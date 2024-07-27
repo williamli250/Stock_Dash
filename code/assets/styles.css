@@ -1,0 +1,195 @@
+/* 設定下拉選單外部容器的背景和文字顏色 */
+.Select-menu-outer {
+    background-color: #333333 !important;
+    color: white !important;
+}
+
+/* 設定下拉選單控制器的背景和文字顏色，邊框顏色 */
+.Select-control {
+    background-color: #333333 !important;
+    color: white !important;
+    border: 1px solid #444444 !important;
+}
+
+/* 設定下拉選單佔位符文字的顏色 */
+.Select-placeholder {
+    color: white !important;
+}
+
+/* 設定多選下拉選單輸入區域的文字顏色 */
+.Select--multi .Select-input {
+    color: white !important;
+}
+
+/* 設定下拉選單選定值的文字顏色 */
+.Select-value {
+    color: white !important;
+}
+
+/* 設定下拉選單選項的背景和文字顏色 */
+.Select-option {
+    background-color: #333333 !important;
+    color: white !important;
+}
+
+/* 設定滑鼠懸停或選中的選項背景和文字顏色 */
+.Select-option.is-focused {
+    background-color: #555555 !important;
+    color: white !important;
+}
+.Select-option.is-selected {
+    background-color: #666666 !important;
+    color: white !important;
+}
+
+/* 設定下拉選單的背景和文字顏色 */
+.Select-menu {
+    background-color: #333333 !important;
+    color: white !important;
+}
+
+/* 設定下拉選單箭頭的顏色 */
+.Select-arrow {
+    border-top-color: white !important;
+}
+
+/* 設定下拉選單選定值標籤的文字顏色 */
+.Select-value-label {
+    color: white !important;
+}
+
+/* 設定整個頁面的背景和文字顏色 */
+body {
+    background-color: #000000 !important;
+    color: white !important;
+    margin: 0 !important;  /* 去掉頁面的預設外邊距 */
+    padding: 0 !important; /* 去掉頁面的預設內邊距 */
+}
+
+html {
+    background-color: #000000 !important;
+}
+
+/* 設定heading 1上方的空白處背景顏色為黑色 */
+h1 {
+    margin-top: 0 !important;
+}
+
+tr:hover td:first-child,
+tr:hover td:nth-last-child(1),
+tr:hover td:nth-last-child(2) {
+    color: black !important;
+}
+
+/* 定義首頁正方形的樣式 */
+.square {
+    width: 300px;
+    height: 300px;
+    display: inline-block;
+    margin: 1px;
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 添加懸停效果 */
+.square:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* 定義正方形內文字的樣式 */
+.square-text {
+    color: white;
+    font-size: 60px;  /* 將字體大小變大 */
+    font-weight: bold;
+    text-align: center;
+    line-height: 300px; /* 垂直居中 */
+}
+
+/* Modern button styles */
+.btn-modern {
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin: 5px;
+    width: auto; /* 縮短按鈕寬度 */
+}
+
+.btn-modern-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-modern-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-modern:hover {
+    opacity: 0.9;
+}
+.stock-status {
+    background-color: #444444;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    text-align: center;
+    flex: 1;
+}
+
+
+
+
+
+.bounce-loader {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bounce-loader > div {
+    width: 18px;
+    height: 18px;
+    background-color: #3498db;
+    border-radius: 100%;
+    display: inline-block;
+    animation: bounce 1.5s infinite ease-in-out;
+    margin: 3px;
+}
+
+.bounce-loader > div:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.bounce-loader > div:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* styles.css */
+.dash-loading {
+    background-color: black; /* 設置背景顏色為黑色 */
+    color: white;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
