@@ -442,10 +442,10 @@ def get_today_status(tickers):
             
             if change > 0:
                 color = 'lightcoral'  # 淡紅色
-                change_text = f"↑ 漲 {change_percent:.2f}%"
+                change_text = f"↑ {change_percent:.2f}%"
             elif change < 0:
                 color = 'lightgreen'  # 淡綠色
-                change_text = f"↓ 跌 {change_percent:.2f}%"
+                change_text = f"↓ {-change_percent:.2f}%"
             else:
                 color = 'white'
                 change_text = f"{change_percent:.2f}%"
