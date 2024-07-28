@@ -447,7 +447,7 @@ def get_today_status(tickers):
         
         if df.empty or len(df) < 2:
             status = html.Div([
-                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center'}),
+                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 调整字體
                 html.P("No data available", style={'color': 'white'})
             ], className="stock-status")
         else:
@@ -467,7 +467,7 @@ def get_today_status(tickers):
                 change_text = f"{change_percent:.2f}%"
             
             status = html.Div([
-                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center'}),
+                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 调整字體
                 html.P(f"股價: ${latest_close:.2f}", style={'color': 'white'}),
                 html.P(change_text, style={'color': color})
             ], className="stock-status")
@@ -488,12 +488,12 @@ def update_charts(ticker, selected_indicators, interval):
         return go.Figure(), go.Figure(), [], html.Div("Data is not sufficient to display indicators", style={'color': 'red', 'textAlign': 'center'})
     
     latest_data, buy_signals, sell_signals, indicator_values = evaluate_signals(df)
-    
+
     # 獲取今日狀況
     today_status_elements = get_today_status(tickers)
     today_status = dbc.Row([
         dbc.Col(today_status_elements[i], width=2, style={'padding': '5px'}) for i in range(len(today_status_elements))
-    ], style={'display': 'flex', 'flexWrap': 'wrap', 'backgroundColor': '#333333', 'padding': '10px', 'borderRadius': '5px'})
+    ], style={'display': 'flex', 'flexWrap': 'wrap', 'justifyContent': 'center', 'padding': '10px'})
 
     price_fig = go.Figure()
     price_fig.add_trace(go.Candlestick(

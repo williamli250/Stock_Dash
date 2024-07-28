@@ -88,7 +88,7 @@ tr:hover td:nth-last-child(2) {
     display: inline-block;
     margin: 1px;
     background: linear-gradient(135deg, #6e8efb, #a777e3);
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -117,7 +117,7 @@ tr:hover td:nth-last-child(2) {
     transition: background-color 0.3s ease, color 0.3s ease;
     font-size: 18px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 40px;
     margin: 5px;
     width: auto; /* 縮短按鈕寬度 */
 }
@@ -135,18 +135,15 @@ tr:hover td:nth-last-child(2) {
 .btn-modern:hover {
     opacity: 0.9;
 }
+
 .stock-status {
     background-color: #444444;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 20px;  /* 邊角弧度保持不變 */
     margin: 5px;
     text-align: center;
     flex: 1;
 }
-
-
-
-
 
 .bounce-loader {
     width: 100%;
