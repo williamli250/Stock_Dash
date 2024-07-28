@@ -229,19 +229,15 @@ def evaluate_signals(df):
         sell_signals.append("Williams %R > -40 (Secondary Sell)")
     
     # ADX Buy/Sell Signal
-    status_adx = "Wait"
-    secondary_status_adx = "Wait"
-    if adx > 25:
-        buy_signals.append("ADX > 25 (Buy)")
-    if adx > 23:
-        buy_signals.append("ADX > 23 (Secondary Buy)")
-    if adx < 20:
-        sell_signals.append("ADX < 20 (Sell)")
-    if adx < 22:
-        sell_signals.append("ADX < 22 (Secondary Sell)")
-
     status_adx = "--"
     secondary_status_adx = "--"
+    if adx > 25:
+        status_adx = "Hot Trend"
+        buy_signals.append("ADX > 25 (Buy)")
+    if adx < 20:
+        status_adx = "No Trend"
+        sell_signals.append("ADX < 20 (Sell)")
+
 
     indicator_values = [
         {"Indicator": "MACD", "Value": f"{macd:.2f}", "Sell Signal": "< MACD Signal", "Buy Signal": "> MACD Signal", "Secondary Sell Signal": "< MACD Signal", "Secondary Buy Signal": "> MACD Signal", "Status": status_macd, "Secondary Status": secondary_status_macd},
@@ -255,7 +251,7 @@ def evaluate_signals(df):
         {"Indicator": "K", "Value": f"{k:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 70", "Secondary Buy Signal": "< 30", "Status": status_kd, "Secondary Status": secondary_status_kd},
         {"Indicator": "D", "Value": f"{d:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 70", "Secondary Buy Signal": "< 30", "Status": status_kd, "Secondary Status": secondary_status_kd},
         {"Indicator": "Williams %R", "Value": f"{williams_r:.2f}", "Sell Signal": "> -20", "Buy Signal": "< -80", "Secondary Sell Signal": "> -40", "Secondary Buy Signal": "< -60", "Status": status_williams_r, "Secondary Status": secondary_status_williams_r},
-        {"Indicator": "ADX", "Value": f"{adx:.2f}", "Sell Signal": "< 20", "Buy Signal": "> 25", "Secondary Sell Signal": "< 22", "Secondary Buy Signal": "> 23", "Status": status_adx, "Secondary Status": secondary_status_adx},
+        {"Indicator": "ADX", "Value": f"{adx:.2f}", "Sell Signal": "< 20", "Buy Signal": "> 25", "Secondary Sell Signal": "--", "Secondary Buy Signal": "--", "Status": status_adx, "Secondary Status": "--"},
         {"Indicator": "Close Price", "Value": f"{close_price:.2f}", "Sell Signal": "-", "Buy Signal": "-", "Secondary Sell Signal": "-", "Secondary Buy Signal": "-", "Status": "-", "Secondary Status": "-"}
     ]
     
@@ -360,43 +356,60 @@ layout = dbc.Container([
                 'color': 'white'
             },
             {
-                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "K" || {Indicator} = "D" || {Indicator} = "Williams %R" || {Indicator} = "ADX" || {Indicator} = "Close Price"'},
+                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "K" || {Indicator} = "D" || {Indicator} = "Williams %R"'},
                 'backgroundColor': 'rgba(144, 238, 144, 0.3)',  
+                'color': 'white'
+            },            
+            {
+                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "ADX" || {Indicator} = "Close Price"'},
+                'backgroundColor': 'rgba(255, 192, 203, 0.4)',  
                 'color': 'white'
             },
             {
                 'if': {'filter_query': '{Status} = "Buy"', 'column_id': 'Status'},
-                'backgroundColor': 'rgba(0, 255, 0, 0.4)',
+                'backgroundColor': 'rgba(0, 255, 0, 0.5)',
                 'color': 'white',
                 'fontWeight': 'bold'
             },
             {
                 'if': {'filter_query': '{Status} = "Sell"', 'column_id': 'Status'},
-                'backgroundColor': 'rgba(255, 0, 0, 0.4)',
+                'backgroundColor': 'rgba(255, 0, 0, 0.6)',
                 'color': 'white',
                 'fontWeight': 'bold'
             },
             {
                 'if': {'filter_query': '{Secondary Status} = "Buy"', 'column_id': 'Secondary Status'},
-                'backgroundColor': 'rgba(0, 255, 0, 0.4)',
+                'backgroundColor': 'rgba(0, 255, 0, 0.5)',
                 'color': 'white',
                 'fontWeight': 'bold'
             },
             {
                 'if': {'filter_query': '{Secondary Status} = "Sell"', 'column_id': 'Secondary Status'},
-                'backgroundColor': 'rgba(255, 0, 0, 0.4)',
+                'backgroundColor': 'rgba(255, 0, 0, 0.6)',
                 'color': 'white',
                 'fontWeight': 'bold'
             },
             {
                 'if': {'filter_query': '{Status} = "Wait"', 'column_id': 'Status'},
-                'backgroundColor': 'rgba(255, 255, 0, 0.4)',
+                'backgroundColor': 'rgba(255, 255, 0, 0.5)',
                 'color': 'white',
                 'fontWeight': 'bold'
             },
             {
                 'if': {'filter_query': '{Secondary Status} = "Wait"', 'column_id': 'Secondary Status'},
-                'backgroundColor': 'rgba(255, 255, 0, 0.4)',
+                'backgroundColor': 'rgba(255, 255, 0, 0.5)',
+                'color': 'white',
+                'fontWeight': 'bold'
+            },
+            {
+                'if': {'filter_query': '{Status} = "Hot Trend"', 'column_id': 'Status'},
+                'backgroundColor': 'rgba(255, 192, 203, 0.55)',
+                'color': 'white',
+                'fontWeight': 'bold'
+            },
+            {
+                'if': {'filter_query': '{Status} = "No Trend"', 'column_id': 'Status'},
+                'backgroundColor': 'rgba(255, 192, 203, 0.3)',
                 'color': 'white',
                 'fontWeight': 'bold'
             }
@@ -543,5 +556,6 @@ def update_charts(ticker, selected_indicators, interval):
     )
     
     return price_fig, indicator_fig, indicator_values, today_status
+
 
 
