@@ -491,9 +491,13 @@ def update_charts(ticker, selected_indicators, interval):
 
     # 獲取今日狀況
     today_status_elements = get_today_status(tickers)
-    today_status = dbc.Row([
-        dbc.Col(today_status_elements[i], width=2, style={'padding': '5px'}) for i in range(len(today_status_elements))
-    ], style={'display': 'flex', 'flexWrap': 'wrap', 'justifyContent': 'center', 'padding': '10px'})
+    today_status = dbc.Row(
+        html.Div(
+            children=[html.Div(today_status_elements[i], style={'padding': '5px', 'flex': '1 1 16%', 'maxWidth': '16%'}) for i in range(len(today_status_elements))],
+            style={'display': 'flex', 'justifyContent': 'center', 'flexWrap': 'wrap', 'padding': '10px'}
+        ),
+        style={'width': '100%'}
+    )
 
     price_fig = go.Figure()
     price_fig.add_trace(go.Candlestick(
