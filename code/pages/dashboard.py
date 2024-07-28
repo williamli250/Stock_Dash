@@ -238,7 +238,6 @@ def evaluate_signals(df):
         status_adx = "No Trend"
         sell_signals.append("ADX < 20 (Sell)")
 
-
     indicator_values = [
         {"Indicator": "MACD", "Value": f"{macd:.2f}", "Sell Signal": "< MACD Signal", "Buy Signal": "> MACD Signal", "Secondary Sell Signal": "< MACD Signal", "Secondary Buy Signal": "> MACD Signal", "Status": status_macd, "Secondary Status": secondary_status_macd},
         {"Indicator": "RSI", "Value": f"{rsi:.2f}", "Sell Signal": "> 70", "Buy Signal": "< 30", "Secondary Sell Signal": "> 60", "Secondary Buy Signal": "< 40", "Status": status_rsi, "Secondary Status": secondary_status_rsi},
@@ -246,10 +245,10 @@ def evaluate_signals(df):
         {"Indicator": "EMA", "Value": f"{ema:.2f}", "Sell Signal": "< Close", "Buy Signal": "> Close", "Secondary Sell Signal": "< Close", "Secondary Buy Signal": "> Close", "Status": status_ema, "Secondary Status": secondary_status_ema},
         {"Indicator": "BB High", "Value": f"{bb_high:.2f}", "Sell Signal": "> Close", "Buy Signal": "-", "Secondary Sell Signal": "Near High", "Secondary Buy Signal": "-", "Status": status_bb, "Secondary Status": secondary_status_bb},
         {"Indicator": "BB Low", "Value": f"{bb_low:.2f}", "Sell Signal": "-", "Buy Signal": "< Close", "Secondary Sell Signal": "-", "Secondary Buy Signal": "Near Low", "Status": status_bb, "Secondary Status": secondary_status_bb},
-        {"Indicator": "Stochastic RSI", "Value": f"{stochastic_rsi:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 60", "Secondary Buy Signal": "< 40", "Status": status_stochastic_rsi, "Secondary Status": secondary_status_stochastic_rsi},
-        {"Indicator": "CCI", "Value": f"{cci:.2f}", "Sell Signal": "> 100", "Buy Signal": "< -100", "Secondary Sell Signal": "> 90", "Secondary Buy Signal": "< -90", "Status": status_cci, "Secondary Status": secondary_status_cci},
         {"Indicator": "K", "Value": f"{k:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 70", "Secondary Buy Signal": "< 30", "Status": status_kd, "Secondary Status": secondary_status_kd},
         {"Indicator": "D", "Value": f"{d:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 70", "Secondary Buy Signal": "< 30", "Status": status_kd, "Secondary Status": secondary_status_kd},
+        {"Indicator": "Stochastic RSI", "Value": f"{stochastic_rsi:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 60", "Secondary Buy Signal": "< 40", "Status": status_stochastic_rsi, "Secondary Status": secondary_status_stochastic_rsi},
+        {"Indicator": "CCI", "Value": f"{cci:.2f}", "Sell Signal": "> 100", "Buy Signal": "< -100", "Secondary Sell Signal": "> 90", "Secondary Buy Signal": "< -90", "Status": status_cci, "Secondary Status": secondary_status_cci},
         {"Indicator": "Williams %R", "Value": f"{williams_r:.2f}", "Sell Signal": "> -20", "Buy Signal": "< -80", "Secondary Sell Signal": "> -40", "Secondary Buy Signal": "< -60", "Status": status_williams_r, "Secondary Status": secondary_status_williams_r},
         {"Indicator": "ADX", "Value": f"{adx:.2f}", "Sell Signal": "< 20", "Buy Signal": "> 25", "Secondary Sell Signal": "--", "Secondary Buy Signal": "--", "Status": status_adx, "Secondary Status": "--"},
         {"Indicator": "Close Price", "Value": f"{close_price:.2f}", "Sell Signal": "-", "Buy Signal": "-", "Secondary Sell Signal": "-", "Secondary Buy Signal": "-", "Status": "-", "Secondary Status": "-"}
@@ -273,10 +272,10 @@ indicators_options = [
     {"label": "EMA (Exponential Moving Average)", "value": "EMA"},
     {"label": "BB High (布林帶上軌)", "value": "BB High"},
     {"label": "BB Low (布林帶下軌)", "value": "BB Low"},
-    {"label": "Stochastic RSI", "value": "Stochastic RSI"},
-    {"label": "CCI (Commodity Channel Index)", "value": "CCI"},
     {"label": "K (Stochastic Oscillator)", "value": "K"},
     {"label": "D (Stochastic Oscillator)", "value": "D"},
+    {"label": "Stochastic RSI", "value": "Stochastic RSI"},
+    {"label": "CCI (Commodity Channel Index)", "value": "CCI"},
     {"label": "Williams %R", "value": "Williams %R"},
     {"label": "ADX (Average Directional Index)", "value": "ADX"},
     {"label": "Close Price", "value": "Close Price"}
@@ -291,10 +290,7 @@ layout = dbc.Container([
         dbc.Col(html.H1("Stock Dashboard", className="text-center text-primary mb-4"), width=12)
     ]),
     dbc.Row(id='today-status'),
-    dbc.Row([
-        dbc.Col(dcc.Graph(id='price-chart', config={'displayModeBar': False}), width=6),
-        dbc.Col(dcc.Graph(id='indicator-chart', config={'displayModeBar': False}), width=6)
-    ], style={'backgroundColor': 'black'}),
+
 
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
 
@@ -346,20 +342,20 @@ layout = dbc.Container([
                 'color': 'white'
             },
             {
-                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "SMA" || {Indicator} = "EMA" || {Indicator} = "BB High" || {Indicator} = "BB Low"'},
+                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "SMA" || {Indicator} = "EMA"'},
                 'backgroundColor': 'rgba(135, 206, 235, 0.35)',
                 'color': 'white'
             },
             {
-                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "Stochastic RSI" || {Indicator} = "CCI"'},
+                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "BB High" || {Indicator} = "BB Low" || {Indicator} = "K" || {Indicator} = "D"'},
+                'backgroundColor': 'rgba(144, 238, 144, 0.3)',  
+                'color': 'white'
+            }, 
+            {
+                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "Stochastic RSI" || {Indicator} = "CCI" || {Indicator} = "Williams %R"'},
                 'backgroundColor': 'rgba(255, 165, 0, 0.3)',
                 'color': 'white'
             },
-            {
-                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "K" || {Indicator} = "D" || {Indicator} = "Williams %R"'},
-                'backgroundColor': 'rgba(144, 238, 144, 0.3)',  
-                'color': 'white'
-            },            
             {
                 'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "ADX" || {Indicator} = "Close Price"'},
                 'backgroundColor': 'rgba(255, 192, 203, 0.4)',  
@@ -428,6 +424,10 @@ layout = dbc.Container([
         },
         style_table={'overflowX': 'auto'}
     ), width=12)),
+    dbc.Row([
+        dbc.Col(dcc.Graph(id='price-chart', config={'displayModeBar': False}), width=6),
+        dbc.Col(dcc.Graph(id='indicator-chart', config={'displayModeBar': False}), width=6)
+    ], style={'backgroundColor': 'black'}),
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
@@ -504,7 +504,8 @@ def update_charts(ticker, selected_indicators, interval):
         template='plotly_dark',
         paper_bgcolor='rgba(0, 0, 0, 0.5)',  # 圖表外部背景顏色
         plot_bgcolor='rgba(0, 0, 0, 0.5)',  # 圖表內部背景顏色
-        font=dict(color='white')  # 字體顏色
+        font=dict(color='white'),  # 字體顏色
+        hovermode='x unified'  # 設定 hovermode 為 x unified
     )
     
     indicator_fig = go.Figure()
@@ -525,10 +526,6 @@ def update_charts(ticker, selected_indicators, interval):
         indicator_fig.add_trace(go.Scatter(x=df.index, y=df['BB_high'], name='BB High'))
     if 'BB Low' in selected_indicators:
         indicator_fig.add_trace(go.Scatter(x=df.index, y=df['BB_low'], name='BB Low'))
-    if 'Stochastic RSI' in selected_indicators:
-        indicator_fig.add_trace(go.Scatter(x=df.index, y=df['Stochastic RSI'], name='Stochastic RSI'))
-    if 'CCI' in selected_indicators:
-        indicator_fig.add_trace(go.Scatter(x=df.index, y=df['CCI'], name='CCI'))
     if 'K' in selected_indicators:
         indicator_fig.add_trace(go.Scatter(x=df.index, y=df['K'], name='K'))
         indicator_fig.add_trace(go.Scatter(x=[df.index[-1]], y=[80], mode='markers+text', name='Sell Signal', text=['80'], textposition='top center'))
@@ -537,6 +534,10 @@ def update_charts(ticker, selected_indicators, interval):
         indicator_fig.add_trace(go.Scatter(x=df.index, y=df['D'], name='D'))
         indicator_fig.add_trace(go.Scatter(x=[df.index[-1]], y=[80], mode='markers+text', name='Sell Signal', text=['80'], textposition='top center'))
         indicator_fig.add_trace(go.Scatter(x=[df.index[-1]], y=[20], mode='markers+text', name='Buy Signal', text=['20'], textposition='top center'))
+    if 'Stochastic RSI' in selected_indicators:
+        indicator_fig.add_trace(go.Scatter(x=df.index, y=df['Stochastic RSI'], name='Stochastic RSI'))
+    if 'CCI' in selected_indicators:
+        indicator_fig.add_trace(go.Scatter(x=df.index, y=df['CCI'], name='CCI'))
     if 'Williams %R' in selected_indicators:
         indicator_fig.add_trace(go.Scatter(x=df.index, y=df['Williams %R'], name='Williams %R'))
     if 'ADX' in selected_indicators:
@@ -552,10 +553,8 @@ def update_charts(ticker, selected_indicators, interval):
         xaxis_rangeslider_visible=True,
         paper_bgcolor='rgba(0, 0, 0, 0.5)',  # 圖表外部背景顏色
         plot_bgcolor='rgba(0, 0, 0, 0.5)',  # 圖表內部背景顏色
-        font=dict(color='white')  # 字體顏
+        font=dict(color='white'),  # 字體顏色
+        hovermode='x unified'  # 設定 hovermode 為 x unified
     )
     
     return price_fig, indicator_fig, indicator_values, today_status
-
-
-

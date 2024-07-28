@@ -76,16 +76,6 @@ def display_content(btn_indicator_intro, btn_combo_strategy):
                 dbc.Col(html.Hr(), width=12)
             ]),
             dbc.Row([
-                dbc.Col(html.H3("Stochastic RSI"), width=12),
-                dbc.Col(html.P("用途：隨機指標和相對強弱指標的結合，用於識別超買和超賣狀態。Stochastic RSI 的值範圍從0到100，通常在20以下表示超賣，80以上表示超買。"), width=12),
-                dbc.Col(html.Hr(), width=12)
-            ]),
-            dbc.Row([
-                dbc.Col(html.H3("CCI (Commodity Channel Index)"), width=12),
-                dbc.Col(html.P("用途：CCI 用於識別價格的超買和超賣狀態。當CCI值高於100時，表示市場超買；當CCI值低於-100時，表示市場超賣。"), width=12),
-                dbc.Col(html.Hr(), width=12)
-            ]),
-            dbc.Row([
                 dbc.Col(html.H3("K (Stochastic Oscillator)"), width=12),
                 dbc.Col(html.P("用途：隨機震盪指標的K線，用於判斷市場的超買或超賣狀態。當K線在20以下並上穿D線時，通常被視為買入信號；當K線在80以上並下穿D線時，通常被視為賣出信號。"), width=12),
                 dbc.Col(html.Hr(), width=12)
@@ -93,6 +83,16 @@ def display_content(btn_indicator_intro, btn_combo_strategy):
             dbc.Row([
                 dbc.Col(html.H3("D (Stochastic Oscillator)"), width=12),
                 dbc.Col(html.P("用途：隨機震盪指標的D線，與K線結合使用，用於判斷市場的超買或超賣狀態。D線通常是K線的三日簡單移動平均。"), width=12),
+                dbc.Col(html.Hr(), width=12)
+            ]),
+            dbc.Row([
+                dbc.Col(html.H3("Stochastic RSI"), width=12),
+                dbc.Col(html.P("用途：隨機指標和相對強弱指標的結合，用於識別超買和超賣狀態。Stochastic RSI 的值範圍從0到100，通常在20以下表示超賣，80以上表示超買。"), width=12),
+                dbc.Col(html.Hr(), width=12)
+            ]),
+            dbc.Row([
+                dbc.Col(html.H3("CCI (Commodity Channel Index)"), width=12),
+                dbc.Col(html.P("用途：CCI 用於識別價格的超買和超賣狀態。當CCI值高於100時，表示市場超買；當CCI值低於-100時，表示市場超賣。"), width=12),
                 dbc.Col(html.Hr(), width=12)
             ]),
             dbc.Row([
@@ -126,6 +126,11 @@ def display_content(btn_indicator_intro, btn_combo_strategy):
             dbc.Row([
                 dbc.Col(html.H3("布林帶和 KDJ 的組合策略"), width=12),
                 dbc.Col(html.P("布林帶用於判斷市場的波動性，而 KDJ 是基於隨機指標的技術指標。當價格接近布林帶下軌且 KDJ 中的 K 線上穿 D 線時，通常被視為買進信號；反之，當價格接近布林帶上軌且 K 線下穿 D 線時，通常被視為賣出信號。"), width=12),
+                dbc.Col(html.Hr(), width=12)
+            ]),
+            dbc.Row([
+                dbc.Col(html.H3("Stochastic RSI 和 CCI 的組合策略"), width=12),
+                dbc.Col(html.P("Stochastic RSI 和 CCI 結合使用可以提高判斷超買和超賣狀態的準確性。當 Stochastic RSI 和 CCI 同時在超賣區域（如 Stochastic RSI < 20 且 CCI < -100），通常被視為買進信號；反之，當兩者同時在超買區域（如 Stochastic RSI > 80 且 CCI > 100），通常被視為賣出信號。"), width=12),
                 dbc.Col(html.Hr(), width=12)
             ]),
             dbc.Row([
