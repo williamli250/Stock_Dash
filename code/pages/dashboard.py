@@ -291,37 +291,7 @@ layout = dbc.Container([
     ]),
     dbc.Row(id='today-status'),
 
-
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
-
-    dbc.Row([
-        dbc.Col(dcc.Dropdown(
-            id='interval-selection',
-            options=[
-                {"label": "60分鐘線", "value": "60m"},
-                {"label": "日線", "value": "1d"},
-                {"label": "週線", "value": "1wk"},
-            ],
-            value='1d',  # 設置日線為初始值
-            className="mb-3",
-            style={'backgroundColor': '#333333', 'color': 'white'}
-        ), width=3),
-        dbc.Col(dcc.Dropdown(
-            id='stock-ticker',
-            options=[{'label': name, 'value': ticker} for name, ticker in tickers.items()],
-            value='2330.TW',
-            className="mb-3",
-            style={'backgroundColor': '#333333', 'color': 'white'}
-        ), width=3),
-        dbc.Col(dcc.Dropdown(
-            id='indicator-selection',
-            options=indicators_options,
-            multi=True,
-            value=["RSI"],  # 預設值為 "RSI"
-            className="mb-3",
-            style={'backgroundColor': '#333333', 'color': 'white'}
-        ), width=6)
-    ], style={'backgroundColor': 'black'}),
 
     dbc.Row(dbc.Col(dash_table.DataTable(
         id='indicators-table',
@@ -424,10 +394,43 @@ layout = dbc.Container([
         },
         style_table={'overflowX': 'auto'}
     ), width=12)),
+
+    dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
+
+    dbc.Row([
+        dbc.Col(dcc.Dropdown(
+            id='interval-selection',
+            options=[
+                {"label": "60分鐘線", "value": "60m"},
+                {"label": "日線", "value": "1d"},
+                {"label": "週線", "value": "1wk"},
+            ],
+            value='1d',  # 設置日線為初始值
+            className="mb-3",
+            style={'backgroundColor': '#333333', 'color': 'white'}
+        ), width=3),
+        dbc.Col(dcc.Dropdown(
+            id='stock-ticker',
+            options=[{'label': name, 'value': ticker} for name, ticker in tickers.items()],
+            value='2330.TW',
+            className="mb-3",
+            style={'backgroundColor': '#333333', 'color': 'white'}
+        ), width=3),
+        dbc.Col(dcc.Dropdown(
+            id='indicator-selection',
+            options=indicators_options,
+            multi=True,
+            value=["BB High", "BB Low", "SMA", "Close Price"],  # 預設值
+            className="mb-3",
+            style={'backgroundColor': '#333333', 'color': 'white'}
+        ), width=6)
+    ], style={'backgroundColor': 'black'}),
+
     dbc.Row([
         dbc.Col(dcc.Graph(id='price-chart', config={'displayModeBar': False}), width=6),
         dbc.Col(dcc.Graph(id='indicator-chart', config={'displayModeBar': False}), width=6)
     ], style={'backgroundColor': 'black'}),
+
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行
     dbc.Row([dbc.Col(html.Br()) for _ in range(2)]),  # 添加換行

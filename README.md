@@ -14,7 +14,7 @@
 
 ### 二、終端機操作
 
-cd Desktop/Stock_DSS/code
+cd Desktop/Stock_Dash/code
 
 python index.py
 
