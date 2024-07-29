@@ -3,7 +3,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from app import app
 from pages.dashboard import layout as dashboard_layout
-from pages.valuation import layout as valuaiton_layout
+from pages.valuation import layout as valuation_layout
 from pages.indicator_intro import layout as indicator_intro_layout
 
 app.layout = html.Div([
@@ -26,7 +26,7 @@ def display_page(pathname):
             ])
         ])
     elif pathname == '/valuation':
-        return valuaiton_layout
+        return valuation_layout
     elif pathname == '/indicator-intro':
         return indicator_intro_layout
     else:

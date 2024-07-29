@@ -515,16 +515,20 @@ def get_today_status(tickers):
             if change > 0:
                 color = 'lightcoral'  # 淡紅色
                 change_text = f"↑ {change_percent:.2f}%"
+                change_amount = f"+{change:.2f}"
             elif change < 0:
                 color = 'lightgreen'  # 淡綠色
                 change_text = f"↓ {-change_percent:.2f}%"
+                change_amount = f"{change:.2f}"
             else:
                 color = 'white'
                 change_text = f"{change_percent:.2f}%"
+                change_amount = f"{change:.2f}"
             
             status = html.Div([
                 html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 調整字體
                 html.P(f"股價: ${latest_close:.2f}", style={'color': 'white'}),
+                html.P(f"{change_amount}", style={'color': color}),  # 新增漲跌量
                 html.P(change_text, style={'color': color})
             ], className="stock-status")
         
