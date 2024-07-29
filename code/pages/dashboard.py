@@ -102,8 +102,8 @@ def add_technical_indicators(df):
         df['BB_high'] = pd.Series([None]*len(df))
         df['BB_low'] = pd.Series([None]*len(df))
 
-    if len(df) >= 14:  # Stochastic Oscillator需要14個數據點
-        stoch = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close'], window=14, smooth_window=14)
+    if len(df) >= 9:  # Stochastic Oscillator需要9個數據點
+        stoch = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close'], window=9, smooth_window=9)
         df['Stochastic RSI'] = stoch.stoch()
         df['K'] = stoch.stoch()
         df['D'] = stoch.stoch_signal()
@@ -200,6 +200,8 @@ def evaluate_signals(df):
     # Bollinger Bands Buy/Sell Signal
     status_bb = "Wait"
     secondary_status_bb = "Wait"
+    near_low = bb_low + (bb_high - bb_low) / 10
+    near_high = bb_high - (bb_high - bb_low) / 10
     if df['Close'].iloc[-1] < bb_low:
         status_bb = "Buy"
         buy_signals.append("Close < BB Low (Buy)")
@@ -288,12 +290,12 @@ def evaluate_signals(df):
         sell_signals.append("ADX < 20 (Sell)")
 
     indicator_values = [
-        {"Indicator": "MACD", "Value": f"{macd:.2f}", "Sell Signal": "< MACD Signal", "Buy Signal": "> MACD Signal", "Secondary Sell Signal": "< MACD Signal", "Secondary Buy Signal": "> MACD Signal", "Status": status_macd, "Secondary Status": secondary_status_macd},
+        {"Indicator": "MACD", "Value": f"{macd:.2f}", "Sell Signal": f"< {macd_signal:.2f}", "Buy Signal": f"> {macd_signal:.2f}", "Secondary Sell Signal": f"< {macd_signal:.2f}", "Secondary Buy Signal": f"> {macd_signal:.2f}", "Status": status_macd, "Secondary Status": secondary_status_macd},
         {"Indicator": "RSI", "Value": f"{rsi:.2f}", "Sell Signal": "> 70", "Buy Signal": "< 30", "Secondary Sell Signal": "> 60", "Secondary Buy Signal": "< 40", "Status": status_rsi, "Secondary Status": secondary_status_rsi},
-        {"Indicator": "SMA", "Value": f"{sma:.2f}", "Sell Signal": "< Close", "Buy Signal": "> Close", "Secondary Sell Signal": "< Close", "Secondary Buy Signal": "> Close", "Status": status_sma, "Secondary Status": secondary_status_sma},
-        {"Indicator": "EMA", "Value": f"{ema:.2f}", "Sell Signal": "< Close", "Buy Signal": "> Close", "Secondary Sell Signal": "< Close", "Secondary Buy Signal": "> Close", "Status": status_ema, "Secondary Status": secondary_status_ema},
-        {"Indicator": "BB High", "Value": f"{bb_high:.2f}", "Sell Signal": "> Close", "Buy Signal": "-", "Secondary Sell Signal": "Near High", "Secondary Buy Signal": "-", "Status": status_bb, "Secondary Status": secondary_status_bb},
-        {"Indicator": "BB Low", "Value": f"{bb_low:.2f}", "Sell Signal": "-", "Buy Signal": "< Close", "Secondary Sell Signal": "-", "Secondary Buy Signal": "Near Low", "Status": status_bb, "Secondary Status": secondary_status_bb},
+        {"Indicator": "SMA", "Value": f"{sma:.2f}", "Sell Signal": f"< {close_price:.2f}", "Buy Signal": f"> {close_price:.2f}", "Secondary Sell Signal": f"< {close_price:.2f}", "Secondary Buy Signal": f"> {close_price:.2f}", "Status": status_sma, "Secondary Status": secondary_status_sma},
+        {"Indicator": "EMA", "Value": f"{ema:.2f}", "Sell Signal": f"< {close_price:.2f}", "Buy Signal": f"> {close_price:.2f}", "Secondary Sell Signal": f"< {close_price:.2f}", "Secondary Buy Signal": f"> {close_price:.2f}", "Status": status_ema, "Secondary Status": secondary_status_ema},
+        {"Indicator": "BB High v.s Close Price", "Value": f"{close_price:.2f}", "Sell Signal": f"> {bb_high:.2f}", "Buy Signal": "-", "Secondary Sell Signal": f"< {near_high:.2f}", "Secondary Buy Signal": "-", "Status": status_bb, "Secondary Status": secondary_status_bb},
+        {"Indicator": "BB Low v.s Close Price", "Value": f"{close_price:.2f}", "Sell Signal": "-", "Buy Signal": f"< {bb_low:.2f}", "Secondary Sell Signal": "-", "Secondary Buy Signal": f"< {near_low:.2f}", "Status": status_bb, "Secondary Status": secondary_status_bb},
         {"Indicator": "K", "Value": f"{k:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 70", "Secondary Buy Signal": "< 30", "Status": status_kd, "Secondary Status": secondary_status_kd},
         {"Indicator": "D", "Value": f"{d:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 70", "Secondary Buy Signal": "< 30", "Status": status_kd, "Secondary Status": secondary_status_kd},
         {"Indicator": "Stochastic RSI", "Value": f"{stochastic_rsi:.2f}", "Sell Signal": "> 80", "Buy Signal": "< 20", "Secondary Sell Signal": "> 60", "Secondary Buy Signal": "< 40", "Status": status_stochastic_rsi, "Secondary Status": secondary_status_stochastic_rsi},
@@ -304,7 +306,6 @@ def evaluate_signals(df):
     ]
 
     return latest_data, buy_signals, sell_signals, indicator_values
-
 tickers = {
     '台積電': '2330.TW',
     '富邦印度': '00652.TW',
@@ -373,7 +374,7 @@ layout = dbc.Container([
                 'color': 'white'
             },
             {
-                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "BB High" || {Indicator} = "BB Low" || {Indicator} = "K" || {Indicator} = "D"'},
+                'if': {'column_id': 'Indicator', 'filter_query': '{Indicator} = "BB High v.s Close Price" || {Indicator} = "BB Low v.s Close Price" || {Indicator} = "K" || {Indicator} = "D"'},
                 'backgroundColor': 'rgba(144, 238, 144, 0.3)',  
                 'color': 'white'
             }, 
