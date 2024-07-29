@@ -3,7 +3,7 @@ from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 from app import app
 from pages.dashboard import layout as dashboard_layout
-from pages.prediction import layout as prediction_layout
+from pages.valuation import layout as valuaiton_layout
 from pages.indicator_intro import layout as indicator_intro_layout
 
 app.layout = html.Div([
@@ -25,8 +25,8 @@ def display_page(pathname):
                 html.Div(id="dashboard-content")
             ])
         ])
-    elif pathname == '/stock-prediction':
-        return prediction_layout
+    elif pathname == '/valuation':
+        return valuaiton_layout
     elif pathname == '/indicator-intro':
         return indicator_intro_layout
     else:
@@ -73,7 +73,7 @@ def display_page(pathname):
                 ),
                 dbc.Col(
                     html.A(
-                        html.Div("股票預測", className="square", style={
+                        html.Div("估價", className="square", style={
                             'width': '300px',
                             'height': '300px',
                             'background-color': 'rgba(255, 255, 0, 0.5)',  # 半透明的黃色
@@ -84,7 +84,7 @@ def display_page(pathname):
                             'color': 'black',
                             'textDecoration': 'none'  # 移除文字下的底線
                         }),
-                        href="/stock-prediction",
+                        href="/valuation",
                         style={'textDecoration': 'none'}  # 移除文字下的底線
                     ), width=4, className="d-flex justify-content-center"
                 )
