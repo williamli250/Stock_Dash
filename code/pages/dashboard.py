@@ -42,12 +42,20 @@ INDICATOR_MAPPING = {
     "Close Price": "Close"
 }
 
-def get_stock_data(ticker, interval):
+def get_stock_data(ticker, interval, date_range):
     end_date = (datetime.today() + timedelta(days=1)).strftime('%Y-%m-%d')
-    start_date = (datetime.today() - timedelta(days=365)).strftime('%Y-%m-%d')
+    if date_range == '2m':
+        start_date = (datetime.today() - timedelta(days=60)).strftime('%Y-%m-%d')
+    elif date_range == '6m':
+        start_date = (datetime.today() - timedelta(days=180)).strftime('%Y-%m-%d')
+    elif date_range == '3y':
+        start_date = (datetime.today() - timedelta(days=1095)).strftime('%Y-%m-%d')
+    else:  # 默認為近一年
+        start_date = (datetime.today() - timedelta(days=365)).strftime('%Y-%m-%d')
+
     df = yf.download(ticker, start=start_date, end=end_date, interval=interval)
     df.reset_index(inplace=True)
-    
+
     # 檢查是否有 'Date' 列，否則改用 'Datetime'
     if 'Date' in df.columns:
         df['Date'] = pd.to_datetime(df['Date'])
@@ -57,27 +65,61 @@ def get_stock_data(ticker, interval):
         df.set_index('Datetime', inplace=True)
     else:
         raise ValueError("Data does not contain 'Date' or 'Datetime' columns")
-    
+
     return df
 
 def add_technical_indicators(df):
     if len(df) < 15:  # 確保有足夠的數據來計算技術指標
         raise ValueError("Not enough data to calculate technical indicators")
     
-    df['MACD'] = ta.trend.MACD(df['Close']).macd()
-    df['MACD_signal'] = ta.trend.MACD(df['Close']).macd_signal()
-    df['RSI'] = ta.momentum.RSIIndicator(df['Close']).rsi()
-    df['SMA'] = ta.trend.SMAIndicator(df['Close'], window=14).sma_indicator()
-    df['EMA'] = ta.trend.EMAIndicator(df['Close'], window=14).ema_indicator()
-    bollinger = ta.volatility.BollingerBands(df['Close'])
-    df['BB_high'] = bollinger.bollinger_hband()
-    df['BB_low'] = bollinger.bollinger_lband()
-    df['Stochastic RSI'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch()
-    df['K'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch()
-    df['D'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch_signal()
-    df['Williams %R'] = ta.momentum.WilliamsRIndicator(df['High'], df['Low'], df['Close']).williams_r()
-    df['CCI'] = ta.trend.CCIIndicator(df['High'], df['Low'], df['Close']).cci()
-    df['ADX'] = ta.trend.ADXIndicator(df['High'], df['Low'], df['Close']).adx()
+    if len(df) >= 26:  # MACD需要26個數據點
+        df['MACD'] = ta.trend.MACD(df['Close']).macd()
+        df['MACD_signal'] = ta.trend.MACD(df['Close']).macd_signal()
+    else:
+        df['MACD'] = pd.Series([None]*len(df))
+        df['MACD_signal'] = pd.Series([None]*len(df))
+
+    if len(df) >= 14:  # RSI需要14個數據點
+        df['RSI'] = ta.momentum.RSIIndicator(df['Close']).rsi()
+        df['SMA'] = ta.trend.SMAIndicator(df['Close'], window=14).sma_indicator()
+        df['EMA'] = ta.trend.EMAIndicator(df['Close'], window=14).ema_indicator()
+    else:
+        df['RSI'] = pd.Series([None]*len(df))
+        df['SMA'] = pd.Series([None]*len(df))
+        df['EMA'] = pd.Series([None]*len(df))
+
+    if len(df) >= 20:  # Bollinger Bands需要20個數據點
+        bollinger = ta.volatility.BollingerBands(df['Close'])
+        df['BB_high'] = bollinger.bollinger_hband()
+        df['BB_low'] = bollinger.bollinger_lband()
+    else:
+        df['BB_high'] = pd.Series([None]*len(df))
+        df['BB_low'] = pd.Series([None]*len(df))
+
+    if len(df) >= 14:  # Stochastic Oscillator需要14個數據點
+        df['Stochastic RSI'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch()
+        df['K'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch()
+        df['D'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch_signal()
+    else:
+        df['Stochastic RSI'] = pd.Series([None]*len(df))
+        df['K'] = pd.Series([None]*len(df))
+        df['D'] = pd.Series([None]*len(df))
+
+    if len(df) >= 20:  # Williams %R需要20個數據點
+        df['Williams %R'] = ta.momentum.WilliamsRIndicator(df['High'], df['Low'], df['Close']).williams_r()
+    else:
+        df['Williams %R'] = pd.Series([None]*len(df))
+
+    if len(df) >= 20:  # CCI需要20個數據點
+        df['CCI'] = ta.trend.CCIIndicator(df['High'], df['Low'], df['Close']).cci()
+    else:
+        df['CCI'] = pd.Series([None]*len(df))
+
+    if len(df) >= 14:  # ADX需要14個數據點
+        df['ADX'] = ta.trend.ADXIndicator(df['High'], df['Low'], df['Close']).adx()
+    else:
+        df['ADX'] = pd.Series([None]*len(df))
+
     return df
 
 def evaluate_signals(df):
@@ -96,10 +138,10 @@ def evaluate_signals(df):
     williams_r = df['Williams %R'].iloc[-1]
     adx = df['ADX'].iloc[-1]
     close_price = df['Close'].iloc[-1]
-    
+
     buy_signals = []
     sell_signals = []
-    
+
     # MACD Buy/Sell Signal
     status_macd = "Wait"
     secondary_status_macd = "Wait"
@@ -111,7 +153,7 @@ def evaluate_signals(df):
         status_macd = "Sell"
         secondary_status_macd = "Sell"
         sell_signals.append("MACD < Signal (Sell)")
-    
+
     # RSI Buy/Sell Signal
     status_rsi = "Wait"
     secondary_status_rsi = "Wait"
@@ -127,7 +169,7 @@ def evaluate_signals(df):
     if rsi > 60:
         secondary_status_rsi = "Sell"
         sell_signals.append("RSI > 60 (Secondary Sell)")
-    
+
     # SMA Buy/Sell Signal
     status_sma = "Wait"
     secondary_status_sma = "Wait"
@@ -137,7 +179,7 @@ def evaluate_signals(df):
     if df['Close'].iloc[-1] > sma:
         status_sma = "Sell"
         secondary_status_sma = "Sell"
-    
+
     # EMA Buy/Sell Signal
     status_ema = "Wait"
     secondary_status_ema = "Wait"
@@ -147,7 +189,7 @@ def evaluate_signals(df):
     if df['Close'].iloc[-1] > ema:
         status_ema = "Sell"
         secondary_status_ema = "Sell"
-    
+
     # Bollinger Bands Buy/Sell Signal
     status_bb = "Wait"
     secondary_status_bb = "Wait"
@@ -163,7 +205,7 @@ def evaluate_signals(df):
     if df['Close'].iloc[-1] > (bb_high - (bb_high - bb_low) / 10):
         secondary_status_bb = "Sell"
         sell_signals.append("Close near BB High (Secondary Sell)")
-    
+
     # Stochastic RSI Buy/Sell Signal
     status_stochastic_rsi = "Wait"
     secondary_status_stochastic_rsi = "Wait"
@@ -179,7 +221,7 @@ def evaluate_signals(df):
     if stochastic_rsi > 60:
         secondary_status_stochastic_rsi = "Sell"
         sell_signals.append("Stochastic RSI > 60 (Secondary Sell)")
-    
+
     # CCI Buy/Sell Signal
     status_cci = "Wait"
     secondary_status_cci = "Wait"
@@ -195,7 +237,7 @@ def evaluate_signals(df):
     if cci > 90:
         secondary_status_cci = "Sell"
         sell_signals.append("CCI > 90 (Secondary Sell)")
-    
+
     # K 和 D Buy/Sell Signal
     status_kd = "Wait"
     secondary_status_kd = "Wait"
@@ -227,7 +269,7 @@ def evaluate_signals(df):
     if williams_r > -40:
         secondary_status_williams_r = "Sell"
         sell_signals.append("Williams %R > -40 (Secondary Sell)")
-    
+
     # ADX Buy/Sell Signal
     status_adx = "--"
     secondary_status_adx = "--"
@@ -253,7 +295,7 @@ def evaluate_signals(df):
         {"Indicator": "ADX", "Value": f"{adx:.2f}", "Sell Signal": "< 20", "Buy Signal": "> 25", "Secondary Sell Signal": "--", "Secondary Buy Signal": "--", "Status": status_adx, "Secondary Status": "--"},
         {"Indicator": "Close Price", "Value": f"{close_price:.2f}", "Sell Signal": "-", "Buy Signal": "-", "Secondary Sell Signal": "-", "Secondary Buy Signal": "-", "Status": "-", "Secondary Status": "-"}
     ]
-    
+
     return latest_data, buy_signals, sell_signals, indicator_values
 
 tickers = {
@@ -279,6 +321,13 @@ indicators_options = [
     {"label": "Williams %R", "value": "Williams %R"},
     {"label": "ADX (Average Directional Index)", "value": "ADX"},
     {"label": "Close Price", "value": "Close Price"}
+]
+
+date_ranges = [
+    {"label": "近兩個月", "value": "2m"},
+    {"label": "近半年", "value": "6m"},
+    {"label": "近一年", "value": "1y"},
+    {"label": "近三年", "value": "3y"}
 ]
 
 layout = dbc.Container([
@@ -423,7 +472,14 @@ layout = dbc.Container([
             value=["BB High", "BB Low", "SMA", "Close Price"],  # 預設值
             className="mb-3",
             style={'backgroundColor': '#333333', 'color': 'white'}
-        ), width=6)
+        ), width=3),
+        dbc.Col(dcc.Dropdown(
+            id='date-range-selection',
+            options=date_ranges,
+            value='1y',  # 設置近一年為初始值
+            className="mb-3",
+            style={'backgroundColor': '#333333', 'color': 'white'}
+        ), width=3)
     ], style={'backgroundColor': 'black'}),
 
     dbc.Row([
@@ -447,7 +503,7 @@ def get_today_status(tickers):
         
         if df.empty or len(df) < 2:
             status = html.Div([
-                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 调整字體
+                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 調整字體
                 html.P("No data available", style={'color': 'white'})
             ], className="stock-status")
         else:
@@ -467,7 +523,7 @@ def get_today_status(tickers):
                 change_text = f"{change_percent:.2f}%"
             
             status = html.Div([
-                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 调整字體
+                html.P(f"{name}", style={'color': 'white', 'marginBottom': '5px', 'fontWeight': 'bold', 'textAlign': 'center', 'fontSize': '18px'}),  # 調整字體
                 html.P(f"股價: ${latest_close:.2f}", style={'color': 'white'}),
                 html.P(change_text, style={'color': color})
             ], className="stock-status")
@@ -478,10 +534,10 @@ def get_today_status(tickers):
 
 @app.callback(
     [Output('price-chart', 'figure'), Output('indicator-chart', 'figure'), Output('indicators-table', 'data'), Output('today-status', 'children')],
-    [Input('stock-ticker', 'value'), Input('indicator-selection', 'value'), Input('interval-selection', 'value')]
+    [Input('stock-ticker', 'value'), Input('indicator-selection', 'value'), Input('interval-selection', 'value'), Input('date-range-selection', 'value')]
 )
-def update_charts(ticker, selected_indicators, interval):
-    df = get_stock_data(ticker, interval)
+def update_charts(ticker, selected_indicators, interval, date_range):
+    df = get_stock_data(ticker, interval, date_range)
     try:
         df = add_technical_indicators(df)
     except ValueError as e:
