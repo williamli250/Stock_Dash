@@ -73,18 +73,24 @@ def add_technical_indicators(df):
         raise ValueError("Not enough data to calculate technical indicators")
     
     if len(df) >= 26:  # MACD需要26個數據點
-        df['MACD'] = ta.trend.MACD(df['Close']).macd()
-        df['MACD_signal'] = ta.trend.MACD(df['Close']).macd_signal()
+        macd = ta.trend.MACD(df['Close'], window_slow=26, window_fast=12, window_sign=9)
+        df['MACD'] = macd.macd()
+        df['MACD_signal'] = macd.macd_signal()
+        df['MACD_diff'] = macd.macd_diff()  # 可選，表示MACD和信號線的差異
     else:
         df['MACD'] = pd.Series([None]*len(df))
         df['MACD_signal'] = pd.Series([None]*len(df))
+        df['MACD_diff'] = pd.Series([None]*len(df))
 
     if len(df) >= 14:  # RSI需要14個數據點
-        df['RSI'] = ta.momentum.RSIIndicator(df['Close']).rsi()
-        df['SMA'] = ta.trend.SMAIndicator(df['Close'], window=14).sma_indicator()
-        df['EMA'] = ta.trend.EMAIndicator(df['Close'], window=14).ema_indicator()
+        df['RSI'] = ta.momentum.RSIIndicator(df['Close'], window=14).rsi()
     else:
         df['RSI'] = pd.Series([None]*len(df))
+
+    if len(df) >= 50:  # 移動平均線需要50個數據點
+        df['SMA'] = ta.trend.SMAIndicator(df['Close'], window=50).sma_indicator()
+        df['EMA'] = ta.trend.EMAIndicator(df['Close'], window=50).ema_indicator()
+    else:
         df['SMA'] = pd.Series([None]*len(df))
         df['EMA'] = pd.Series([None]*len(df))
 
@@ -97,26 +103,27 @@ def add_technical_indicators(df):
         df['BB_low'] = pd.Series([None]*len(df))
 
     if len(df) >= 14:  # Stochastic Oscillator需要14個數據點
-        df['Stochastic RSI'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch()
-        df['K'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch()
-        df['D'] = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close']).stoch_signal()
+        stoch = ta.momentum.StochasticOscillator(df['High'], df['Low'], df['Close'], window=14, smooth_window=14)
+        df['Stochastic RSI'] = stoch.stoch()
+        df['K'] = stoch.stoch()
+        df['D'] = stoch.stoch_signal()
     else:
         df['Stochastic RSI'] = pd.Series([None]*len(df))
         df['K'] = pd.Series([None]*len(df))
         df['D'] = pd.Series([None]*len(df))
 
-    if len(df) >= 20:  # Williams %R需要20個數據點
-        df['Williams %R'] = ta.momentum.WilliamsRIndicator(df['High'], df['Low'], df['Close']).williams_r()
+    if len(df) >= 14:  # Williams %R需要14個數據點
+        df['Williams %R'] = ta.momentum.WilliamsRIndicator(df['High'], df['Low'], df['Close'], lbp=14).williams_r()
     else:
         df['Williams %R'] = pd.Series([None]*len(df))
 
     if len(df) >= 20:  # CCI需要20個數據點
-        df['CCI'] = ta.trend.CCIIndicator(df['High'], df['Low'], df['Close']).cci()
+        df['CCI'] = ta.trend.CCIIndicator(df['High'], df['Low'], df['Close'], window=20).cci()
     else:
         df['CCI'] = pd.Series([None]*len(df))
 
     if len(df) >= 14:  # ADX需要14個數據點
-        df['ADX'] = ta.trend.ADXIndicator(df['High'], df['Low'], df['Close']).adx()
+        df['ADX'] = ta.trend.ADXIndicator(df['High'], df['Low'], df['Close'], window=14).adx()
     else:
         df['ADX'] = pd.Series([None]*len(df))
 
