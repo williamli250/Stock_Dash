@@ -190,3 +190,16 @@ tr:hover td:nth-last-child(2) {
     justify-content: center;
     height: 100%;
 }
+
+/* 中心對齊的行 */
+.centered-row {
+    display: flex;
+    justify-content: center;
+    background-color: black;
+}
+
+/* 中心對齊的列 */
+.centered-col {
+    flex: 0 0 50%; /* 這將設置列寬為50%，並保持居中 */
+    max-width: 50%;
+}
