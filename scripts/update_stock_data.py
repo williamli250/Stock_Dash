@@ -4,7 +4,7 @@ import yfinance as yf
 import pandas as pd
 import json
 from ta import trend, momentum
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def fetch_stock_data(ticker, period='3mo', interval='1d'):
     stock = yf.Ticker(ticker)
@@ -26,13 +26,16 @@ def calculate_indicators(df):
     return df
 
 def prepare_json_data(df):
+    # 移除包含 NaN 的行
+    df_clean = df.dropna(subset=['rsi', 'macd', 'macd_signal', 'macd_diff'])
+
     data = {
-        "dates": df['Date'].dt.strftime('%Y-%m-%d').tolist(),
-        "close": df['Close'].round(2).tolist(),
-        "rsi": df['rsi'].round(2).tolist(),
-        "macd": df['macd'].round(2).tolist(),
-        "macd_signal": df['macd_signal'].round(2).tolist(),
-        "macd_diff": df['macd_diff'].round(2).tolist()
+        "dates": df_clean['Date'].dt.strftime('%Y-%m-%d').tolist(),
+        "close": df_clean['Close'].round(2).tolist(),
+        "rsi": df_clean['rsi'].round(2).tolist(),
+        "macd": df_clean['macd'].round(2).tolist(),
+        "macd_signal": df_clean['macd_signal'].round(2).tolist(),
+        "macd_diff": df_clean['macd_diff'].round(2).tolist()
     }
     return data
 
