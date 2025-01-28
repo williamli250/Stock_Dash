@@ -3,7 +3,7 @@
 import yfinance as yf
 import pandas as pd
 import json
-from ta import trend, momentum
+from ta import trend, momentum, volatility
 from datetime import datetime, timedelta
 
 # 股票代碼字典
@@ -53,7 +53,7 @@ def calculate_indicators(df):
         df['BB High'] = None
         df['BB Low'] = None
     else:
-        bollinger = trend.BollingerBands(close=df['Close'])
+        bollinger = volatility.BollingerBands(close=df['Close'])
         df['BB High'] = bollinger.bollinger_hband()
         df['BB Low'] = bollinger.bollinger_lband()
 
