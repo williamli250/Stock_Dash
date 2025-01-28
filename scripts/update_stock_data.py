@@ -1,4 +1,3 @@
-
 # scripts/update_stock_data.py
 
 import yfinance as yf
@@ -7,7 +6,7 @@ import json
 from ta import trend, momentum
 from datetime import datetime, timedelta
 
-def fetch_stock_data(ticker, period='1mo', interval='1d'):
+def fetch_stock_data(ticker, period='3mo', interval='1d'):
     stock = yf.Ticker(ticker)
     df = stock.history(period=period, interval=interval)
     df.reset_index(inplace=True)
