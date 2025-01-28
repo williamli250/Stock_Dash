@@ -8,8 +8,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- 引入 DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
-    <!-- 引入自定義 CSS -->
-    <link href="assets/styles.css" rel="stylesheet">
+    <!-- 自定義 CSS -->
     <style>
         body {
             background-color: #000; /* 黑色背景 */
@@ -20,15 +19,18 @@
             border-radius: 5px;
             padding: 10px;
             margin: 5px;
-            width: 18%;
             background-color: #222;
+            text-align: center; /* 文字置中 */
+            width: 100%; /* 讓 Bootstrap 控制寬度 */
         }
-        .dataTables_wrapper .dataTables_filter input {
-            color: black; /* 搜索框字體顏色 */
-        }
+        /* 表格樣式 */
         .indicator-table th, .indicator-table td {
             background-color: #333;
             color: white;
+        }
+        /* 圖表高度 */
+        #price-chart, #indicator-chart {
+            height: 400px;
         }
     </style>
 </head>
@@ -48,9 +50,73 @@
             </div>
         </div>
 
-        <!-- 今日狀態 -->
-        <div class="row mt-4" id="today-status">
+        <!-- 六隻股票的概覽 -->
+        <div class="row mt-4 justify-content-center" id="today-status">
             <!-- 動態生成的股票狀態將插入在這裡 -->
+        </div>
+
+        <!-- 選單 -->
+        <div class="row mt-4">
+            <div class="col-md-3 mb-3">
+                <select id="interval-selection" class="form-control">
+                    <option value="60m">60分鐘線</option>
+                    <option value="1d" selected>日線</option>
+                    <option value="1wk">週線</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select id="stock-ticker" class="form-control">
+                    <option value="2330.TW">台積電</option>
+                    <option value="00652.TW">富邦印度</option>
+                    <option value="00930.TW">永豐ESG</option>
+                    <option value="2454.TW">聯發科</option>
+                    <option value="00679B.TW">元大美債20年</option>
+                    <option value="^TWII">台灣大盤指數</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select id="indicator-selection" class="form-control" multiple>
+                    <optgroup label="移動平均線">
+                        <option value="SMA">SMA (Simple Moving Average)</option>
+                        <option value="EMA">EMA (Exponential Moving Average)</option>
+                    </optgroup>
+                    <optgroup label="波動率指標">
+                        <option value="BB High">BB High (布林帶上軌)</option>
+                        <option value="BB Low">BB Low (布林帶下軌)</option>
+                    </optgroup>
+                    <optgroup label="動量指標">
+                        <option value="MACD">MACD (Moving Average Convergence Divergence)</option>
+                        <option value="RSI">RSI (Relative Strength Index)</option>
+                        <option value="Stochastic RSI">Stochastic RSI</option>
+                        <option value="CCI">CCI (Commodity Channel Index)</option>
+                        <option value="Williams %R">Williams %R</option>
+                        <option value="ADX">ADX (Average Directional Index)</option>
+                        <option value="K">K (Stochastic Oscillator)</option>
+                        <option value="D">D (Stochastic Oscillator)</option>
+                    </optgroup>
+                    <optgroup label="價格指標">
+                        <option value="Close Price">Close Price (收盤價)</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select id="date-range-selection" class="form-control">
+                    <option value="2m">近兩個月</option>
+                    <option value="6m">近半年</option>
+                    <option value="1y" selected>近一年</option>
+                    <option value="3y">近三年</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 圖表 -->
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div id="price-chart"></div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div id="indicator-chart"></div>
+            </div>
         </div>
 
         <!-- 表格 -->
@@ -75,62 +141,6 @@
                 </table>
             </div>
         </div>
-
-        <!-- 選擇區域 -->
-        <div class="row mt-4">
-            <div class="col-md-3 mb-3">
-                <select id="interval-selection" class="form-control">
-                    <option value="60m">60分鐘線</option>
-                    <option value="1d" selected>日線</option>
-                    <option value="1wk">週線</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <select id="stock-ticker" class="form-control">
-                    <option value="2330.TW">台積電</option>
-                    <option value="00652.TW">富邦印度</option>
-                    <option value="00930.TW">永豐ESG</option>
-                    <option value="2454.TW">聯發科</option>
-                    <option value="2303.TW">聯電</option>
-                    <option value="^TWII">台灣大盤指數</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <select id="indicator-selection" class="form-control" multiple>
-                    <option value="MACD">MACD (Moving Average Convergence Divergence)</option>
-                    <option value="RSI">RSI (Relative Strength Index)</option>
-                    <option value="SMA">SMA (Simple Moving Average)</option>
-                    <option value="EMA">EMA (Exponential Moving Average)</option>
-                    <option value="BB High">BB High (布林帶上軌)</option>
-                    <option value="BB Low">BB Low (布林帶下軌)</option>
-                    <option value="K">K (Stochastic Oscillator)</option>
-                    <option value="D">D (Stochastic Oscillator)</option>
-                    <option value="Stochastic RSI">Stochastic RSI</option>
-                    <option value="CCI">CCI (Commodity Channel Index)</option>
-                    <option value="Williams %R">Williams %R</option>
-                    <option value="ADX">ADX (Average Directional Index)</option>
-                    <option value="Close">Close Price</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <select id="date-range-selection" class="form-control">
-                    <option value="2m">近兩個月</option>
-                    <option value="6m">近半年</option>
-                    <option value="1y" selected>近一年</option>
-                    <option value="3y">近三年</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- 圖表 -->
-        <div class="row mt-4">
-            <div class="col-md-6 mb-4">
-                <div id="price-chart"></div>
-            </div>
-            <div class="col-md-6 mb-4">
-                <div id="indicator-chart"></div>
-            </div>
-        </div>
     </div>
 
     <!-- 引入 jQuery -->
@@ -143,7 +153,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- 引入 Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- 引入自定義 JavaScript -->
+    <!-- 自定義 JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // 初始化 DataTable
@@ -160,26 +170,9 @@
                 '富邦印度': '00652.TW',
                 '永豐ESG': '00930.TW',
                 '聯發科': '2454.TW',
-                '聯電': '2303.TW',
+                '元大美債20年': '00679B.TW',
                 '台灣大盤指數': '^TWII'
             };
-
-            // 指標選項
-            const indicatorsOptions = [
-                "MACD",
-                "RSI",
-                "SMA",
-                "EMA",
-                "BB High",
-                "BB Low",
-                "K",
-                "D",
-                "Stochastic RSI",
-                "CCI",
-                "Williams %R",
-                "ADX",
-                "Close"
-            ];
 
             // 監聽選擇變更
             $('#interval-selection, #stock-ticker, #indicator-selection, #date-range-selection').on('change', function() {
@@ -196,7 +189,12 @@
                 const dateRange = $('#date-range-selection').val();
 
                 fetch(`data/stock_data.json`)
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok ' + response.statusText);
+                        }
+                        return response.json();
+                    })
                     .then(data => {
                         // 根據選擇的股票和日期範圍過濾數據
                         let filteredData = filterData(data, ticker, dateRange, interval);
@@ -216,7 +214,7 @@
                     })
                     .catch(error => {
                         console.error('無法加載數據:', error);
-                        alert('無法加載數據。');
+                        alert('無法加載數據。請檢查控制台以獲取更多信息。');
                     });
             }
 
@@ -244,12 +242,10 @@
                     case '6m':
                         startDate.setMonth(startDate.getMonth() - 6);
                         break;
-                    case '1y':
-                        startDate.setFullYear(startDate.getFullYear() - 1);
-                        break;
                     case '3y':
                         startDate.setFullYear(startDate.getFullYear() - 3);
                         break;
+                    case '1y':
                     default:
                         startDate.setFullYear(startDate.getFullYear() - 1);
                 }
@@ -276,8 +272,9 @@
 
                 // 獲取最新一筆數據
                 const latestEntry = data[data.length - 1];
+                const previousEntry = data[data.length - 2] || {};
 
-                // 定義指標列表和對應的值
+                // 提取指標值
                 const indicators = {
                     "MACD": latestEntry.MACD,
                     "RSI": latestEntry.RSI,
@@ -294,53 +291,421 @@
                     "Close Price": latestEntry.Close
                 };
 
+                // 評估信號
+                const indicatorValues = evaluateSignals(indicators, latestEntry, previousEntry, data);
+
                 // 遍歷指標並添加到表格
-                for (const [indicator, value] of Object.entries(indicators)) {
-                    // 將數值格式化為兩位小數，或顯示 '-' 如果為 null
-                    const formattedValue = value !== null && value !== undefined ? parseFloat(value).toFixed(2) : '-';
-
-                    // 根據指標類型設定信號和狀態
-                    // 這部分可以根據具體需求調整
-                    let sellSignal = '-', buySignal = '-', secondarySellSignal = '-', secondaryBuySignal = '-', status = '-', secondaryStatus = '-';
-
-                    // 示例：根據 RSI 值設定買賣信號
-                    if (indicator === "RSI") {
-                        if (value < 30) {
-                            buySignal = "< 30";
-                            status = "Buy";
-                        } else if (value > 70) {
-                            sellSignal = "> 70";
-                            status = "Sell";
-                        }
-                    }
-
-                    // 根據 MACD 值設定信號
-                    if (indicator === "MACD") {
-                        if (value > latestEntry['MACD_signal']) {
-                            buySignal = "MACD > Signal";
-                            status = "Buy";
-                        } else if (value < latestEntry['MACD_signal']) {
-                            sellSignal = "MACD < Signal";
-                            status = "Sell";
-                        }
-                    }
-
-                    // 其他指標的信號可以類似處理
-
+                indicatorValues.forEach(indicator => {
                     table.row.add([
-                        indicator,
-                        formattedValue,
-                        sellSignal,
-                        buySignal,
-                        secondarySellSignal,
-                        secondaryBuySignal,
-                        status,
-                        secondaryStatus
+                        indicator.Indicator,
+                        indicator.Value,
+                        indicator['Sell Signal'],
+                        indicator['Buy Signal'],
+                        indicator['Secondary Sell Signal'],
+                        indicator['Secondary Buy Signal'],
+                        indicator.Status,
+                        indicator['Secondary Status']
                     ]);
-                }
+                });
 
                 // 重新繪製表格
                 table.draw();
+            }
+
+            function evaluateSignals(indicators, latestEntry, previousEntry, data) {
+                // 根據您的需求進行信號評估
+                const indicator_values = [];
+
+                // MACD
+                const macd = indicators["MACD"];
+                const macd_signal = latestEntry.MACD_signal;
+                let status_macd = "Wait";
+                let secondary_status_macd = "Wait";
+                let sell_signal_macd = "-";
+                let buy_signal_macd = "-";
+
+                if (macd > macd_signal) {
+                    status_macd = "Buy";
+                    secondary_status_macd = "Buy";
+                    buy_signal_macd = "MACD > Signal";
+                } else if (macd < macd_signal) {
+                    status_macd = "Sell";
+                    secondary_status_macd = "Sell";
+                    sell_signal_macd = "MACD < Signal";
+                }
+
+                indicator_values.push({
+                    "Indicator": "MACD",
+                    "Value": macd !== null && macd !== undefined ? macd.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_macd,
+                    "Buy Signal": buy_signal_macd,
+                    "Secondary Sell Signal": sell_signal_macd,
+                    "Secondary Buy Signal": buy_signal_macd,
+                    "Status": status_macd,
+                    "Secondary Status": secondary_status_macd
+                });
+
+                // RSI
+                const rsi = indicators["RSI"];
+                let status_rsi = "Wait";
+                let secondary_status_rsi = "Wait";
+                let sell_signal_rsi = "-";
+                let buy_signal_rsi = "-";
+
+                if (rsi < 30) {
+                    status_rsi = "Buy";
+                    buy_signal_rsi = "< 30";
+                }
+                if (rsi < 40) {
+                    secondary_status_rsi = "Buy";
+                    buy_signal_rsi = "< 40";
+                }
+                if (rsi > 70) {
+                    status_rsi = "Sell";
+                    sell_signal_rsi = "> 70";
+                }
+                if (rsi > 60) {
+                    secondary_status_rsi = "Sell";
+                    sell_signal_rsi = "> 60";
+                }
+
+                indicator_values.push({
+                    "Indicator": "RSI",
+                    "Value": rsi !== null && rsi !== undefined ? rsi.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_rsi,
+                    "Buy Signal": buy_signal_rsi,
+                    "Secondary Sell Signal": sell_signal_rsi,
+                    "Secondary Buy Signal": buy_signal_rsi,
+                    "Status": status_rsi,
+                    "Secondary Status": secondary_status_rsi
+                });
+
+                // SMA
+                const sma = indicators["SMA"];
+                const close_price = indicators["Close Price"];
+                let status_sma = "Wait";
+                let secondary_status_sma = "Wait";
+                let sell_signal_sma = "-";
+                let buy_signal_sma = "-";
+
+                if (close_price < sma) {
+                    status_sma = "Buy";
+                    secondary_status_sma = "Buy";
+                    buy_signal_sma = `< ${sma.toFixed(2)}`;
+                }
+                if (close_price > sma) {
+                    status_sma = "Sell";
+                    secondary_status_sma = "Sell";
+                    sell_signal_sma = `> ${sma.toFixed(2)}`;
+                }
+
+                indicator_values.push({
+                    "Indicator": "SMA",
+                    "Value": sma !== null && sma !== undefined ? sma.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_sma,
+                    "Buy Signal": buy_signal_sma,
+                    "Secondary Sell Signal": sell_signal_sma,
+                    "Secondary Buy Signal": buy_signal_sma,
+                    "Status": status_sma,
+                    "Secondary Status": secondary_status_sma
+                });
+
+                // EMA
+                const ema = indicators["EMA"];
+                let status_ema = "Wait";
+                let secondary_status_ema = "Wait";
+                let sell_signal_ema = "-";
+                let buy_signal_ema = "-";
+
+                if (close_price < ema) {
+                    status_ema = "Buy";
+                    secondary_status_ema = "Buy";
+                    buy_signal_ema = `< ${ema.toFixed(2)}`;
+                }
+                if (close_price > ema) {
+                    status_ema = "Sell";
+                    secondary_status_ema = "Sell";
+                    sell_signal_ema = `> ${ema.toFixed(2)}`;
+                }
+
+                indicator_values.push({
+                    "Indicator": "EMA",
+                    "Value": ema !== null && ema !== undefined ? ema.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_ema,
+                    "Buy Signal": buy_signal_ema,
+                    "Secondary Sell Signal": sell_signal_ema,
+                    "Secondary Buy Signal": buy_signal_ema,
+                    "Status": status_ema,
+                    "Secondary Status": secondary_status_ema
+                });
+
+                // Bollinger Bands High vs Close Price
+                const bb_high = indicators["BB High"];
+                const bb_low = indicators["BB Low"];
+                let sell_signal_bb_high = "-";
+                let buy_signal_bb_low = "-";
+                let status_bb = "Wait";
+                let secondary_status_bb = "Wait";
+
+                const near_low = bb_low + (bb_high - bb_low) / 10;
+                const near_high = bb_high - (bb_high - bb_low) / 10;
+
+                if (close_price < bb_low) {
+                    status_bb = "Buy";
+                    buy_signal_bb_low = `< ${bb_low.toFixed(2)}`;
+                }
+                if (close_price < near_low) {
+                    secondary_status_bb = "Buy";
+                    buy_signal_bb_low = `< ${near_low.toFixed(2)}`;
+                }
+                if (close_price > bb_high) {
+                    status_bb = "Sell";
+                    sell_signal_bb_high = `> ${bb_high.toFixed(2)}`;
+                }
+                if (close_price > near_high) {
+                    secondary_status_bb = "Sell";
+                    sell_signal_bb_high = `> ${near_high.toFixed(2)}`;
+                }
+
+                indicator_values.push({
+                    "Indicator": "BB High v.s Close Price",
+                    "Value": close_price !== null && close_price !== undefined ? close_price.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_bb_high,
+                    "Buy Signal": "-",
+                    "Secondary Sell Signal": sell_signal_bb_high,
+                    "Secondary Buy Signal": "-",
+                    "Status": status_bb,
+                    "Secondary Status": secondary_status_bb
+                });
+
+                // Bollinger Bands Low v.s Close Price
+                indicator_values.push({
+                    "Indicator": "BB Low v.s Close Price",
+                    "Value": close_price !== null && close_price !== undefined ? close_price.toFixed(2) : '-',
+                    "Sell Signal": "-",
+                    "Buy Signal": buy_signal_bb_low,
+                    "Secondary Sell Signal": "-",
+                    "Secondary Buy Signal": buy_signal_bb_low,
+                    "Status": status_bb,
+                    "Secondary Status": secondary_status_bb
+                });
+
+                // K
+                const k = indicators["K"];
+                let sell_signal_k = "-";
+                let buy_signal_k = "-";
+                let status_k = "Wait";
+                let secondary_status_k = "Wait";
+
+                if (k < 20) {
+                    status_k = "Buy";
+                    buy_signal_k = "< 20";
+                }
+                if (k < 30) {
+                    secondary_status_k = "Buy";
+                    buy_signal_k = "< 30";
+                }
+                if (k > 80) {
+                    status_k = "Sell";
+                    sell_signal_k = "> 80";
+                }
+                if (k > 70) {
+                    secondary_status_k = "Sell";
+                    sell_signal_k = "> 70";
+                }
+
+                indicator_values.push({
+                    "Indicator": "K",
+                    "Value": k !== null && k !== undefined ? k.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_k,
+                    "Buy Signal": buy_signal_k,
+                    "Secondary Sell Signal": sell_signal_k,
+                    "Secondary Buy Signal": buy_signal_k,
+                    "Status": status_k,
+                    "Secondary Status": secondary_status_k
+                });
+
+                // D
+                const d = indicators["D"];
+                let sell_signal_d = "-";
+                let buy_signal_d = "-";
+                let status_d = "Wait";
+                let secondary_status_d = "Wait";
+
+                if (d < 20) {
+                    status_d = "Buy";
+                    buy_signal_d = "< 20";
+                }
+                if (d < 30) {
+                    secondary_status_d = "Buy";
+                    buy_signal_d = "< 30";
+                }
+                if (d > 80) {
+                    status_d = "Sell";
+                    sell_signal_d = "> 80";
+                }
+                if (d > 70) {
+                    secondary_status_d = "Sell";
+                    sell_signal_d = "> 70";
+                }
+
+                indicator_values.push({
+                    "Indicator": "D",
+                    "Value": d !== null && d !== undefined ? d.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_d,
+                    "Buy Signal": buy_signal_d,
+                    "Secondary Sell Signal": sell_signal_d,
+                    "Secondary Buy Signal": buy_signal_d,
+                    "Status": status_d,
+                    "Secondary Status": secondary_status_d
+                });
+
+                // Stochastic RSI
+                const stochastic_rsi = indicators["Stochastic RSI"];
+                let sell_signal_stochastic_rsi = "-";
+                let buy_signal_stochastic_rsi = "-";
+                let status_stochastic_rsi = "Wait";
+                let secondary_status_stochastic_rsi = "Wait";
+
+                if (stochastic_rsi < 20) {
+                    status_stochastic_rsi = "Buy";
+                    buy_signal_stochastic_rsi = "< 20";
+                }
+                if (stochastic_rsi < 40) {
+                    secondary_status_stochastic_rsi = "Buy";
+                    buy_signal_stochastic_rsi = "< 40";
+                }
+                if (stochastic_rsi > 80) {
+                    status_stochastic_rsi = "Sell";
+                    sell_signal_stochastic_rsi = "> 80";
+                }
+                if (stochastic_rsi > 60) {
+                    secondary_status_stochastic_rsi = "Sell";
+                    sell_signal_stochastic_rsi = "> 60";
+                }
+
+                indicator_values.push({
+                    "Indicator": "Stochastic RSI",
+                    "Value": stochastic_rsi !== null && stochastic_rsi !== undefined ? stochastic_rsi.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_stochastic_rsi,
+                    "Buy Signal": buy_signal_stochastic_rsi,
+                    "Secondary Sell Signal": sell_signal_stochastic_rsi,
+                    "Secondary Buy Signal": buy_signal_stochastic_rsi,
+                    "Status": status_stochastic_rsi,
+                    "Secondary Status": secondary_status_stochastic_rsi
+                });
+
+                // CCI
+                const cci = indicators["CCI"];
+                let sell_signal_cci = "-";
+                let buy_signal_cci = "-";
+                let status_cci = "Wait";
+                let secondary_status_cci = "Wait";
+
+                if (cci < -100) {
+                    status_cci = "Buy";
+                    buy_signal_cci = "< -100";
+                }
+                if (cci < -90) {
+                    secondary_status_cci = "Buy";
+                    buy_signal_cci = "< -90";
+                }
+                if (cci > 100) {
+                    status_cci = "Sell";
+                    sell_signal_cci = "> 100";
+                }
+                if (cci > 90) {
+                    secondary_status_cci = "Sell";
+                    sell_signal_cci = "> 90";
+                }
+
+                indicator_values.push({
+                    "Indicator": "CCI",
+                    "Value": cci !== null && cci !== undefined ? cci.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_cci,
+                    "Buy Signal": buy_signal_cci,
+                    "Secondary Sell Signal": sell_signal_cci,
+                    "Secondary Buy Signal": buy_signal_cci,
+                    "Status": status_cci,
+                    "Secondary Status": secondary_status_cci
+                });
+
+                // Williams %R
+                const williams_r = indicators["Williams %R"];
+                let sell_signal_williams_r = "-";
+                let buy_signal_williams_r = "-";
+                let status_williams_r = "Wait";
+                let secondary_status_williams_r = "Wait";
+
+                if (williams_r < -80) {
+                    status_williams_r = "Buy";
+                    buy_signal_williams_r = "< -80";
+                }
+                if (williams_r < -60) {
+                    secondary_status_williams_r = "Buy";
+                    buy_signal_williams_r = "< -60";
+                }
+                if (williams_r > -20) {
+                    status_williams_r = "Sell";
+                    sell_signal_williams_r = "> -20";
+                }
+                if (williams_r > -40) {
+                    secondary_status_williams_r = "Sell";
+                    sell_signal_williams_r = "> -40";
+                }
+
+                indicator_values.push({
+                    "Indicator": "Williams %R",
+                    "Value": williams_r !== null && williams_r !== undefined ? williams_r.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_williams_r,
+                    "Buy Signal": buy_signal_williams_r,
+                    "Secondary Sell Signal": sell_signal_williams_r,
+                    "Secondary Buy Signal": buy_signal_williams_r,
+                    "Status": status_williams_r,
+                    "Secondary Status": secondary_status_williams_r
+                });
+
+                // ADX
+                const adx = indicators["ADX"];
+                let sell_signal_adx = "-";
+                let buy_signal_adx = "-";
+                let status_adx = "--";
+                let secondary_status_adx = "--";
+
+                if (adx > 25) {
+                    status_adx = "Hot Trend";
+                    buy_signal_adx = "> 25";
+                }
+                if (adx < 20) {
+                    status_adx = "No Trend";
+                    sell_signal_adx = "< 20";
+                }
+
+                indicator_values.push({
+                    "Indicator": "ADX",
+                    "Value": adx !== null && adx !== undefined ? adx.toFixed(2) : '-',
+                    "Sell Signal": sell_signal_adx,
+                    "Buy Signal": buy_signal_adx,
+                    "Secondary Sell Signal": sell_signal_adx,
+                    "Secondary Buy Signal": buy_signal_adx,
+                    "Status": status_adx,
+                    "Secondary Status": secondary_status_adx
+                });
+
+                // Close Price
+                const close_price_val = indicators["Close Price"];
+                indicator_values.push({
+                    "Indicator": "Close Price",
+                    "Value": close_price_val !== null && close_price_val !== undefined ? close_price_val.toFixed(2) : '-',
+                    "Sell Signal": "-",
+                    "Buy Signal": "-",
+                    "Secondary Sell Signal": "-",
+                    "Secondary Buy Signal": "-",
+                    "Status": "-",
+                    "Secondary Status": "-"
+                });
+
+                return indicator_values;
             }
 
             function updateCharts(data, selectedIndicators) {
@@ -348,12 +713,12 @@
                 const dates = data.map(entry => entry.Date.toISOString().split('T')[0]);
                 const closePrices = data.map(entry => entry.Close);
 
-                // Initialize price figure
+                // 繪製收盤價圖表（左側）僅顯示折線
                 let priceTraces = [{
                     x: dates,
                     y: closePrices,
                     type: 'scatter',
-                    mode: 'lines+markers',
+                    mode: 'lines', // 只顯示折線
                     name: '收盤價',
                     line: { color: '#17BECF' }
                 }];
@@ -370,7 +735,7 @@
                     hovermode: 'x unified'
                 };
 
-                // Initialize indicator traces
+                // 繪製技術指標圖表（右側）
                 let indicatorTraces = [];
 
                 selectedIndicators.forEach(indicator => {
@@ -612,9 +977,16 @@
                         });
                         // ADX signals can be more complex
                     }
-                    if (indicator === "Close") {
-                        // 已在價格圖表中繪製
-                        // 如果需要，可以添加另一條線
+                    if (indicator === "Close Price") {
+                        const closePrices = data.map(entry => entry.Close);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: closePrices,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Close Price',
+                            line: { color: '#FFFFFF', dash: 'dash' } // 使用虛線區分
+                        });
                     }
                 });
 
@@ -630,11 +1002,17 @@
                     hovermode: 'x unified'
                 };
 
-                // Combine all traces
-                let allTraces = [...indicatorTraces];
+                // 繪製收盤價圖表
+                Plotly.newPlot('price-chart', priceTraces, priceLayout);
 
-                // 創建技術指標圖表
-                Plotly.newPlot('indicator-chart', allTraces, indicatorLayout);
+                // 繪製技術指標圖表
+                if (indicatorTraces.length > 0) {
+                    Plotly.newPlot('indicator-chart', indicatorTraces, indicatorLayout);
+                } else {
+                    // 如果未選擇任何指標，顯示空白或提示
+                    Plotly.purge('indicator-chart');
+                    Plotly.newPlot('indicator-chart', [], indicatorLayout);
+                }
             }
 
             function updateTodayStatus(data, tickers) {
@@ -648,8 +1026,8 @@
                     const tickerData = data.filter(entry => entry.ticker === ticker);
                     if (tickerData.length === 0) {
                         todayStatuses.push(`
-                            <div class="stock-status">
-                                <p style="font-weight:bold; font-size:18px; text-align:center;">${name}</p>
+                            <div class="col-md-2 stock-status">
+                                <p style="font-weight:bold; font-size:18px;">${name}</p>
                                 <p>No data available</p>
                             </div>
                         `);
@@ -660,7 +1038,7 @@
                     const previousEntry = tickerData[tickerData.length - 2] || {};
 
                     const latestClose = parseFloat(latestEntry.Close);
-                    const previousClose = previousEntry.Close !== null ? parseFloat(previousEntry.Close) : latestClose;
+                    const previousClose = previousEntry.Close !== null && previousEntry.Close !== undefined ? parseFloat(previousEntry.Close) : latestClose;
                     const change = latestClose - previousClose;
                     const changePercent = ((change) / previousClose) * 100;
 
@@ -680,8 +1058,8 @@
                     }
 
                     todayStatuses.push(`
-                        <div class="stock-status">
-                            <p style="font-weight:bold; font-size:18px; text-align:center;">${name}</p>
+                        <div class="col-md-2 stock-status">
+                            <p style="font-weight:bold; font-size:18px;">${name}</p>
                             <p>股價: $${latestClose.toFixed(2)}</p>
                             <p style="color:${color};">${changeAmount}</p>
                             <p style="color:${color};">${changeText}</p>
@@ -690,7 +1068,7 @@
                 });
 
                 $('#today-status').html(`
-                    <div class="d-flex flex-wrap justify-content-center">
+                    <div class="w-100 d-flex justify-content-center flex-wrap">
                         ${todayStatuses.join('')}
                     </div>
                 `);
