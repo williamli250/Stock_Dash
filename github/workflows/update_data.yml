@@ -1,0 +1,37 @@
+# .github/workflows/update_data.yml
+
+name: Update Stock Data
+
+on:
+  schedule:
+    # 每天凌晨2點執行（UTC時間）
+    - cron: '0 2 * * *'
+  workflow_dispatch:  # 允許手動觸發
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # 選擇合適的 Python 版本
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install yfinance pandas ta
+
+      - name: Run update script
+        run: |
+          python scripts/update_stock_data.py
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update stock data [skip ci]"
+          file_pattern: data/stock_data.json

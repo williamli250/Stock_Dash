@@ -14,26 +14,26 @@
         <a href="index.html" class="btn btn-primary" style="float: right; margin-top: 20px;">回首頁</a>
         <h1 class="text-center text-primary mt-5">Stock Dashboard</h1>
         
-        <!-- 靜態圖表占位符 -->
+        <!-- 動態圖表 -->
         <div id="price-chart" class="mt-4"></div>
         <div id="indicator-chart" class="mt-4"></div>
     </div>
 
     <!-- 引入 Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- 引入自定義 JavaScript -->
+    <!-- 自定義 JavaScript -->
     <script>
-        // 獲取數據（您可以將數據存儲在 data/stock_data.json 中，並通過 fetch 獲取）
+        // 獲取數據
         fetch('data/stock_data.json')
             .then(response => response.json())
             .then(data => {
-                // 繪製價格圖表
+                // 繪製收盤價圖表
                 var priceTrace = {
                     x: data.dates,
                     y: data.close,
                     type: 'scatter',
                     mode: 'lines+markers',
-                    name: 'Close Price',
+                    name: '收盤價',
                     line: { color: '#17BECF' }
                 };
 
@@ -93,7 +93,7 @@
                 Plotly.newPlot('indicator-chart', [rsiTrace], rsiLayout);
             })
             .catch(error => {
-                console.error('Error fetching the stock data:', error);
+                console.error('無法加載圖表數據:', error);
                 document.getElementById('price-chart').innerHTML = '<p class="text-danger">無法加載圖表數據。</p>';
                 document.getElementById('indicator-chart').innerHTML = '<p class="text-danger">無法加載圖表數據。</p>';
             });
