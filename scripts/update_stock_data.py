@@ -96,6 +96,8 @@ def main():
         df = calculate_indicators(df)
         # 選擇需要的列
         df = df[['ticker', 'Date', 'Close', 'MACD', 'MACD_signal', 'MACD_diff', 'RSI', 'SMA', 'EMA', 'BB High', 'BB Low', 'K', 'D', 'Stochastic RSI', 'CCI', 'Williams %R', 'ADX']]
+        # 將 'Date' 欄位轉換為字符串格式
+        df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
         # 填充 NaN 為 null
         df = df.where(pd.notnull(df), None)
         all_data.extend(df.to_dict(orient='records'))
