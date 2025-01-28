@@ -13,14 +13,91 @@
     <div class="container-fluid">
         <a href="index.html" class="btn btn-primary" style="float: right; margin-top: 20px;">回首頁</a>
         <h1 class="text-center text-primary mt-5">Stock Dashboard</h1>
-        <!-- 靜態內容或嵌入圖表的占位符 -->
-        <div class="text-center">
-            <p>此處為數位儀表板的靜態內容。</p>
-            <!-- 您可以使用 Plotly.js 或其他 JavaScript 圖表庫來嵌入靜態圖表 -->
-            <!-- 示例： -->
-            <img src="https://via.placeholder.com/800x400.png?text=Stock+Dashboard+Chart" alt="Stock Dashboard Chart" class="img-fluid">
-        </div>
+        
+        <!-- 靜態圖表占位符 -->
+        <div id="price-chart" class="mt-4"></div>
+        <div id="indicator-chart" class="mt-4"></div>
     </div>
+
+    <!-- 引入 Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- 引入自定義 JavaScript -->
+    <script>
+        // 獲取數據（您可以將數據存儲在 data/stock_data.json 中，並通過 fetch 獲取）
+        fetch('data/stock_data.json')
+            .then(response => response.json())
+            .then(data => {
+                // 繪製價格圖表
+                var priceTrace = {
+                    x: data.dates,
+                    y: data.close,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    name: 'Close Price',
+                    line: { color: '#17BECF' }
+                };
+
+                var priceLayout = {
+                    title: '股票收盤價',
+                    xaxis: { title: '日期' },
+                    yaxis: { title: '價格 (TWD)' },
+                    template: 'plotly_dark'
+                };
+
+                Plotly.newPlot('price-chart', [priceTrace], priceLayout);
+
+                // 繪製 RSI 圖表
+                var rsiTrace = {
+                    x: data.dates,
+                    y: data.rsi,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: 'RSI',
+                    line: { color: '#FF5733' }
+                };
+
+                var rsiLayout = {
+                    title: '相對強弱指數 (RSI)',
+                    xaxis: { title: '日期' },
+                    yaxis: { title: 'RSI', range: [0, 100] },
+                    shapes: [
+                        // 畫出 70 和 30 的參考線
+                        {
+                            type: 'line',
+                            x0: data.dates[0],
+                            y0: 70,
+                            x1: data.dates[data.dates.length - 1],
+                            y1: 70,
+                            line: {
+                                color: 'red',
+                                width: 1,
+                                dash: 'dashdot'
+                            }
+                        },
+                        {
+                            type: 'line',
+                            x0: data.dates[0],
+                            y0: 30,
+                            x1: data.dates[data.dates.length - 1],
+                            y1: 30,
+                            line: {
+                                color: 'green',
+                                width: 1,
+                                dash: 'dashdot'
+                            }
+                        }
+                    ],
+                    template: 'plotly_dark'
+                };
+
+                Plotly.newPlot('indicator-chart', [rsiTrace], rsiLayout);
+            })
+            .catch(error => {
+                console.error('Error fetching the stock data:', error);
+                document.getElementById('price-chart').innerHTML = '<p class="text-danger">無法加載圖表數據。</p>';
+                document.getElementById('indicator-chart').innerHTML = '<p class="text-danger">無法加載圖表數據。</p>';
+            });
+    </script>
 
     <!-- 引入 Bootstrap JS 和依賴 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

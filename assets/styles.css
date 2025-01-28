@@ -104,7 +104,7 @@ tr:hover td:nth-last-child(2) {
 /* 定義正方形內文字的樣式 */
 .square-text {
     color: white;
-    font-size: 60px;  /* 將字體大小變大 */
+    font-size: 40px;  /* 調整字體大小 */
     font-weight: bold;
     text-align: center;
     line-height: 300px; /* 垂直居中 */
