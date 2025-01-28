@@ -314,6 +314,17 @@
                         }
                     }
 
+                    // 根據 MACD 值設定信號
+                    if (indicator === "MACD") {
+                        if (value > latestEntry['MACD_signal']) {
+                            buySignal = "MACD > Signal";
+                            status = "Buy";
+                        } else if (value < latestEntry['MACD_signal']) {
+                            sellSignal = "MACD < Signal";
+                            status = "Sell";
+                        }
+                    }
+
                     // 其他指標的信號可以類似處理
 
                     table.row.add([
