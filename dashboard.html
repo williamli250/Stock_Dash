@@ -6,38 +6,292 @@
     <title>數位儀表板</title>
     <!-- 引入 Bootstrap CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入 DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
     <!-- 引入自定義 CSS -->
     <link href="assets/styles.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000; /* 黑色背景 */
+            color: white; /* 白色字體 */
+        }
+        .stock-status {
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            width: 18%;
+            background-color: #222;
+        }
+        .dataTables_wrapper .dataTables_filter input {
+            color: black; /* 搜索框字體顏色 */
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
-        <a href="index.html" class="btn btn-primary" style="float: right; margin-top: 20px;">回首頁</a>
-        <h1 class="text-center text-primary mt-5">Stock Dashboard</h1>
-        
-        <!-- 動態圖表 -->
-        <div id="price-chart" class="mt-4"></div>
-        <div id="indicator-chart" class="mt-4"></div>
+        <!-- 回首頁按鈕 -->
+        <div class="row mt-3">
+            <div class="col-12 text-right">
+                <a href="index.html" class="btn btn-primary">回首頁</a>
+            </div>
+        </div>
+
+        <!-- 標題 -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h1 class="text-center text-primary">Stock Dashboard</h1>
+            </div>
+        </div>
+
+        <!-- 今日狀態 -->
+        <div class="row mt-4" id="today-status">
+            <!-- 動態生成的股票狀態將插入在這裡 -->
+        </div>
+
+        <!-- 表格 -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <table id="indicators-table" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Indicator</th>
+                            <th>Value</th>
+                            <th>Sell Signal</th>
+                            <th>Buy Signal</th>
+                            <th>Secondary Sell Signal</th>
+                            <th>Secondary Buy Signal</th>
+                            <th>Status</th>
+                            <th>Secondary Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 動態生成的表格數據將插入在這裡 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 選擇區域 -->
+        <div class="row mt-4">
+            <div class="col-md-3 mb-3">
+                <select id="interval-selection" class="form-control">
+                    <option value="60m">60分鐘線</option>
+                    <option value="1d" selected>日線</option>
+                    <option value="1wk">週線</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select id="stock-ticker" class="form-control">
+                    <option value="2330.TW">台積電</option>
+                    <option value="00652.TW">富邦印度</option>
+                    <option value="00930.TW">永豐ESG</option>
+                    <option value="2454.TW">聯發科</option>
+                    <option value="2303.TW">聯電</option>
+                    <option value="^TWII">台灣大盤指數</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select id="indicator-selection" class="form-control" multiple>
+                    <option value="MACD">MACD (Moving Average Convergence Divergence)</option>
+                    <option value="RSI">RSI (Relative Strength Index)</option>
+                    <option value="SMA">SMA (Simple Moving Average)</option>
+                    <option value="EMA">EMA (Exponential Moving Average)</option>
+                    <option value="BB High">BB High (布林帶上軌)</option>
+                    <option value="BB Low">BB Low (布林帶下軌)</option>
+                    <option value="K">K (Stochastic Oscillator)</option>
+                    <option value="D">D (Stochastic Oscillator)</option>
+                    <option value="Stochastic RSI">Stochastic RSI</option>
+                    <option value="CCI">CCI (Commodity Channel Index)</option>
+                    <option value="Williams %R">Williams %R</option>
+                    <option value="ADX">ADX (Average Directional Index)</option>
+                    <option value="Close Price">Close Price</option>
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <select id="date-range-selection" class="form-control">
+                    <option value="2m">近兩個月</option>
+                    <option value="6m">近半年</option>
+                    <option value="1y" selected>近一年</option>
+                    <option value="3y">近三年</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 圖表 -->
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div id="price-chart"></div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div id="indicator-chart"></div>
+            </div>
+        </div>
     </div>
 
     <!-- 引入 Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <!-- 自定義 JavaScript -->
+    <!-- 引入 DataTables.js -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- 引入自定義 JavaScript -->
     <script>
-        // 獲取數據
-        fetch('data/stock_data.json')
-            .then(response => response.json())
-            .then(data => {
-                // 繪製收盤價圖表
-                var priceTrace = {
-                    x: data.dates,
-                    y: data.close,
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化 DataTable
+            var table = $('#indicators-table').DataTable({
+                "paging": false,
+                "info": false,
+                "autoWidth": false,
+                "order": []
+            });
+
+            // 股票代碼映射
+            const tickers = {
+                '台積電': '2330.TW',
+                '富邦印度': '00652.TW',
+                '永豐ESG': '00930.TW',
+                '聯發科': '2454.TW',
+                '聯電': '2303.TW',
+                '台灣大盤指數': '^TWII'
+            };
+
+            // 指標選項
+            const indicatorsOptions = [
+                "MACD",
+                "RSI",
+                "SMA",
+                "EMA",
+                "BB High",
+                "BB Low",
+                "K",
+                "D",
+                "Stochastic RSI",
+                "CCI",
+                "Williams %R",
+                "ADX",
+                "Close Price"
+            ];
+
+            // 監聽選擇變更
+            $('#interval-selection, #stock-ticker, #indicator-selection, #date-range-selection').on('change', function() {
+                updateDashboard();
+            });
+
+            // 初始加載
+            updateDashboard();
+
+            function updateDashboard() {
+                const interval = $('#interval-selection').val();
+                const ticker = $('#stock-ticker').val();
+                const selectedIndicators = $('#indicator-selection').val() || [];
+                const dateRange = $('#date-range-selection').val();
+
+                fetch(`data/stock_data.json`)
+                    .then(response => response.json())
+                    .then(data => {
+                        // 根據選擇的股票和日期範圍過濾數據
+                        let filteredData = filterData(data, ticker, dateRange, interval);
+                        if (filteredData.length === 0) {
+                            alert('沒有符合條件的數據。');
+                            return;
+                        }
+
+                        // 更新表格
+                        updateTable(filteredData);
+
+                        // 更新圖表
+                        updateCharts(filteredData, selectedIndicators);
+
+                        // 更新今日狀態
+                        updateTodayStatus(data, tickers);
+                    })
+                    .catch(error => {
+                        console.error('無法加載數據:', error);
+                        alert('無法加載數據。');
+                    });
+            }
+
+            function filterData(data, ticker, dateRange, interval) {
+                // 假設 stock_data.json 中包含不同股票的數據，這需要根據實際數據結構調整
+                // 這裡假設只有一支股票的數據，並且包含所有日期和指標
+                // 如果有多支股票，需根據 ticker 過濾
+
+                // 過濾日期範圍
+                const today = new Date();
+                let startDate;
+                switch(dateRange) {
+                    case '2m':
+                        startDate = new Date(today.setMonth(today.getMonth() - 2));
+                        break;
+                    case '6m':
+                        startDate = new Date(today.setMonth(today.getMonth() - 6));
+                        break;
+                    case '1y':
+                        startDate = new Date(today.setFullYear(today.getFullYear() - 1));
+                        break;
+                    case '3y':
+                        startDate = new Date(today.setFullYear(today.getFullYear() - 3));
+                        break;
+                    default:
+                        startDate = new Date(today.setFullYear(today.getFullYear() - 1));
+                }
+
+                // 過濾數據
+                const filtered = data.filter(entry => {
+                    const entryDate = new Date(entry.Date);
+                    return entry.ticker === ticker && entryDate >= startDate && entryDate <= today;
+                });
+
+                // 根據 interval 過濾
+                // 這裡假設 interval 影響數據的粒度，例如 '1d', '60m', '1wk'
+                // 具體實現需要根據實際數據調整
+
+                return filtered;
+            }
+
+            function updateTable(data) {
+                // 清空表格
+                table.clear();
+
+                // 填充表格數據
+                data.forEach(entry => {
+                    table.row.add([
+                        entry.Indicator,
+                        entry.Value,
+                        entry["Sell Signal"],
+                        entry["Buy Signal"],
+                        entry["Secondary Sell Signal"],
+                        entry["Secondary Buy Signal"],
+                        entry.Status,
+                        entry["Secondary Status"]
+                    ]);
+                });
+
+                // 重新繪製表格
+                table.draw();
+            }
+
+            function updateCharts(data, selectedIndicators) {
+                // 準備數據
+                const dates = data.map(entry => entry.Date);
+                const closePrices = data.map(entry => entry["Close Price"]);
+                const rsi = data.map(entry => entry.RSI);
+                const macd = data.map(entry => entry.MACD);
+                const macd_signal = data.map(entry => entry.MACD_signal);
+                const macd_diff = data.map(entry => entry.MACD_diff);
+                // 其他指標根據需要添加
+
+                // 更新收盤價圖表
+                const priceTrace = {
+                    x: dates,
+                    y: closePrices,
                     type: 'scatter',
                     mode: 'lines+markers',
                     name: '收盤價',
                     line: { color: '#17BECF' }
                 };
 
-                var priceLayout = {
+                const priceLayout = {
                     title: '股票收盤價',
                     xaxis: { title: '日期' },
                     yaxis: { title: '價格 (TWD)' },
@@ -46,62 +300,125 @@
 
                 Plotly.newPlot('price-chart', [priceTrace], priceLayout);
 
-                // 繪製 RSI 圖表
-                var rsiTrace = {
-                    x: data.dates,
-                    y: data.rsi,
-                    type: 'scatter',
-                    mode: 'lines',
-                    name: 'RSI',
-                    line: { color: '#FF5733' }
-                };
+                // 更新技術指標圖表
+                const indicatorTraces = [];
+                selectedIndicators.forEach(indicator => {
+                    if (indicator === "MACD") {
+                        indicatorTraces.push({
+                            x: dates,
+                            y: macd,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'MACD',
+                            line: { color: '#FF5733' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: macd_signal,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'MACD Signal',
+                            line: { color: '#2ECC40' }
+                        });
+                    }
+                    if (indicator === "RSI") {
+                        indicatorTraces.push({
+                            x: dates,
+                            y: rsi,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'RSI',
+                            line: { color: '#FF5733' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(70),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'RSI Overbought',
+                            line: { dash: 'dashdot', color: 'red' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(30),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'RSI Oversold',
+                            line: { dash: 'dashdot', color: 'green' }
+                        });
+                    }
+                    // 根據選擇的其他指標添加相應的追蹤
+                });
 
-                var rsiLayout = {
-                    title: '相對強弱指數 (RSI)',
+                const indicatorLayout = {
+                    title: '技術指標',
                     xaxis: { title: '日期' },
-                    yaxis: { title: 'RSI', range: [0, 100] },
-                    shapes: [
-                        // 畫出 70 和 30 的參考線
-                        {
-                            type: 'line',
-                            x0: data.dates[0],
-                            y0: 70,
-                            x1: data.dates[data.dates.length - 1],
-                            y1: 70,
-                            line: {
-                                color: 'red',
-                                width: 1,
-                                dash: 'dashdot'
-                            }
-                        },
-                        {
-                            type: 'line',
-                            x0: data.dates[0],
-                            y0: 30,
-                            x1: data.dates[data.dates.length - 1],
-                            y1: 30,
-                            line: {
-                                color: 'green',
-                                width: 1,
-                                dash: 'dashdot'
-                            }
-                        }
-                    ],
+                    yaxis: { title: '值' },
                     template: 'plotly_dark'
                 };
 
-                Plotly.newPlot('indicator-chart', [rsiTrace], rsiLayout);
-            })
-            .catch(error => {
-                console.error('無法加載圖表數據:', error);
-                document.getElementById('price-chart').innerHTML = '<p class="text-danger">無法加載圖表數據。</p>';
-                document.getElementById('indicator-chart').innerHTML = '<p class="text-danger">無法加載圖表數據。</p>';
-            });
-    </script>
+                Plotly.newPlot('indicator-chart', indicatorTraces, indicatorLayout);
+            }
 
-    <!-- 引入 Bootstrap JS 和依賴 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            function updateTodayStatus(data, tickers) {
+                // 清空現有狀態
+                $('#today-status').empty();
+
+                const todayStatuses = [];
+
+                Object.keys(tickers).forEach(name => {
+                    const ticker = tickers[name];
+                    const tickerData = data.filter(entry => entry.ticker === ticker);
+                    if (tickerData.length === 0) {
+                        todayStatuses.push(`
+                            <div class="stock-status">
+                                <p style="font-weight:bold; font-size:18px; text-align:center;">${name}</p>
+                                <p>No data available</p>
+                            </div>
+                        `);
+                        return;
+                    }
+
+                    const latestEntry = tickerData[tickerData.length - 1];
+                    const previousEntry = tickerData[tickerData.length - 2] || {};
+
+                    const latestClose = parseFloat(latestEntry["Close Price"]);
+                    const previousClose = parseFloat(previousEntry["Close Price"]) || latestClose;
+                    const change = latestClose - previousClose;
+                    const changePercent = ((change) / previousClose) * 100;
+
+                    let color, changeText, changeAmount;
+                    if (change > 0) {
+                        color = 'lightcoral'; // 淡紅色
+                        changeText = `↑ ${changePercent.toFixed(2)}%`;
+                        changeAmount = `+${change.toFixed(2)}`;
+                    } else if (change < 0) {
+                        color = 'lightgreen'; // 淡綠色
+                        changeText = `↓ ${Math.abs(changePercent).toFixed(2)}%`;
+                        changeAmount = `${change.toFixed(2)}`;
+                    } else {
+                        color = 'white';
+                        changeText = `${changePercent.toFixed(2)}%`;
+                        changeAmount = `${change.toFixed(2)}`;
+                    }
+
+                    todayStatuses.push(`
+                        <div class="stock-status">
+                            <p style="font-weight:bold; font-size:18px; text-align:center;">${name}</p>
+                            <p>股價: $${latestClose.toFixed(2)}</p>
+                            <p style="color:${color};">${changeAmount}</p>
+                            <p style="color:${color};">${changeText}</p>
+                        </div>
+                    `);
+                });
+
+                $('#today-status').html(`
+                    <div class="d-flex flex-wrap justify-content-center">
+                        ${todayStatuses.join('')}
+                    </div>
+                `);
+            }
+        });
+    </script>
 </body>
 </html>
