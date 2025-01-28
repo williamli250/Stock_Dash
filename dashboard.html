@@ -26,6 +26,10 @@
         .dataTables_wrapper .dataTables_filter input {
             color: black; /* 搜索框字體顏色 */
         }
+        .indicator-table th, .indicator-table td {
+            background-color: #333;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -52,7 +56,7 @@
         <!-- 表格 -->
         <div class="row mt-4">
             <div class="col-12">
-                <table id="indicators-table" class="table table-striped table-bordered" style="width:100%">
+                <table id="indicators-table" class="table table-striped table-bordered indicator-table" style="width:100%">
                     <thead>
                         <tr>
                             <th>Indicator</th>
@@ -105,7 +109,7 @@
                     <option value="CCI">CCI (Commodity Channel Index)</option>
                     <option value="Williams %R">Williams %R</option>
                     <option value="ADX">ADX (Average Directional Index)</option>
-                    <option value="Close Price">Close Price</option>
+                    <option value="Close">Close Price</option>
                 </select>
             </div>
             <div class="col-md-3 mb-3">
@@ -134,6 +138,11 @@
     <!-- 引入 DataTables.js -->
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- 引入 Bootstrap JS 和依賴 -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- 引入自定義 JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -169,7 +178,7 @@
                 "CCI",
                 "Williams %R",
                 "ADX",
-                "Close Price"
+                "Close"
             ];
 
             // 監聽選擇變更
@@ -212,11 +221,20 @@
             }
 
             function filterData(data, ticker, dateRange, interval) {
-                // 假設 stock_data.json 中包含不同股票的數據，這需要根據實際數據結構調整
-                // 這裡假設只有一支股票的數據，並且包含所有日期和指標
-                // 如果有多支股票，需根據 ticker 過濾
+                // 過濾特定股票
+                let tickerData = data.filter(entry => entry.ticker === ticker);
 
-                // 過濾日期範圍
+                if (tickerData.length === 0) {
+                    return [];
+                }
+
+                // 解析日期並排序
+                tickerData.forEach(entry => {
+                    entry.Date = new Date(entry.Date);
+                });
+                tickerData.sort((a, b) => a.Date - b.Date);
+
+                // 根據日期範圍過濾
                 const today = new Date();
                 let startDate;
                 switch(dateRange) {
@@ -236,36 +254,79 @@
                         startDate = new Date(today.setFullYear(today.getFullYear() - 1));
                 }
 
-                // 過濾數據
-                const filtered = data.filter(entry => {
-                    const entryDate = new Date(entry.Date);
-                    return entry.ticker === ticker && entryDate >= startDate && entryDate <= today;
-                });
+                // 過濾日期範圍
+                tickerData = tickerData.filter(entry => entry.Date >= startDate && entry.Date <= today);
 
                 // 根據 interval 過濾
-                // 這裡假設 interval 影響數據的粒度，例如 '1d', '60m', '1wk'
-                // 具體實現需要根據實際數據調整
+                if (interval === '1wk') {
+                    // 每週一取一筆數據
+                    tickerData = tickerData.filter(entry => entry.Date.getDay() === 1); // 0=Sunday, 1=Monday, etc.
+                } else if (interval === '60m') {
+                    // 假設有更高頻率的數據，否則無法處理
+                    // 目前數據為日線，忽略
+                }
+                // 其他間隔可以根據需要實現
 
-                return filtered;
+                return tickerData;
             }
 
             function updateTable(data) {
                 // 清空表格
                 table.clear();
 
-                // 填充表格數據
-                data.forEach(entry => {
+                // 獲取最新一筆數據
+                const latestEntry = data[data.length - 1];
+
+                // 定義指標列表和對應的值
+                const indicators = {
+                    "MACD": latestEntry.MACD,
+                    "RSI": latestEntry.RSI,
+                    "SMA": latestEntry.SMA,
+                    "EMA": latestEntry.EMA,
+                    "BB High": latestEntry['BB High'],
+                    "BB Low": latestEntry['BB Low'],
+                    "K": latestEntry.K,
+                    "D": latestEntry.D,
+                    "Stochastic RSI": latestEntry['Stochastic RSI'],
+                    "CCI": latestEntry.CCI,
+                    "Williams %R": latestEntry['Williams %R'],
+                    "ADX": latestEntry.ADX,
+                    "Close Price": latestEntry.Close
+                };
+
+                // 遍歷指標並添加到表格
+                for (const [indicator, value] of Object.entries(indicators)) {
+                    // 將數值格式化為兩位小數，或顯示 '-' 如果為 null
+                    const formattedValue = value !== null && value !== undefined ? parseFloat(value).toFixed(2) : '-';
+
+                    // 根據指標類型設定信號和狀態
+                    // 這部分可以根據具體需求調整
+                    let sellSignal = '-', buySignal = '-', secondarySellSignal = '-', secondaryBuySignal = '-', status = '-', secondaryStatus = '-';
+
+                    // 示例：根據 RSI 值設定買賣信號
+                    if (indicator === "RSI") {
+                        if (value < 30) {
+                            buySignal = "< 30";
+                            status = "Buy";
+                        } else if (value > 70) {
+                            sellSignal = "> 70";
+                            status = "Sell";
+                        }
+                    }
+
+                    // 其他指標的信號可以類似處理
+
                     table.row.add([
-                        entry.Indicator,
-                        entry.Value,
-                        entry["Sell Signal"],
-                        entry["Buy Signal"],
-                        entry["Secondary Sell Signal"],
-                        entry["Secondary Buy Signal"],
-                        entry.Status,
-                        entry["Secondary Status"]
+                        indicator,
+                        formattedValue,
+                        sellSignal,
+                        buySignal,
+                        secondarySellSignal,
+                        secondaryBuySignal,
+                        status,
+                        secondaryStatus
                     ]);
-                });
+                }
 
                 // 重新繪製表格
                 table.draw();
@@ -273,37 +334,38 @@
 
             function updateCharts(data, selectedIndicators) {
                 // 準備數據
-                const dates = data.map(entry => entry.Date);
-                const closePrices = data.map(entry => entry["Close Price"]);
-                const rsi = data.map(entry => entry.RSI);
-                const macd = data.map(entry => entry.MACD);
-                const macd_signal = data.map(entry => entry.MACD_signal);
-                const macd_diff = data.map(entry => entry.MACD_diff);
-                // 其他指標根據需要添加
+                const dates = data.map(entry => entry.Date.toISOString().split('T')[0]);
+                const closePrices = data.map(entry => entry.Close);
 
-                // 更新收盤價圖表
-                const priceTrace = {
+                // Initialize price figure
+                let priceTraces = [{
                     x: dates,
                     y: closePrices,
                     type: 'scatter',
                     mode: 'lines+markers',
                     name: '收盤價',
                     line: { color: '#17BECF' }
-                };
+                }];
 
-                const priceLayout = {
+                // Plotly layout for price chart
+                let priceLayout = {
                     title: '股票收盤價',
                     xaxis: { title: '日期' },
                     yaxis: { title: '價格 (TWD)' },
-                    template: 'plotly_dark'
+                    template: 'plotly_dark',
+                    paper_bgcolor: 'rgba(0, 0, 0, 0)',
+                    plot_bgcolor: 'rgba(0, 0, 0, 0)',
+                    font: { color: 'white' },
+                    hovermode: 'x unified'
                 };
 
-                Plotly.newPlot('price-chart', [priceTrace], priceLayout);
+                // Initialize indicator traces
+                let indicatorTraces = [];
 
-                // 更新技術指標圖表
-                const indicatorTraces = [];
                 selectedIndicators.forEach(indicator => {
                     if (indicator === "MACD") {
+                        const macd = data.map(entry => entry.MACD);
+                        const macd_signal = data.map(entry => entry.MACD_signal);
                         indicatorTraces.push({
                             x: dates,
                             y: macd,
@@ -322,6 +384,7 @@
                         });
                     }
                     if (indicator === "RSI") {
+                        const rsi = data.map(entry => entry.RSI);
                         indicatorTraces.push({
                             x: dates,
                             y: rsi,
@@ -347,17 +410,220 @@
                             line: { dash: 'dashdot', color: 'green' }
                         });
                     }
-                    // 根據選擇的其他指標添加相應的追蹤
+                    if (indicator === "SMA") {
+                        const sma = data.map(entry => entry.SMA);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: sma,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'SMA',
+                            line: { color: '#FFA500' }
+                        });
+                    }
+                    if (indicator === "EMA") {
+                        const ema = data.map(entry => entry.EMA);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: ema,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'EMA',
+                            line: { color: '#800080' }
+                        });
+                    }
+                    if (indicator === "BB High") {
+                        const bb_high = data.map(entry => entry['BB High']);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: bb_high,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'BB High',
+                            line: { color: '#FFFF00' }
+                        });
+                    }
+                    if (indicator === "BB Low") {
+                        const bb_low = data.map(entry => entry['BB Low']);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: bb_low,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'BB Low',
+                            line: { color: '#00FF00' }
+                        });
+                    }
+                    if (indicator === "K") {
+                        const k = data.map(entry => entry.K);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: k,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'K',
+                            line: { color: '#FF69B4' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(80),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'K Overbought',
+                            line: { dash: 'dashdot', color: 'red' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(20),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'K Oversold',
+                            line: { dash: 'dashdot', color: 'green' }
+                        });
+                    }
+                    if (indicator === "D") {
+                        const d = data.map(entry => entry.D);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: d,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'D',
+                            line: { color: '#1E90FF' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(80),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'D Overbought',
+                            line: { dash: 'dashdot', color: 'red' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(20),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'D Oversold',
+                            line: { dash: 'dashdot', color: 'green' }
+                        });
+                    }
+                    if (indicator === "Stochastic RSI") {
+                        const stochastic_rsi = data.map(entry => entry['Stochastic RSI']);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: stochastic_rsi,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Stochastic RSI',
+                            line: { color: '#DC143C' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(80),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Stochastic RSI Overbought',
+                            line: { dash: 'dashdot', color: 'red' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(20),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Stochastic RSI Oversold',
+                            line: { dash: 'dashdot', color: 'green' }
+                        });
+                    }
+                    if (indicator === "CCI") {
+                        const cci = data.map(entry => entry.CCI);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: cci,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'CCI',
+                            line: { color: '#00FFFF' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(100),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'CCI Overbought',
+                            line: { dash: 'dashdot', color: 'red' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(-100),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'CCI Oversold',
+                            line: { dash: 'dashdot', color: 'green' }
+                        });
+                    }
+                    if (indicator === "Williams %R") {
+                        const williams_r = data.map(entry => entry['Williams %R']);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: williams_r,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Williams %R',
+                            line: { color: '#8B008B' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(-20),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Williams %R Overbought',
+                            line: { dash: 'dashdot', color: 'red' }
+                        });
+                        indicatorTraces.push({
+                            x: dates,
+                            y: Array(dates.length).fill(-80),
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'Williams %R Oversold',
+                            line: { dash: 'dashdot', color: 'green' }
+                        });
+                    }
+                    if (indicator === "ADX") {
+                        const adx = data.map(entry => entry.ADX);
+                        indicatorTraces.push({
+                            x: dates,
+                            y: adx,
+                            type: 'scatter',
+                            mode: 'lines',
+                            name: 'ADX',
+                            line: { color: '#FFD700' }
+                        });
+                        // ADX signals can be more complex
+                    }
+                    if (indicator === "Close") {
+                        // Already plotted in price-chart
+                        // If needed, can add another line
+                    }
                 });
 
-                const indicatorLayout = {
+                // Plotly layout for indicator chart
+                let indicatorLayout = {
                     title: '技術指標',
                     xaxis: { title: '日期' },
                     yaxis: { title: '值' },
-                    template: 'plotly_dark'
+                    template: 'plotly_dark',
+                    paper_bgcolor: 'rgba(0, 0, 0, 0)',
+                    plot_bgcolor: 'rgba(0, 0, 0, 0)',
+                    font: { color: 'white' },
+                    hovermode: 'x unified'
                 };
 
-                Plotly.newPlot('indicator-chart', indicatorTraces, indicatorLayout);
+                // Combine all traces
+                let allTraces = [...indicatorTraces];
+
+                // Create the indicator chart
+                Plotly.newPlot('indicator-chart', allTraces, indicatorLayout);
             }
 
             function updateTodayStatus(data, tickers) {
@@ -382,8 +648,8 @@
                     const latestEntry = tickerData[tickerData.length - 1];
                     const previousEntry = tickerData[tickerData.length - 2] || {};
 
-                    const latestClose = parseFloat(latestEntry["Close Price"]);
-                    const previousClose = parseFloat(previousEntry["Close Price"]) || latestClose;
+                    const latestClose = parseFloat(latestEntry.Close);
+                    const previousClose = previousEntry.Close !== null ? parseFloat(previousEntry.Close) : latestClose;
                     const change = latestClose - previousClose;
                     const changePercent = ((change) / previousClose) * 100;
 
