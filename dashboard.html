@@ -9,30 +9,7 @@
     <!-- 引入 DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
     <!-- 自定義 CSS -->
-    <style>
-        body {
-            background-color: #000; /* 黑色背景 */
-            color: white; /* 白色字體 */
-        }
-        .stock-status {
-            border: 1px solid #555;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 5px;
-            background-color: #222;
-            text-align: center; /* 文字置中 */
-            width: 100%; /* 讓 Bootstrap 控制寬度 */
-        }
-        /* 表格樣式 */
-        .indicator-table th, .indicator-table td {
-            background-color: #333;
-            color: white;
-        }
-        /* 圖表高度 */
-        #price-chart, #indicator-chart {
-            height: 400px;
-        }
-    </style>
+    <link href="assets/styles.css" rel="stylesheet">
 </head>
 <body>
     <div class="container-fluid">
@@ -718,7 +695,7 @@
                     x: dates,
                     y: closePrices,
                     type: 'scatter',
-                    mode: 'lines', // 只顯示折線
+                    mode: 'lines',
                     name: '收盤價',
                     line: { color: '#17BECF' }
                 }];
