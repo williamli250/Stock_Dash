@@ -79,6 +79,15 @@
             text-align: center;
         }
 
+        .status-no-trend {
+            /* 無背景顏色，文字顏色為白色 */
+            color: white;
+            padding: 5px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
         /* DataTables 排序指示符顏色調整 */
         table.dataTable thead .sorting:after,
         table.dataTable thead .sorting_asc:after,
@@ -225,8 +234,19 @@
                 "paging": false,
                 "info": false,
                 "autoWidth": false,
-                "order": [], // 如果您希望禁用初始排序，保留此行
-                // 移除 columnDefs 部分，允許所有欄位進行排序和搜索
+                "order": [], // 禁用初始排序
+                "columnDefs": [
+                    {
+                        "targets": [6, 7], // Status 和 Secondary Status 欄位
+                        "render": function(data, type, row, meta) {
+                            if(type === 'sort') {
+                                // 提取純文本內容進行排序
+                                return $(data).text();
+                            }
+                            return data;
+                        }
+                    }
+                ]
             });
 
             // 股票代碼映射
@@ -268,8 +288,12 @@
                             return;
                         }
 
+                        // 獲取最新一筆數據
+                        const latestEntry = filteredData[filteredData.length - 1];
+                        const previousEntry = filteredData[filteredData.length - 2] || {};
+
                         // 更新表格
-                        updateTable(filteredData);
+                        updateTable(latestEntry, previousEntry, data);
 
                         // 更新圖表
                         updateCharts(filteredData, selectedIndicators);
@@ -331,33 +355,30 @@
                 return tickerData;
             }
 
-            function updateTable(data) {
+            function updateTable(latestEntry, previousEntry, data) {
                 // 清空表格
                 table.clear();
 
-                // 獲取最新一筆數據
-                const latestEntry = data[data.length - 1];
-                const previousEntry = data[data.length - 2] || {};
-
                 // 提取指標值
                 const indicators = {
-                    "MACD": latestEntry.MACD,
-                    "RSI": latestEntry.RSI,
-                    "SMA": latestEntry.SMA,
-                    "EMA": latestEntry.EMA,
-                    "BB High": latestEntry['BB High'],
-                    "BB Low": latestEntry['BB Low'],
-                    "K": latestEntry.K,
-                    "D": latestEntry.D,
-                    "Stochastic RSI": latestEntry['Stochastic RSI'],
-                    "CCI": latestEntry.CCI,
-                    "Williams %R": latestEntry['Williams %R'],
-                    "ADX": latestEntry.ADX,
-                    "Close Price": latestEntry.Close
+                    "MACD": latestEntry.MACD !== null ? latestEntry.MACD : "-",
+                    "MACD_signal": latestEntry.MACD_signal !== null ? latestEntry.MACD_signal : "-",
+                    "RSI": latestEntry.RSI !== null ? latestEntry.RSI : "-",
+                    "SMA": latestEntry.SMA !== null ? latestEntry.SMA : "-",
+                    "EMA": latestEntry.EMA !== null ? latestEntry.EMA : "-",
+                    "BB High": latestEntry['BB High'] !== null ? latestEntry['BB High'] : "-",
+                    "BB Low": latestEntry['BB Low'] !== null ? latestEntry['BB Low'] : "-",
+                    "K": latestEntry.K !== null ? latestEntry.K : "-",
+                    "D": latestEntry.D !== null ? latestEntry.D : "-",
+                    "Stochastic RSI": latestEntry['Stochastic RSI'] !== null ? latestEntry['Stochastic RSI'] : "-",
+                    "CCI": latestEntry.CCI !== null ? latestEntry.CCI : "-",
+                    "Williams %R": latestEntry['Williams %R'] !== null ? latestEntry['Williams %R'] : "-",
+                    "ADX": latestEntry.ADX !== null ? latestEntry.ADX : "-",
+                    "Close Price": latestEntry.Close !== null ? latestEntry.Close : "-"
                 };
 
                 // 評估信號
-                const indicatorValues = evaluateSignals(indicators, latestEntry, previousEntry, data);
+                const indicatorValues = evaluateSignals(indicators);
 
                 // 遍歷指標並添加到表格
                 indicatorValues.forEach(indicator => {
@@ -373,303 +394,292 @@
                     ]);
                 });
 
+                // 調試：在控制台輸出要添加到表格的數據
+                console.log("Table Rows to Add:", indicatorValues);
+
                 // 重新繪製表格
                 table.draw();
             }
 
-            function evaluateSignals(indicators, latestEntry, previousEntry, data) {
+            function evaluateSignals(indicators) {
                 const indicator_values = [];
+
+                // Helper function to safely format numbers
+                function formatNumber(value) {
+                    return (value !== null && value !== undefined && !isNaN(value)) ? parseFloat(value).toFixed(2) : '-';
+                }
 
                 // MACD
                 const macd = indicators["MACD"];
-                const macd_signal = latestEntry.MACD_signal;
+                const macd_signal = indicators["MACD_signal"];
                 let status_macd = "Wait";
                 let secondary_status_macd = "Wait";
-                let sell_signal_macd = "-";
-                let buy_signal_macd = "-";
-
                 if (macd > macd_signal) {
                     status_macd = "Buy";
                     secondary_status_macd = "Buy";
-                    buy_signal_macd = "MACD > Signal";
                 } else if (macd < macd_signal) {
                     status_macd = "Sell";
                     secondary_status_macd = "Sell";
-                    sell_signal_macd = "MACD < Signal";
                 }
 
                 indicator_values.push({
                     "Indicator": "MACD",
-                    "Value": macd !== null && macd !== undefined ? macd.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_macd,
-                    "Buy Signal": buy_signal_macd,
-                    "Secondary Sell Signal": sell_signal_macd,
-                    "Secondary Buy Signal": buy_signal_macd,
-                    "Status": `<span class="${statusClass_general(status_macd)}">${status_macd}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(secondary_status_macd)}">${secondary_status_macd}</span>`
+                    "Value": formatNumber(macd),
+                    "Sell Signal": formatNumber(macd_signal),
+                    "Buy Signal": formatNumber(macd_signal),
+                    "Secondary Sell Signal": formatNumber(macd_signal),
+                    "Secondary Buy Signal": formatNumber(macd_signal),
+                    "Status": `<span class="${statusClass_general(status_macd.toLowerCase())}">${status_macd}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_macd.toLowerCase())}">${secondary_status_macd}</span>`
                 });
 
                 // RSI
                 const rsi = indicators["RSI"];
-                let status_rsi = "Wait";
-                let secondary_status_rsi = "Wait";
-                let sell_signal_rsi = "-";
-                let buy_signal_rsi = "-";
-
-                if (rsi < 30) {
-                    status_rsi = "Buy";
-                    buy_signal_rsi = "< 30";
-                }
-                if (rsi < 40) {
-                    secondary_status_rsi = "Buy";
-                    buy_signal_rsi = "< 40";
-                }
-                if (rsi > 70) {
-                    status_rsi = "Sell";
-                    sell_signal_rsi = "> 70";
-                }
-                if (rsi > 60) {
-                    secondary_status_rsi = "Sell";
-                    sell_signal_rsi = "> 60";
-                }
-
                 indicator_values.push({
                     "Indicator": "RSI",
-                    "Value": rsi !== null && rsi !== undefined ? rsi.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_rsi,
-                    "Buy Signal": buy_signal_rsi,
-                    "Secondary Sell Signal": sell_signal_rsi,
-                    "Secondary Buy Signal": buy_signal_rsi,
-                    "Status": `<span class="${statusClass_general(status_rsi)}">${status_rsi}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(secondary_status_rsi)}">${secondary_status_rsi}</span>`
+                    "Value": formatNumber(rsi),
+                    "Sell Signal": "> 70",
+                    "Buy Signal": "< 30",
+                    "Secondary Sell Signal": "> 60",
+                    "Secondary Buy Signal": "< 40",
+                    "Status": determineStatus(rsi, 70, 30, 60, 40),
+                    "Secondary Status": determineSecondaryStatus(rsi, 70, 30, 60, 40)
                 });
 
                 // SMA
                 const sma = indicators["SMA"];
-                const close_price = indicators["Close Price"];
+                const close_price_sma = indicators["Close Price"];
                 let status_sma = "Wait";
                 let secondary_status_sma = "Wait";
-                let sell_signal_sma = "-";
-                let buy_signal_sma = "-";
-
-                if (close_price < sma) {
+                if (close_price_sma < sma) {
                     status_sma = "Buy";
                     secondary_status_sma = "Buy";
-                    buy_signal_sma = `< ${sma.toFixed(2)}`;
-                }
-                if (close_price > sma) {
+                } else if (close_price_sma > sma) {
                     status_sma = "Sell";
                     secondary_status_sma = "Sell";
-                    sell_signal_sma = `> ${sma.toFixed(2)}`;
                 }
 
                 indicator_values.push({
                     "Indicator": "SMA",
-                    "Value": sma !== null && sma !== undefined ? sma.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_sma,
-                    "Buy Signal": buy_signal_sma,
-                    "Secondary Sell Signal": sell_signal_sma,
-                    "Secondary Buy Signal": buy_signal_sma,
-                    "Status": `<span class="${statusClass_general(status_sma)}">${status_sma}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(secondary_status_sma)}">${secondary_status_sma}</span>`
+                    "Value": formatNumber(sma),
+                    "Sell Signal": `< ${formatNumber(close_price_sma)}`,
+                    "Buy Signal": `> ${formatNumber(close_price_sma)}`,
+                    "Secondary Sell Signal": `< ${formatNumber(close_price_sma)}`,
+                    "Secondary Buy Signal": `> ${formatNumber(close_price_sma)}`,
+                    "Status": `<span class="${statusClass_general(status_sma.toLowerCase())}">${status_sma}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_sma.toLowerCase())}">${secondary_status_sma}</span>`
                 });
 
                 // EMA
                 const ema = indicators["EMA"];
+                const close_price_ema = indicators["Close Price"];
                 let status_ema = "Wait";
                 let secondary_status_ema = "Wait";
-                let sell_signal_ema = "-";
-                let buy_signal_ema = "-";
-
-                if (close_price < ema) {
+                if (close_price_ema < ema) {
                     status_ema = "Buy";
                     secondary_status_ema = "Buy";
-                    buy_signal_ema = `< ${ema.toFixed(2)}`;
-                }
-                if (close_price > ema) {
+                } else if (close_price_ema > ema) {
                     status_ema = "Sell";
                     secondary_status_ema = "Sell";
-                    sell_signal_ema = `> ${ema.toFixed(2)}`;
                 }
 
                 indicator_values.push({
                     "Indicator": "EMA",
-                    "Value": ema !== null && ema !== undefined ? ema.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_ema,
-                    "Buy Signal": buy_signal_ema,
-                    "Secondary Sell Signal": sell_signal_ema,
-                    "Secondary Buy Signal": buy_signal_ema,
-                    "Status": `<span class="${statusClass_general(status_ema)}">${status_ema}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(secondary_status_ema)}">${secondary_status_ema}</span>`
+                    "Value": formatNumber(ema),
+                    "Sell Signal": `< ${formatNumber(close_price_ema)}`,
+                    "Buy Signal": `> ${formatNumber(close_price_ema)}`,
+                    "Secondary Sell Signal": `< ${formatNumber(close_price_ema)}`,
+                    "Secondary Buy Signal": `> ${formatNumber(close_price_ema)}`,
+                    "Status": `<span class="${statusClass_general(status_ema.toLowerCase())}">${status_ema}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_ema.toLowerCase())}">${secondary_status_ema}</span>`
                 });
 
-                // BB High
+                // Bollinger Bands High v.s Close Price
                 const bb_high = indicators["BB High"];
+                const bb_low = indicators["BB Low"];
+                const close_price_bb_high = indicators["Close Price"];
+                const near_low = bb_low + (bb_high - bb_low) / 10;
+                const near_high = bb_high - (bb_high - bb_low) / 10;
+
                 let status_bb_high = "Wait";
-                if (close_price > bb_high) {
-                    status_bb_high = "Sell";
-                } else if (close_price < bb_high) {
+                let secondary_status_bb_high = "Wait";
+
+                if (close_price_bb_high < bb_low) {
                     status_bb_high = "Buy";
+                } else if (close_price_bb_high < near_low) {
+                    secondary_status_bb_high = "Buy";
+                }
+
+                if (close_price_bb_high > bb_high) {
+                    status_bb_high = "Sell";
+                } else if (close_price_bb_high > near_high) {
+                    secondary_status_bb_high = "Sell";
                 }
 
                 indicator_values.push({
                     "Indicator": "BB High v.s Close Price",
-                    "Value": close_price !== null && close_price !== undefined ? close_price.toFixed(2) : '-',
-                    "Sell Signal": close_price > bb_high ? `> ${bb_high.toFixed(2)}` : "-",
-                    "Buy Signal": close_price < bb_high ? `< ${bb_high.toFixed(2)}` : "-",
-                    "Secondary Sell Signal": close_price > bb_high ? `> ${bb_high.toFixed(2)}` : "-",
-                    "Secondary Buy Signal": close_price < bb_high ? `< ${bb_high.toFixed(2)}` : "-",
-                    "Status": `<span class="${statusClass_general(status_bb_high)}">${status_bb_high}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_bb_high)}">${status_bb_high}</span>`
+                    "Value": formatNumber(close_price_bb_high),
+                    "Sell Signal": `> ${formatNumber(bb_high)}`,
+                    "Buy Signal": `> ${formatNumber(bb_low)}`,
+                    "Secondary Sell Signal": `< ${formatNumber(near_high)}`,
+                    "Secondary Buy Signal": `> ${formatNumber(near_low)}`,
+                    "Status": `<span class="${statusClass_general(status_bb_high.toLowerCase().replace(' ', '-'))}">${status_bb_high}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_bb_high.toLowerCase().replace(' ', '-'))}">${secondary_status_bb_high}</span>`
                 });
 
-                // BB Low
-                const bb_low = indicators["BB Low"];
+                // Bollinger Bands Low v.s Close Price
                 let status_bb_low = "Wait";
-                if (close_price < bb_low) {
+                let secondary_status_bb_low = "Wait";
+
+                if (close_price_bb_high < bb_low) {
                     status_bb_low = "Buy";
-                } else if (close_price > bb_low) {
+                } else if (close_price_bb_high < near_low) {
+                    secondary_status_bb_low = "Buy";
+                }
+
+                if (close_price_bb_high > bb_high) {
                     status_bb_low = "Sell";
+                } else if (close_price_bb_high > near_high) {
+                    secondary_status_bb_low = "Sell";
                 }
 
                 indicator_values.push({
                     "Indicator": "BB Low v.s Close Price",
-                    "Value": close_price !== null && close_price !== undefined ? close_price.toFixed(2) : '-',
-                    "Sell Signal": close_price > bb_low ? `> ${bb_low.toFixed(2)}` : "-",
-                    "Buy Signal": close_price < bb_low ? `< ${bb_low.toFixed(2)}` : "-",
-                    "Secondary Sell Signal": close_price > bb_low ? `> ${bb_low.toFixed(2)}` : "-",
-                    "Secondary Buy Signal": close_price < bb_low ? `< ${bb_low.toFixed(2)}` : "-",
-                    "Status": `<span class="${statusClass_general(status_bb_low)}">${status_bb_low}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_bb_low)}">${status_bb_low}</span>`
-                });
-
-                // K
-                const k = indicators["K"];
-                let status_k = "Wait";
-                if (k < 20) {
-                    status_k = "Buy";
-                } else if (k > 80) {
-                    status_k = "Sell";
-                }
-
-                indicator_values.push({
-                    "Indicator": "K",
-                    "Value": k !== null && k !== undefined ? k.toFixed(2) : '-',
-                    "Sell Signal": k > 80 ? "> 80" : "-",
-                    "Buy Signal": k < 20 ? "< 20" : "-",
-                    "Secondary Sell Signal": k > 70 ? "> 70" : "-",
-                    "Secondary Buy Signal": k < 30 ? "< 30" : "-",
-                    "Status": `<span class="${statusClass_general(status_k)}">${status_k}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_k)}">${status_k}</span>`
-                });
-
-                // D
-                const d = indicators["D"];
-                let status_d = "Wait";
-                if (d < 20) {
-                    status_d = "Buy";
-                } else if (d > 80) {
-                    status_d = "Sell";
-                }
-
-                indicator_values.push({
-                    "Indicator": "D",
-                    "Value": d !== null && d !== undefined ? d.toFixed(2) : '-',
-                    "Sell Signal": d > 80 ? "> 80" : "-",
-                    "Buy Signal": d < 20 ? "< 20" : "-",
-                    "Secondary Sell Signal": d > 70 ? "> 70" : "-",
-                    "Secondary Buy Signal": d < 30 ? "< 30" : "-",
-                    "Status": `<span class="${statusClass_general(status_d)}">${status_d}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_d)}">${status_d}</span>`
+                    "Value": formatNumber(close_price_bb_high),
+                    "Sell Signal": `> ${formatNumber(bb_high)}`,
+                    "Buy Signal": `< ${formatNumber(bb_low)}`,
+                    "Secondary Sell Signal": `< ${formatNumber(near_high)}`,
+                    "Secondary Buy Signal": `< ${formatNumber(near_low)}`,
+                    "Status": `<span class="${statusClass_general(status_bb_low.toLowerCase().replace(' ', '-'))}">${status_bb_low}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_bb_low.toLowerCase().replace(' ', '-'))}">${secondary_status_bb_low}</span>`
                 });
 
                 // Stochastic RSI
                 const stochastic_rsi = indicators["Stochastic RSI"];
-                let status_stochastic_rsi = "Wait";
-                if (stochastic_rsi < 20) {
-                    status_stochastic_rsi = "Buy";
-                } else if (stochastic_rsi > 80) {
-                    status_stochastic_rsi = "Sell";
-                }
-
                 indicator_values.push({
                     "Indicator": "Stochastic RSI",
-                    "Value": stochastic_rsi !== null && stochastic_rsi !== undefined ? stochastic_rsi.toFixed(2) : '-',
-                    "Sell Signal": stochastic_rsi > 80 ? "> 80" : "-",
-                    "Buy Signal": stochastic_rsi < 20 ? "< 20" : "-",
-                    "Secondary Sell Signal": stochastic_rsi > 60 ? "> 60" : "-",
-                    "Secondary Buy Signal": stochastic_rsi < 40 ? "< 40" : "-",
-                    "Status": `<span class="${statusClass_general(status_stochastic_rsi)}">${status_stochastic_rsi}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_stochastic_rsi)}">${status_stochastic_rsi}</span>`
+                    "Value": formatNumber(stochastic_rsi),
+                    "Sell Signal": "> 80",
+                    "Buy Signal": "< 20",
+                    "Secondary Sell Signal": "> 60",
+                    "Secondary Buy Signal": "< 40",
+                    "Status": determineStatus(stochastic_rsi, 80, 20, 60, 40),
+                    "Secondary Status": determineSecondaryStatus(stochastic_rsi, 80, 20, 60, 40)
                 });
 
                 // CCI
                 const cci = indicators["CCI"];
-                let status_cci = "Wait";
-                if (cci < -100) {
-                    status_cci = "Buy";
-                } else if (cci > 100) {
-                    status_cci = "Sell";
-                }
-
                 indicator_values.push({
                     "Indicator": "CCI",
-                    "Value": cci !== null && cci !== undefined ? cci.toFixed(2) : '-',
-                    "Sell Signal": cci > 100 ? "> 100" : "-",
-                    "Buy Signal": cci < -100 ? "< -100" : "-",
-                    "Secondary Sell Signal": cci > 90 ? "> 90" : "-",
-                    "Secondary Buy Signal": cci < -90 ? "< -90" : "-",
-                    "Status": `<span class="${statusClass_general(status_cci)}">${status_cci}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_cci)}">${status_cci}</span>`
+                    "Value": formatNumber(cci),
+                    "Sell Signal": "> 100",
+                    "Buy Signal": "< -100",
+                    "Secondary Sell Signal": "> 90",
+                    "Secondary Buy Signal": "< -90",
+                    "Status": determineStatus(cci, 100, -100, 90, -90),
+                    "Secondary Status": determineSecondaryStatus(cci, 100, -100, 90, -90)
                 });
 
                 // Williams %R
                 const williams_r = indicators["Williams %R"];
-                let status_williams_r = "Wait";
-                if (williams_r < -80) {
-                    status_williams_r = "Buy";
-                } else if (williams_r > -20) {
-                    status_williams_r = "Sell";
-                }
-
                 indicator_values.push({
                     "Indicator": "Williams %R",
-                    "Value": williams_r !== null && williams_r !== undefined ? williams_r.toFixed(2) : '-',
-                    "Sell Signal": williams_r > -20 ? "> -20" : "-",
-                    "Buy Signal": williams_r < -80 ? "< -80" : "-",
-                    "Secondary Sell Signal": williams_r > -40 ? "> -40" : "-",
-                    "Secondary Buy Signal": williams_r < -60 ? "< -60" : "-",
-                    "Status": `<span class="${statusClass_general(status_williams_r)}">${status_williams_r}</span>`,
-                    "Secondary Status": `<span class="${statusClass_general(status_williams_r)}">${status_williams_r}</span>`
+                    "Value": formatNumber(williams_r),
+                    "Sell Signal": "> -20",
+                    "Buy Signal": "< -80",
+                    "Secondary Sell Signal": "> -40",
+                    "Secondary Buy Signal": "< -60",
+                    "Status": determineStatus(williams_r, -20, -80, -40, -60),
+                    "Secondary Status": determineSecondaryStatus(williams_r, -20, -80, -40, -60)
                 });
 
                 // ADX
                 const adx = indicators["ADX"];
                 let status_adx = "Wait";
+                let secondary_status_adx = "Wait";
+
                 if (adx > 25) {
                     status_adx = "Hot Trend";
+                    secondary_status_adx = "Hot Trend";
                 } else if (adx < 20) {
                     status_adx = "No Trend";
-                } else {
-                    status_adx = "Trend"; // 當 ADX 在 20 到 25 之間時，標記為 "Trend"
+                    secondary_status_adx = "No Trend";
                 }
 
                 indicator_values.push({
                     "Indicator": "ADX",
-                    "Value": adx !== null && adx !== undefined ? adx.toFixed(2) : '-',
-                    "Sell Signal": "-",
-                    "Buy Signal": "-",
-                    "Secondary Sell Signal": "-",
-                    "Secondary Buy Signal": "-",
-                    "Status": status_adx !== "No Trend" ? `<span class="${statusClass_general(status_adx, 'ADX')}" data-sort="${status_adx}">${status_adx}</span>` : `${status_adx}`,
-                    "Secondary Status": status_adx !== "No Trend" ? `<span class="${statusClass_general(status_adx, 'ADX')}" data-sort="${status_adx}">${status_adx}</span>` : `${status_adx}`
+                    "Value": formatNumber(adx),
+                    "Sell Signal": "< 20",
+                    "Buy Signal": "> 25",
+                    "Secondary Sell Signal": "< 20",
+                    "Secondary Buy Signal": "> 25",
+                    "Status": `<span class="${statusClass_general(status_adx.toLowerCase().replace(' ', '-'))}">${status_adx}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_adx.toLowerCase().replace(' ', '-'))}">${secondary_status_adx}</span>`
+                });
+
+                // K
+                const k = indicators["K"];
+                const d = indicators["D"];
+                let status_k = "Wait";
+                let secondary_status_k = "Wait";
+
+                if (k < 20 && d < 20 && k > d) {
+                    status_k = "Buy";
+                }
+                if (k < 30 && d < 30 && k > d) {
+                    secondary_status_k = "Buy";
+                }
+                if (k > 80 && d > 80 && k < d) {
+                    status_k = "Sell";
+                }
+                if (k > 70 && d > 70 && k < d) {
+                    secondary_status_k = "Sell";
+                }
+
+                indicator_values.push({
+                    "Indicator": "K",
+                    "Value": formatNumber(k),
+                    "Sell Signal": "> 80",
+                    "Buy Signal": "< 20",
+                    "Secondary Sell Signal": "> 70",
+                    "Secondary Buy Signal": "< 30",
+                    "Status": `<span class="${statusClass_general(status_k.toLowerCase())}">${status_k}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_k.toLowerCase())}">${secondary_status_k}</span>`
+                });
+
+                // D
+                let status_d = "Wait";
+                let secondary_status_d = "Wait";
+
+                if (k < 20 && d < 20 && k > d) {
+                    status_d = "Buy";
+                }
+                if (k < 30 && d < 30 && k > d) {
+                    secondary_status_d = "Buy";
+                }
+                if (k > 80 && d > 80 && k < d) {
+                    status_d = "Sell";
+                }
+                if (k > 70 && d > 70 && k < d) {
+                    secondary_status_d = "Sell";
+                }
+
+                indicator_values.push({
+                    "Indicator": "D",
+                    "Value": formatNumber(d),
+                    "Sell Signal": "> 80",
+                    "Buy Signal": "< 20",
+                    "Secondary Sell Signal": "> 70",
+                    "Secondary Buy Signal": "< 30",
+                    "Status": `<span class="${statusClass_general(status_d.toLowerCase())}">${status_d}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_d.toLowerCase())}">${secondary_status_d}</span>`
                 });
 
                 // Close Price
                 const close_price_val = indicators["Close Price"];
                 indicator_values.push({
                     "Indicator": "Close Price",
-                    "Value": close_price_val !== null && close_price_val !== undefined ? close_price_val.toFixed(2) : '-',
+                    "Value": formatNumber(close_price_val),
                     "Sell Signal": "-",
                     "Buy Signal": "-",
                     "Secondary Sell Signal": "-",
@@ -678,33 +688,51 @@
                     "Secondary Status": "-"
                 });
 
+                // 調試：在控制台輸出所有指標值
+                console.log("Evaluated Indicators:", indicator_values);
+
                 return indicator_values;
             }
 
-            // 輔助函數來獲取狀態類別
-            function statusClass_general(status, indicator = "") {
-                if (indicator === "ADX") {
-                    switch(status) {
-                        case 'Hot Trend':
-                            return 'status-hot-trend';
-                        case 'Trend':
-                            return 'status-trend';
-                        case 'No Trend':
-                            return ''; // 無背景顏色
-                        default:
-                            return 'status-wait';
-                    }
+            // 判斷一般指標的 Status
+            function determineStatus(value, sellSignal, buySignal, secondarySell, secondaryBuy) {
+                if (value > sellSignal) {
+                    return `<span class="${statusClass_general('sell')}">Sell</span>`;
+                } else if (value < buySignal) {
+                    return `<span class="${statusClass_general('buy')}">Buy</span>`;
                 } else {
-                    switch(status.toLowerCase()) {
-                        case 'buy':
-                            return 'status-buy';
-                        case 'sell':
-                            return 'status-sell';
-                        case 'wait':
-                            return 'status-wait';
-                        default:
-                            return 'status-wait';
-                    }
+                    return `<span class="${statusClass_general('wait')}">Wait</span>`;
+                }
+            }
+
+            // 判斷一般指標的 Secondary Status
+            function determineSecondaryStatus(value, sellSignal, buySignal, secondarySell, secondaryBuy) {
+                if (value > secondarySell) {
+                    return `<span class="${statusClass_general('sell')}">Sell</span>`;
+                } else if (value < secondaryBuy) {
+                    return `<span class="${statusClass_general('buy')}">Buy</span>`;
+                } else {
+                    return `<span class="${statusClass_general('wait')}">Wait</span>`;
+                }
+            }
+
+            // 輔助函數來獲取狀態類別
+            function statusClass_general(status) {
+                switch(status.toLowerCase()) {
+                    case 'buy':
+                        return 'status-buy';
+                    case 'sell':
+                        return 'status-sell';
+                    case 'wait':
+                        return 'status-wait';
+                    case 'trend':
+                        return 'status-trend';
+                    case 'hot-trend':
+                        return 'status-hot-trend';
+                    case 'no-trend':
+                        return 'status-no-trend';
+                    default:
+                        return 'status-wait';
                 }
             }
 
@@ -740,8 +768,8 @@
 
                 selectedIndicators.forEach(indicator => {
                     if (indicator === "MACD") {
-                        const macd = data.map(entry => entry.MACD);
-                        const macd_signal = data.map(entry => entry.MACD_signal);
+                        const macd = data.map(entry => entry.MACD !== null ? entry.MACD : null);
+                        const macd_signal = data.map(entry => entry.MACD_signal !== null ? entry.MACD_signal : null);
                         indicatorTraces.push({
                             x: dates,
                             y: macd,
@@ -760,7 +788,7 @@
                         });
                     }
                     if (indicator === "RSI") {
-                        const rsi = data.map(entry => entry.RSI);
+                        const rsi = data.map(entry => entry.RSI !== null ? entry.RSI : null);
                         indicatorTraces.push({
                             x: dates,
                             y: rsi,
@@ -787,7 +815,7 @@
                         });
                     }
                     if (indicator === "SMA") {
-                        const sma = data.map(entry => entry.SMA);
+                        const sma = data.map(entry => entry.SMA !== null ? entry.SMA : null);
                         indicatorTraces.push({
                             x: dates,
                             y: sma,
@@ -798,7 +826,7 @@
                         });
                     }
                     if (indicator === "EMA") {
-                        const ema = data.map(entry => entry.EMA);
+                        const ema = data.map(entry => entry.EMA !== null ? entry.EMA : null);
                         indicatorTraces.push({
                             x: dates,
                             y: ema,
@@ -809,7 +837,7 @@
                         });
                     }
                     if (indicator === "BB High") {
-                        const bb_high = data.map(entry => entry['BB High']);
+                        const bb_high = data.map(entry => entry['BB High'] !== null ? entry['BB High'] : null);
                         indicatorTraces.push({
                             x: dates,
                             y: bb_high,
@@ -820,7 +848,7 @@
                         });
                     }
                     if (indicator === "BB Low") {
-                        const bb_low = data.map(entry => entry['BB Low']);
+                        const bb_low = data.map(entry => entry['BB Low'] !== null ? entry['BB Low'] : null);
                         indicatorTraces.push({
                             x: dates,
                             y: bb_low,
@@ -831,7 +859,7 @@
                         });
                     }
                     if (indicator === "K") {
-                        const k = data.map(entry => entry.K);
+                        const k = data.map(entry => entry.K !== null ? entry.K : null);
                         indicatorTraces.push({
                             x: dates,
                             y: k,
@@ -858,7 +886,7 @@
                         });
                     }
                     if (indicator === "D") {
-                        const d = data.map(entry => entry.D);
+                        const d = data.map(entry => entry.D !== null ? entry.D : null);
                         indicatorTraces.push({
                             x: dates,
                             y: d,
@@ -885,7 +913,7 @@
                         });
                     }
                     if (indicator === "Stochastic RSI") {
-                        const stochastic_rsi = data.map(entry => entry['Stochastic RSI']);
+                        const stochastic_rsi = data.map(entry => entry['Stochastic RSI'] !== null ? entry['Stochastic RSI'] : null);
                         indicatorTraces.push({
                             x: dates,
                             y: stochastic_rsi,
@@ -912,7 +940,7 @@
                         });
                     }
                     if (indicator === "CCI") {
-                        const cci = data.map(entry => entry.CCI);
+                        const cci = data.map(entry => entry.CCI !== null ? entry.CCI : null);
                         indicatorTraces.push({
                             x: dates,
                             y: cci,
@@ -939,7 +967,7 @@
                         });
                     }
                     if (indicator === "Williams %R") {
-                        const williams_r = data.map(entry => entry['Williams %R']);
+                        const williams_r = data.map(entry => entry['Williams %R'] !== null ? entry['Williams %R'] : null);
                         indicatorTraces.push({
                             x: dates,
                             y: williams_r,
@@ -958,7 +986,7 @@
                         });
                         indicatorTraces.push({
                             x: dates,
-                            y: Array(dates.length).fill(-80),
+                            y: Array(dates.length).fill(-40),
                             type: 'scatter',
                             mode: 'lines',
                             name: 'Williams %R Oversold',
@@ -966,7 +994,7 @@
                         });
                     }
                     if (indicator === "ADX") {
-                        const adx = data.map(entry => entry.ADX);
+                        const adx = data.map(entry => entry.ADX !== null ? entry.ADX : null);
                         indicatorTraces.push({
                             x: dates,
                             y: adx,
@@ -975,10 +1003,10 @@
                             name: 'ADX',
                             line: { color: '#FFD700' }
                         });
-                        // ADX signals can be more complex
+                        // ADX 信號可以更複雜，這裡僅顯示 ADX 線
                     }
                     if (indicator === "Close Price") {
-                        const closePrices = data.map(entry => entry.Close);
+                        const closePrices = data.map(entry => entry.Close !== null ? entry.Close : null);
                         indicatorTraces.push({
                             x: dates,
                             y: closePrices,
