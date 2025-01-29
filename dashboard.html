@@ -9,7 +9,94 @@
     <!-- 引入 DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap4.min.css">
     <!-- 自定義 CSS -->
-    <link href="assets/styles.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000; /* 黑色背景 */
+            color: white; /* 全局文字顏色為白色 */
+        }
+        .stock-status {
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 5px;
+            background-color: #222;
+            text-align: center; /* 文字置中 */
+            width: 100%; /* 讓 Bootstrap 控制寬度 */
+        }
+        /* 表格樣式 */
+        .indicator-table th, .indicator-table td {
+            background-color: #333;
+            color: white;
+        }
+        /* 狀態類別的樣式 */
+        .status-buy {
+            background-color: red;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .status-sell {
+            background-color: green;
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .status-wait {
+            background-color: yellow;
+            color: black;
+            padding: 5px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .status-trend {
+            background-color: pink; /* 粉紅色 */
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .status-hot-trend {
+            background-color: violet; /* 淡紫色 */
+            color: white;
+            padding: 5px;
+            border-radius: 3px;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* DataTables 排序指示符顏色調整 */
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_desc:after {
+            color: white; /* 調整排序指示符顏色為白色 */
+        }
+
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_desc:before {
+            color: white; /* 調整排序指示符顏色為白色 */
+        }
+
+        /* 圖表高度 */
+        #price-chart, #indicator-chart {
+            height: 400px;
+        }
+    </style>
 </head>
 <body>
     <div class="container-fluid">
@@ -27,7 +114,7 @@
             </div>
         </div>
 
-        <!-- 六隻股票的概覽 -->
+        <!-- 六檔股票的概覽 -->
         <div class="row mt-4 justify-content-center" id="today-status">
             <!-- 動態生成的股票狀態將插入在這裡 -->
         </div>
@@ -138,7 +225,8 @@
                 "paging": false,
                 "info": false,
                 "autoWidth": false,
-                "order": []
+                "order": [], // 如果您希望禁用初始排序，保留此行
+                // 移除 columnDefs 部分，允許所有欄位進行排序和搜索
             });
 
             // 股票代碼映射
@@ -280,8 +368,8 @@
                         indicator['Buy Signal'],
                         indicator['Secondary Sell Signal'],
                         indicator['Secondary Buy Signal'],
-                        indicator.Status,
-                        indicator['Secondary Status']
+                        indicator.Status, // 包含 span 元素或純文本
+                        indicator['Secondary Status'] // 包含 span 元素或純文本
                     ]);
                 });
 
@@ -290,7 +378,6 @@
             }
 
             function evaluateSignals(indicators, latestEntry, previousEntry, data) {
-                // 根據您的需求進行信號評估
                 const indicator_values = [];
 
                 // MACD
@@ -318,8 +405,8 @@
                     "Buy Signal": buy_signal_macd,
                     "Secondary Sell Signal": sell_signal_macd,
                     "Secondary Buy Signal": buy_signal_macd,
-                    "Status": status_macd,
-                    "Secondary Status": secondary_status_macd
+                    "Status": `<span class="${statusClass_general(status_macd)}">${status_macd}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_macd)}">${secondary_status_macd}</span>`
                 });
 
                 // RSI
@@ -353,8 +440,8 @@
                     "Buy Signal": buy_signal_rsi,
                     "Secondary Sell Signal": sell_signal_rsi,
                     "Secondary Buy Signal": buy_signal_rsi,
-                    "Status": status_rsi,
-                    "Secondary Status": secondary_status_rsi
+                    "Status": `<span class="${statusClass_general(status_rsi)}">${status_rsi}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_rsi)}">${secondary_status_rsi}</span>`
                 });
 
                 // SMA
@@ -383,8 +470,8 @@
                     "Buy Signal": buy_signal_sma,
                     "Secondary Sell Signal": sell_signal_sma,
                     "Secondary Buy Signal": buy_signal_sma,
-                    "Status": status_sma,
-                    "Secondary Status": secondary_status_sma
+                    "Status": `<span class="${statusClass_general(status_sma)}">${status_sma}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_sma)}">${secondary_status_sma}</span>`
                 });
 
                 // EMA
@@ -412,261 +499,170 @@
                     "Buy Signal": buy_signal_ema,
                     "Secondary Sell Signal": sell_signal_ema,
                     "Secondary Buy Signal": buy_signal_ema,
-                    "Status": status_ema,
-                    "Secondary Status": secondary_status_ema
+                    "Status": `<span class="${statusClass_general(status_ema)}">${status_ema}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(secondary_status_ema)}">${secondary_status_ema}</span>`
                 });
 
-                // Bollinger Bands High vs Close Price
+                // BB High
                 const bb_high = indicators["BB High"];
-                const bb_low = indicators["BB Low"];
-                let sell_signal_bb_high = "-";
-                let buy_signal_bb_low = "-";
-                let status_bb = "Wait";
-                let secondary_status_bb = "Wait";
-
-                const near_low = bb_low + (bb_high - bb_low) / 10;
-                const near_high = bb_high - (bb_high - bb_low) / 10;
-
-                if (close_price < bb_low) {
-                    status_bb = "Buy";
-                    buy_signal_bb_low = `< ${bb_low.toFixed(2)}`;
-                }
-                if (close_price < near_low) {
-                    secondary_status_bb = "Buy";
-                    buy_signal_bb_low = `< ${near_low.toFixed(2)}`;
-                }
+                let status_bb_high = "Wait";
                 if (close_price > bb_high) {
-                    status_bb = "Sell";
-                    sell_signal_bb_high = `> ${bb_high.toFixed(2)}`;
-                }
-                if (close_price > near_high) {
-                    secondary_status_bb = "Sell";
-                    sell_signal_bb_high = `> ${near_high.toFixed(2)}`;
+                    status_bb_high = "Sell";
+                } else if (close_price < bb_high) {
+                    status_bb_high = "Buy";
                 }
 
                 indicator_values.push({
                     "Indicator": "BB High v.s Close Price",
                     "Value": close_price !== null && close_price !== undefined ? close_price.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_bb_high,
-                    "Buy Signal": "-",
-                    "Secondary Sell Signal": sell_signal_bb_high,
-                    "Secondary Buy Signal": "-",
-                    "Status": status_bb,
-                    "Secondary Status": secondary_status_bb
+                    "Sell Signal": close_price > bb_high ? `> ${bb_high.toFixed(2)}` : "-",
+                    "Buy Signal": close_price < bb_high ? `< ${bb_high.toFixed(2)}` : "-",
+                    "Secondary Sell Signal": close_price > bb_high ? `> ${bb_high.toFixed(2)}` : "-",
+                    "Secondary Buy Signal": close_price < bb_high ? `< ${bb_high.toFixed(2)}` : "-",
+                    "Status": `<span class="${statusClass_general(status_bb_high)}">${status_bb_high}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_bb_high)}">${status_bb_high}</span>`
                 });
 
-                // Bollinger Bands Low v.s Close Price
+                // BB Low
+                const bb_low = indicators["BB Low"];
+                let status_bb_low = "Wait";
+                if (close_price < bb_low) {
+                    status_bb_low = "Buy";
+                } else if (close_price > bb_low) {
+                    status_bb_low = "Sell";
+                }
+
                 indicator_values.push({
                     "Indicator": "BB Low v.s Close Price",
                     "Value": close_price !== null && close_price !== undefined ? close_price.toFixed(2) : '-',
-                    "Sell Signal": "-",
-                    "Buy Signal": buy_signal_bb_low,
-                    "Secondary Sell Signal": "-",
-                    "Secondary Buy Signal": buy_signal_bb_low,
-                    "Status": status_bb,
-                    "Secondary Status": secondary_status_bb
+                    "Sell Signal": close_price > bb_low ? `> ${bb_low.toFixed(2)}` : "-",
+                    "Buy Signal": close_price < bb_low ? `< ${bb_low.toFixed(2)}` : "-",
+                    "Secondary Sell Signal": close_price > bb_low ? `> ${bb_low.toFixed(2)}` : "-",
+                    "Secondary Buy Signal": close_price < bb_low ? `< ${bb_low.toFixed(2)}` : "-",
+                    "Status": `<span class="${statusClass_general(status_bb_low)}">${status_bb_low}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_bb_low)}">${status_bb_low}</span>`
                 });
 
                 // K
                 const k = indicators["K"];
-                let sell_signal_k = "-";
-                let buy_signal_k = "-";
                 let status_k = "Wait";
-                let secondary_status_k = "Wait";
-
                 if (k < 20) {
                     status_k = "Buy";
-                    buy_signal_k = "< 20";
-                }
-                if (k < 30) {
-                    secondary_status_k = "Buy";
-                    buy_signal_k = "< 30";
-                }
-                if (k > 80) {
+                } else if (k > 80) {
                     status_k = "Sell";
-                    sell_signal_k = "> 80";
-                }
-                if (k > 70) {
-                    secondary_status_k = "Sell";
-                    sell_signal_k = "> 70";
                 }
 
                 indicator_values.push({
                     "Indicator": "K",
                     "Value": k !== null && k !== undefined ? k.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_k,
-                    "Buy Signal": buy_signal_k,
-                    "Secondary Sell Signal": sell_signal_k,
-                    "Secondary Buy Signal": buy_signal_k,
-                    "Status": status_k,
-                    "Secondary Status": secondary_status_k
+                    "Sell Signal": k > 80 ? "> 80" : "-",
+                    "Buy Signal": k < 20 ? "< 20" : "-",
+                    "Secondary Sell Signal": k > 70 ? "> 70" : "-",
+                    "Secondary Buy Signal": k < 30 ? "< 30" : "-",
+                    "Status": `<span class="${statusClass_general(status_k)}">${status_k}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_k)}">${status_k}</span>`
                 });
 
                 // D
                 const d = indicators["D"];
-                let sell_signal_d = "-";
-                let buy_signal_d = "-";
                 let status_d = "Wait";
-                let secondary_status_d = "Wait";
-
                 if (d < 20) {
                     status_d = "Buy";
-                    buy_signal_d = "< 20";
-                }
-                if (d < 30) {
-                    secondary_status_d = "Buy";
-                    buy_signal_d = "< 30";
-                }
-                if (d > 80) {
+                } else if (d > 80) {
                     status_d = "Sell";
-                    sell_signal_d = "> 80";
-                }
-                if (d > 70) {
-                    secondary_status_d = "Sell";
-                    sell_signal_d = "> 70";
                 }
 
                 indicator_values.push({
                     "Indicator": "D",
                     "Value": d !== null && d !== undefined ? d.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_d,
-                    "Buy Signal": buy_signal_d,
-                    "Secondary Sell Signal": sell_signal_d,
-                    "Secondary Buy Signal": buy_signal_d,
-                    "Status": status_d,
-                    "Secondary Status": secondary_status_d
+                    "Sell Signal": d > 80 ? "> 80" : "-",
+                    "Buy Signal": d < 20 ? "< 20" : "-",
+                    "Secondary Sell Signal": d > 70 ? "> 70" : "-",
+                    "Secondary Buy Signal": d < 30 ? "< 30" : "-",
+                    "Status": `<span class="${statusClass_general(status_d)}">${status_d}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_d)}">${status_d}</span>`
                 });
 
                 // Stochastic RSI
                 const stochastic_rsi = indicators["Stochastic RSI"];
-                let sell_signal_stochastic_rsi = "-";
-                let buy_signal_stochastic_rsi = "-";
                 let status_stochastic_rsi = "Wait";
-                let secondary_status_stochastic_rsi = "Wait";
-
                 if (stochastic_rsi < 20) {
                     status_stochastic_rsi = "Buy";
-                    buy_signal_stochastic_rsi = "< 20";
-                }
-                if (stochastic_rsi < 40) {
-                    secondary_status_stochastic_rsi = "Buy";
-                    buy_signal_stochastic_rsi = "< 40";
-                }
-                if (stochastic_rsi > 80) {
+                } else if (stochastic_rsi > 80) {
                     status_stochastic_rsi = "Sell";
-                    sell_signal_stochastic_rsi = "> 80";
-                }
-                if (stochastic_rsi > 60) {
-                    secondary_status_stochastic_rsi = "Sell";
-                    sell_signal_stochastic_rsi = "> 60";
                 }
 
                 indicator_values.push({
                     "Indicator": "Stochastic RSI",
                     "Value": stochastic_rsi !== null && stochastic_rsi !== undefined ? stochastic_rsi.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_stochastic_rsi,
-                    "Buy Signal": buy_signal_stochastic_rsi,
-                    "Secondary Sell Signal": sell_signal_stochastic_rsi,
-                    "Secondary Buy Signal": buy_signal_stochastic_rsi,
-                    "Status": status_stochastic_rsi,
-                    "Secondary Status": secondary_status_stochastic_rsi
+                    "Sell Signal": stochastic_rsi > 80 ? "> 80" : "-",
+                    "Buy Signal": stochastic_rsi < 20 ? "< 20" : "-",
+                    "Secondary Sell Signal": stochastic_rsi > 60 ? "> 60" : "-",
+                    "Secondary Buy Signal": stochastic_rsi < 40 ? "< 40" : "-",
+                    "Status": `<span class="${statusClass_general(status_stochastic_rsi)}">${status_stochastic_rsi}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_stochastic_rsi)}">${status_stochastic_rsi}</span>`
                 });
 
                 // CCI
                 const cci = indicators["CCI"];
-                let sell_signal_cci = "-";
-                let buy_signal_cci = "-";
                 let status_cci = "Wait";
-                let secondary_status_cci = "Wait";
-
                 if (cci < -100) {
                     status_cci = "Buy";
-                    buy_signal_cci = "< -100";
-                }
-                if (cci < -90) {
-                    secondary_status_cci = "Buy";
-                    buy_signal_cci = "< -90";
-                }
-                if (cci > 100) {
+                } else if (cci > 100) {
                     status_cci = "Sell";
-                    sell_signal_cci = "> 100";
-                }
-                if (cci > 90) {
-                    secondary_status_cci = "Sell";
-                    sell_signal_cci = "> 90";
                 }
 
                 indicator_values.push({
                     "Indicator": "CCI",
                     "Value": cci !== null && cci !== undefined ? cci.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_cci,
-                    "Buy Signal": buy_signal_cci,
-                    "Secondary Sell Signal": sell_signal_cci,
-                    "Secondary Buy Signal": buy_signal_cci,
-                    "Status": status_cci,
-                    "Secondary Status": secondary_status_cci
+                    "Sell Signal": cci > 100 ? "> 100" : "-",
+                    "Buy Signal": cci < -100 ? "< -100" : "-",
+                    "Secondary Sell Signal": cci > 90 ? "> 90" : "-",
+                    "Secondary Buy Signal": cci < -90 ? "< -90" : "-",
+                    "Status": `<span class="${statusClass_general(status_cci)}">${status_cci}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_cci)}">${status_cci}</span>`
                 });
 
                 // Williams %R
                 const williams_r = indicators["Williams %R"];
-                let sell_signal_williams_r = "-";
-                let buy_signal_williams_r = "-";
                 let status_williams_r = "Wait";
-                let secondary_status_williams_r = "Wait";
-
                 if (williams_r < -80) {
                     status_williams_r = "Buy";
-                    buy_signal_williams_r = "< -80";
-                }
-                if (williams_r < -60) {
-                    secondary_status_williams_r = "Buy";
-                    buy_signal_williams_r = "< -60";
-                }
-                if (williams_r > -20) {
+                } else if (williams_r > -20) {
                     status_williams_r = "Sell";
-                    sell_signal_williams_r = "> -20";
-                }
-                if (williams_r > -40) {
-                    secondary_status_williams_r = "Sell";
-                    sell_signal_williams_r = "> -40";
                 }
 
                 indicator_values.push({
                     "Indicator": "Williams %R",
                     "Value": williams_r !== null && williams_r !== undefined ? williams_r.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_williams_r,
-                    "Buy Signal": buy_signal_williams_r,
-                    "Secondary Sell Signal": sell_signal_williams_r,
-                    "Secondary Buy Signal": buy_signal_williams_r,
-                    "Status": status_williams_r,
-                    "Secondary Status": secondary_status_williams_r
+                    "Sell Signal": williams_r > -20 ? "> -20" : "-",
+                    "Buy Signal": williams_r < -80 ? "< -80" : "-",
+                    "Secondary Sell Signal": williams_r > -40 ? "> -40" : "-",
+                    "Secondary Buy Signal": williams_r < -60 ? "< -60" : "-",
+                    "Status": `<span class="${statusClass_general(status_williams_r)}">${status_williams_r}</span>`,
+                    "Secondary Status": `<span class="${statusClass_general(status_williams_r)}">${status_williams_r}</span>`
                 });
 
                 // ADX
                 const adx = indicators["ADX"];
-                let sell_signal_adx = "-";
-                let buy_signal_adx = "-";
-                let status_adx = "--";
-                let secondary_status_adx = "--";
-
+                let status_adx = "Wait";
                 if (adx > 25) {
                     status_adx = "Hot Trend";
-                    buy_signal_adx = "> 25";
-                }
-                if (adx < 20) {
+                } else if (adx < 20) {
                     status_adx = "No Trend";
-                    sell_signal_adx = "< 20";
+                } else {
+                    status_adx = "Trend"; // 當 ADX 在 20 到 25 之間時，標記為 "Trend"
                 }
 
                 indicator_values.push({
                     "Indicator": "ADX",
                     "Value": adx !== null && adx !== undefined ? adx.toFixed(2) : '-',
-                    "Sell Signal": sell_signal_adx,
-                    "Buy Signal": buy_signal_adx,
-                    "Secondary Sell Signal": sell_signal_adx,
-                    "Secondary Buy Signal": buy_signal_adx,
-                    "Status": status_adx,
-                    "Secondary Status": secondary_status_adx
+                    "Sell Signal": "-",
+                    "Buy Signal": "-",
+                    "Secondary Sell Signal": "-",
+                    "Secondary Buy Signal": "-",
+                    "Status": status_adx !== "No Trend" ? `<span class="${statusClass_general(status_adx, 'ADX')}" data-sort="${status_adx}">${status_adx}</span>` : `${status_adx}`,
+                    "Secondary Status": status_adx !== "No Trend" ? `<span class="${statusClass_general(status_adx, 'ADX')}" data-sort="${status_adx}">${status_adx}</span>` : `${status_adx}`
                 });
 
                 // Close Price
@@ -683,6 +679,33 @@
                 });
 
                 return indicator_values;
+            }
+
+            // 輔助函數來獲取狀態類別
+            function statusClass_general(status, indicator = "") {
+                if (indicator === "ADX") {
+                    switch(status) {
+                        case 'Hot Trend':
+                            return 'status-hot-trend';
+                        case 'Trend':
+                            return 'status-trend';
+                        case 'No Trend':
+                            return ''; // 無背景顏色
+                        default:
+                            return 'status-wait';
+                    }
+                } else {
+                    switch(status.toLowerCase()) {
+                        case 'buy':
+                            return 'status-buy';
+                        case 'sell':
+                            return 'status-sell';
+                        case 'wait':
+                            return 'status-wait';
+                        default:
+                            return 'status-wait';
+                    }
+                }
             }
 
             function updateCharts(data, selectedIndicators) {
@@ -1003,7 +1026,7 @@
                     const tickerData = data.filter(entry => entry.ticker === ticker);
                     if (tickerData.length === 0) {
                         todayStatuses.push(`
-                            <div class="col-md-2 stock-status">
+                            <div class="col-md-2 col-sm-6 stock-status">
                                 <p style="font-weight:bold; font-size:18px;">${name}</p>
                                 <p>No data available</p>
                             </div>
@@ -1035,7 +1058,7 @@
                     }
 
                     todayStatuses.push(`
-                        <div class="col-md-2 stock-status">
+                        <div class="col-md-2 col-sm-6 stock-status">
                             <p style="font-weight:bold; font-size:18px;">${name}</p>
                             <p>股價: $${latestClose.toFixed(2)}</p>
                             <p style="color:${color};">${changeAmount}</p>
