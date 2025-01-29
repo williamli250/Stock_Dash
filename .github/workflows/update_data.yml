@@ -4,8 +4,9 @@ name: Update Stock Data
 
 on:
   schedule:
-    # 每天凌晨2點執行（UTC時間）
-    - cron: '0 2 * * *'
+    # 每天台灣時間 9:05（對應 UTC 1:05）和 13:00（對應 UTC 5:00）執行
+    - cron: '5 1 * * *'
+    - cron: '0 5 * * *'
   workflow_dispatch:  # 允許手動觸發
 
 permissions:
