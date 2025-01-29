@@ -102,7 +102,7 @@
         }
 
         /* 圖表高度 */
-        #price-chart, #indicator-chart {
+        #price-chart, #indicator-chart, #status-distribution-chart, #secondary-status-distribution-chart {
             height: 400px;
         }
     </style>
@@ -154,8 +154,8 @@
                         <option value="EMA">EMA (Exponential Moving Average)</option>
                     </optgroup>
                     <optgroup label="波動率指標">
-                        <option value="BB High">BB High (布林帶上軌)</option>
-                        <option value="BB Low">BB Low (布林帶下軌)</option>
+                        <option value="BB High" selected>BB High (布林帶上軌)</option>
+                        <option value="BB Low" selected>BB Low (布林帶下軌)</option>
                     </optgroup>
                     <optgroup label="動量指標">
                         <option value="MACD">MACD (Moving Average Convergence Divergence)</option>
@@ -168,7 +168,7 @@
                         <option value="D">D (Stochastic Oscillator)</option>
                     </optgroup>
                     <optgroup label="價格指標">
-                        <option value="Close Price">Close Price (收盤價)</option>
+                        <option value="Close Price" selected>Close Price (收盤價)</option>
                     </optgroup>
                 </select>
             </div>
@@ -189,6 +189,16 @@
             </div>
             <div class="col-md-6 mb-4">
                 <div id="indicator-chart"></div>
+            </div>
+        </div>
+
+        <!-- 新增的直方圖 -->
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <div id="status-distribution-chart"></div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div id="secondary-status-distribution-chart"></div>
             </div>
         </div>
 
@@ -380,6 +390,9 @@
                 // 評估信號
                 const indicatorValues = evaluateSignals(indicators);
 
+                // 更新狀態分佈直方圖
+                updateStatusCharts(indicatorValues);
+
                 // 遍歷指標並添加到表格
                 indicatorValues.forEach(indicator => {
                     table.row.add([
@@ -425,10 +438,10 @@
                 indicator_values.push({
                     "Indicator": "MACD",
                     "Value": formatNumber(macd),
-                    "Sell Signal": formatNumber(macd_signal),
-                    "Buy Signal": formatNumber(macd_signal),
-                    "Secondary Sell Signal": formatNumber(macd_signal),
-                    "Secondary Buy Signal": formatNumber(macd_signal),
+                    "Sell Signal": `< ${formatNumber(macd_signal)}`,
+                    "Buy Signal": `> ${formatNumber(macd_signal)}`,
+                    "Secondary Sell Signal": `< ${formatNumber(macd_signal)}`,
+                    "Secondary Buy Signal": `> ${formatNumber(macd_signal)}`,
                     "Status": `<span class="${statusClass_general(status_macd.toLowerCase())}">${status_macd}</span>`,
                     "Secondary Status": `<span class="${statusClass_general(secondary_status_macd.toLowerCase())}">${secondary_status_macd}</span>`
                 });
@@ -1013,7 +1026,7 @@
                             type: 'scatter',
                             mode: 'lines',
                             name: 'Close Price',
-                            line: { color: '#FFFFFF' } // 使用虛線區分
+                            line: { color: '#17BECF'}
                         });
                     }
                 });
@@ -1041,6 +1054,90 @@
                     Plotly.purge('indicator-chart');
                     Plotly.newPlot('indicator-chart', [], indicatorLayout);
                 }
+            }
+
+            function updateStatusCharts(indicatorValues) {
+                let statusCounts = { 'Buy': 0, 'Wait': 0, 'Sell': 0 };
+                let secondaryStatusCounts = { 'Buy': 0, 'Wait': 0, 'Sell': 0 };
+
+                indicatorValues.forEach(indicator => {
+                    // 提取 Status 和 Secondary Status 的文字內容
+                    let statusText = $(indicator.Status).text();
+                    let secondaryStatusText = $(indicator['Secondary Status']).text();
+
+                    if (statusText in statusCounts) {
+                        statusCounts[statusText]++;
+                    }
+                    if (secondaryStatusText in secondaryStatusCounts) {
+                        secondaryStatusCounts[secondaryStatusText]++;
+                    }
+                });
+
+                // 創建 Status 分佈直方圖數據
+                const statusData = [{
+                    x: ['Buy', 'Wait', 'Sell'],
+                    y: [statusCounts['Buy'], statusCounts['Wait'], statusCounts['Sell']],
+                    type: 'bar',
+                    marker: {
+                        color: [
+                            'rgba(255, 0, 0, 0.8)',    // Buy - 半透明紅色 (透明度 0.8)
+                            'rgba(255, 255, 0, 0.5',  // Wait - 半透明黃色 (透明度 0.5)
+                            'rgba(0, 128, 0, 0.8)'     // Sell - 半透明綠色 (透明度 0.8)
+                        ]
+                    },
+                    text: [statusCounts['Buy'], statusCounts['Wait'], statusCounts['Sell']],
+                    textposition: 'auto',
+                    textfont: { color: 'white' }, // 將數值顏色設為白色
+                    hoverinfo: 'text+y'
+                }];
+
+                const statusLayout = {
+                    title: 'Status 分佈',
+                    xaxis: { title: '狀態' },
+                    yaxis: { title: '數量' },
+                    template: 'plotly_dark',
+                    paper_bgcolor: 'rgba(0, 0, 0, 0)',
+                    plot_bgcolor: 'rgba(0, 0, 0, 0)',
+                    font: { color: 'white' },
+                    showlegend: false,
+                    hovermode: 'closest'
+                };
+
+                // 創建 Secondary Status 分佈直方圖數據
+                const secondaryStatusData = [{
+                    x: ['Buy', 'Wait', 'Sell'],
+                    y: [secondaryStatusCounts['Buy'], secondaryStatusCounts['Wait'], secondaryStatusCounts['Sell']],
+                    type: 'bar',
+                    marker: {
+                        color: [
+                            'rgba(255, 0, 0, 0.8)',    // Buy - 半透明紅色 (透明度 0.8)
+                            'rgba(255, 255, 0, 0.5)',  // Wait - 半透明黃色 (透明度 0.5)
+                            'rgba(0, 128, 0, 0.8)'     // Sell - 半透明綠色 (透明度 0.8)
+                        ]
+                    },
+                    text: [secondaryStatusCounts['Buy'], secondaryStatusCounts['Wait'], secondaryStatusCounts['Sell']],
+                    textposition: 'auto',
+                    textfont: { color: 'white' }, // 將數值顏色設為白色
+                    hoverinfo: 'text+y'
+                }];
+
+                const secondaryStatusLayout = {
+                    title: 'Secondary Status 分佈',
+                    xaxis: { title: '狀態' },
+                    yaxis: { title: '數量' },
+                    template: 'plotly_dark',
+                    paper_bgcolor: 'rgba(0, 0, 0, 0)',
+                    plot_bgcolor: 'rgba(0, 0, 0, 0)',
+                    font: { color: 'white' },
+                    showlegend: false,
+                    hovermode: 'closest'
+                };
+
+                // 繪製 Status 分佈直方圖
+                Plotly.newPlot('status-distribution-chart', statusData, statusLayout);
+
+                // 繪製 Secondary Status 分佈直方圖
+                Plotly.newPlot('secondary-status-distribution-chart', secondaryStatusData, secondaryStatusLayout);
             }
 
             function updateTodayStatus(data, tickers) {
