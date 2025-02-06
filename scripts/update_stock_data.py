@@ -8,12 +8,12 @@ import json
 from ta import trend, momentum, volatility
 from datetime import datetime
 
-# 股票代碼字典 (更新後：移除永豐ESG，新增美股)
+# 股票代碼字典（移除永豐ESG，新增美股）
 tickers = {
     '台積電': '2330.TW',
     '富邦印度': '00652.TW',
     '聯發科': '2454.TW',
-    '元大美債': '00679B.TWO',  # 正確代碼
+    '元大美債': '00679B.TWO',
     '台灣大盤指數': '^TWII',
     '特斯拉': 'TSLA',
     '輝達': 'NVDA',
@@ -27,8 +27,8 @@ def fetch_stock_data(ticker, period='2y', interval='1d'):
     抓取股票歷史數據。
 
     :param ticker: 股票代碼
-    :param period: 時間範圍（如 "2y" 表示兩年）
-    :param interval: 數據間隔（如 "1d" 表示日線）
+    :param period: 時間範圍（例如 "2y" 表示兩年）
+    :param interval: 數據間隔（例如 "1d" 表示日線）
     :return: 包含歷史數據的 DataFrame
     """
     try:
@@ -181,9 +181,10 @@ def main():
         df = df[existing_columns]
         # 將 'Date' 欄位轉換為字符串格式
         df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
-        # 移除含有任何 NaN 值的行
+        # 將所有數值欄位統一四捨五入至小數點第二位
+        df = df.round(2)
         df.dropna(inplace=True)
-        # 填充 NaN 為 null（僅針對仍然存在的 NaN）
+        # 將剩餘的 NaN 值轉換為 None
         df = df.where(pd.notnull(df), None)
         all_data.extend(df.to_dict(orient='records'))
 
