@@ -38,7 +38,6 @@
             width: 100%;
             text-align: center;
         }
-
         .status-sell {
             background-color: green;
             color: white;
@@ -48,7 +47,6 @@
             width: 100%;
             text-align: center;
         }
-
         .status-wait {
             background-color: yellow;
             color: black;
@@ -58,7 +56,6 @@
             width: 100%;
             text-align: center;
         }
-
         .status-trend {
             background-color: pink; /* 粉紅色 */
             color: white;
@@ -68,7 +65,6 @@
             width: 100%;
             text-align: center;
         }
-
         .status-hot-trend {
             background-color: violet; /* 淡紫色 */
             color: white;
@@ -78,7 +74,6 @@
             width: 100%;
             text-align: center;
         }
-
         .status-no-trend {
             /* 無背景顏色，文字顏色為白色 */
             color: white;
@@ -87,20 +82,17 @@
             width: 100%;
             text-align: center;
         }
-
         /* DataTables 排序指示符顏色調整 */
         table.dataTable thead .sorting:after,
         table.dataTable thead .sorting_asc:after,
         table.dataTable thead .sorting_desc:after {
             color: white; /* 調整排序指示符顏色為白色 */
         }
-
         table.dataTable thead .sorting:before,
         table.dataTable thead .sorting_asc:before,
         table.dataTable thead .sorting_desc:before {
             color: white; /* 調整排序指示符顏色為白色 */
         }
-
         /* 圖表高度 */
         #price-chart, #indicator-chart, #status-distribution-chart, #secondary-status-distribution-chart {
             height: 400px;
@@ -123,7 +115,7 @@
             </div>
         </div>
 
-        <!-- 六檔股票的概覽 -->
+        <!-- 股票狀態概覽 -->
         <div class="row mt-4 justify-content-center" id="today-status">
             <!-- 動態生成的股票狀態將插入在這裡 -->
         </div>
@@ -141,10 +133,14 @@
                 <select id="stock-ticker" class="form-control">
                     <option value="2330.TW">台積電</option>
                     <option value="00652.TW">富邦印度</option>
-                    <option value="00930.TW">永豐ESG</option>
                     <option value="2454.TW">聯發科</option>
                     <option value="00679B.TWO">元大美債20年</option>
                     <option value="^TWII">台灣大盤指數</option>
+                    <option value="TSLA">特斯拉</option>
+                    <option value="NVDA">輝達</option>
+                    <option value="MSFT">微軟</option>
+                    <option value="AAPL">蘋果</option>
+                    <option value="GOOG">谷歌</option>
                 </select>
             </div>
             <div class="col-md-3 mb-3">
@@ -192,7 +188,7 @@
             </div>
         </div>
 
-        <!-- 新增的直方圖 -->
+        <!-- 直方圖 -->
         <div class="row mt-4">
             <div class="col-md-6 mb-4">
                 <div id="status-distribution-chart"></div>
@@ -259,14 +255,18 @@
                 ]
             });
 
-            // 股票代碼映射
+            // 股票代碼映射 (更新後：移除永豐ESG，加入美股)
             const tickers = {
                 '台積電': '2330.TW',
                 '富邦印度': '00652.TW',
-                '永豐ESG': '00930.TW',
                 '聯發科': '2454.TW',
                 '元大美債20年': '00679B.TWO',
-                '台灣大盤指數': '^TWII'
+                '台灣大盤指數': '^TWII',
+                '特斯拉': 'TSLA',
+                '輝達': 'NVDA',
+                '微軟': 'MSFT',
+                '蘋果': 'AAPL',
+                '谷歌': 'GOOG'
             };
 
             // 監聽選擇變更
@@ -1081,7 +1081,7 @@
                     marker: {
                         color: [
                             'rgba(255, 0, 0, 0.8)',    // Buy - 半透明紅色 (透明度 0.8)
-                            'rgba(255, 255, 0, 0.5',  // Wait - 半透明黃色 (透明度 0.5)
+                            'rgba(255, 255, 0, 0.5)',  // Wait - 半透明黃色 (透明度 0.5)
                             'rgba(0, 128, 0, 0.8)'     // Sell - 半透明綠色 (透明度 0.8)
                         ]
                     },

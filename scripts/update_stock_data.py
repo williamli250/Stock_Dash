@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # scripts/update_stock_data.py
 
 import os
@@ -7,14 +8,18 @@ import json
 from ta import trend, momentum, volatility
 from datetime import datetime
 
-# 股票代碼字典
+# 股票代碼字典 (更新後：移除永豐ESG，新增美股)
 tickers = {
     '台積電': '2330.TW',
     '富邦印度': '00652.TW',
-    '永豐ESG': '00930.TW',
     '聯發科': '2454.TW',
     '元大美債': '00679B.TWO',  # 正確代碼
-    '台灣大盤指數': '^TWII'
+    '台灣大盤指數': '^TWII',
+    '特斯拉': 'TSLA',
+    '輝達': 'NVDA',
+    '微軟': 'MSFT',
+    '蘋果': 'AAPL',
+    '谷歌': 'GOOG'
 }
 
 def fetch_stock_data(ticker, period='2y', interval='1d'):
