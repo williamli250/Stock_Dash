@@ -446,7 +446,7 @@
         "RSI": 41.41,
         "SMA": 915.46,
         "EMA": 904.45,
-        "BB High": 1081.77,
+        "BB High": 1081.78,
         "BB Low": 820.51,
         "K": 26.07,
         "D": 8.95,
@@ -1040,7 +1040,7 @@
         "K": 100.0,
         "D": 87.82,
         "Stochastic RSI": 1.0,
-        "CCI": 74.72,
+        "CCI": 74.71,
         "Williams %R": -0.0,
         "ADX": 12.15
     },
@@ -1075,11 +1075,11 @@
         "EMA": 912.96,
         "BB High": 963.19,
         "BB Low": 861.36,
-        "K": 94.9,
+        "K": 94.89,
         "D": 95.24,
         "Stochastic RSI": 1.0,
         "CCI": 132.92,
-        "Williams %R": -5.1,
+        "Williams %R": -5.11,
         "ADX": 13.96
     },
     {
@@ -1572,7 +1572,7 @@
         "K": 42.31,
         "D": 27.56,
         "Stochastic RSI": 0.19,
-        "CCI": -20.0,
+        "CCI": -20.01,
         "Williams %R": -57.69,
         "ADX": 23.98
     },
@@ -1833,7 +1833,7 @@
         "RSI": 51.11,
         "SMA": 993.09,
         "EMA": 995.62,
-        "BB High": 1059.22,
+        "BB High": 1059.21,
         "BB Low": 982.17,
         "K": 37.5,
         "D": 22.78,
@@ -2199,7 +2199,7 @@
         "K": 70.2,
         "D": 80.64,
         "Stochastic RSI": 0.45,
-        "CCI": 47.62,
+        "CCI": 47.63,
         "Williams %R": -29.8,
         "ADX": 13.56
     },
@@ -2332,7 +2332,7 @@
         "K": 91.67,
         "D": 88.89,
         "Stochastic RSI": 0.82,
-        "CCI": 109.31,
+        "CCI": 109.3,
         "Williams %R": -8.33,
         "ADX": 12.75
     },
@@ -2541,7 +2541,7 @@
         "K": 9.52,
         "D": 20.63,
         "Stochastic RSI": 0.0,
-        "CCI": -70.01,
+        "CCI": -70.02,
         "Williams %R": -90.48,
         "ADX": 12.06
     },
@@ -2655,7 +2655,7 @@
         "K": 10.0,
         "D": 48.53,
         "Stochastic RSI": 0.0,
-        "CCI": -107.2,
+        "CCI": -107.19,
         "Williams %R": -90.0,
         "ADX": 13.02
     },
@@ -3928,7 +3928,7 @@
         "K": 85.21,
         "D": 92.04,
         "Stochastic RSI": 1.0,
-        "CCI": 145.22,
+        "CCI": 145.23,
         "Williams %R": -14.79,
         "ADX": 20.79
     },
@@ -4189,7 +4189,7 @@
         "RSI": 48.94,
         "SMA": 912.21,
         "EMA": 939.12,
-        "BB High": 998.98,
+        "BB High": 998.99,
         "BB Low": 904.61,
         "K": 7.41,
         "D": 12.89,
@@ -4608,7 +4608,7 @@
         "SMA": 977.71,
         "EMA": 998.15,
         "BB High": 1092.04,
-        "BB Low": 985.64,
+        "BB Low": 985.63,
         "K": 83.33,
         "D": 86.11,
         "Stochastic RSI": 0.82,
@@ -4910,7 +4910,7 @@
         "MACD_diff": 0.32,
         "RSI": 67.25,
         "SMA": 1038.65,
-        "EMA": 1050.77,
+        "EMA": 1050.78,
         "BB High": 1153.62,
         "BB Low": 1042.04,
         "K": 84.21,
@@ -6341,7 +6341,7 @@
         "K": 5.0,
         "D": 18.86,
         "Stochastic RSI": 0.0,
-        "CCI": -178.1,
+        "CCI": -178.11,
         "Williams %R": -95.0,
         "ADX": 32.31
     },
@@ -16494,20 +16494,20 @@
     {
         "ticker": "00652.TW",
         "Date": "2026-04-21",
-        "Close": 34.05,
+        "Close": 34.06,
         "MACD": -0.02,
         "MACD_signal": -0.27,
         "MACD_diff": 0.25,
-        "RSI": 53.64,
+        "RSI": 53.75,
         "SMA": 34.5,
         "EMA": 34.3,
-        "BB High": 34.88,
+        "BB High": 34.89,
         "BB Low": 31.24,
-        "K": 92.88,
-        "D": 95.7,
-        "Stochastic RSI": 0.96,
-        "CCI": 80.03,
-        "Williams %R": -7.12,
+        "K": 93.24,
+        "D": 95.82,
+        "Stochastic RSI": 0.97,
+        "CCI": 80.28,
+        "Williams %R": -6.76,
         "ADX": 29.19
     },
     {
@@ -24773,7 +24773,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -104.05,
         "Williams %R": -96.91,
-        "ADX": 25.2
+        "ADX": 25.32
     },
     {
         "ticker": "00679B.TWO",
@@ -24792,7 +24792,7 @@
         "Stochastic RSI": 0.08,
         "CCI": -92.24,
         "Williams %R": -87.63,
-        "ADX": 23.46
+        "ADX": 23.56
     },
     {
         "ticker": "00679B.TWO",
@@ -24811,7 +24811,7 @@
         "Stochastic RSI": 0.25,
         "CCI": -43.78,
         "Williams %R": -68.04,
-        "ADX": 22.35
+        "ADX": 22.45
     },
     {
         "ticker": "00679B.TWO",
@@ -24830,7 +24830,7 @@
         "Stochastic RSI": 0.2,
         "CCI": -55.13,
         "Williams %R": -74.23,
-        "ADX": 20.99
+        "ADX": 21.09
     },
     {
         "ticker": "00679B.TWO",
@@ -24849,7 +24849,7 @@
         "Stochastic RSI": 0.31,
         "CCI": -26.93,
         "Williams %R": -60.82,
-        "ADX": 20.01
+        "ADX": 20.11
     },
     {
         "ticker": "00679B.TWO",
@@ -24868,7 +24868,7 @@
         "Stochastic RSI": 0.56,
         "CCI": 12.42,
         "Williams %R": -37.11,
-        "ADX": 19.77
+        "ADX": 19.87
     },
     {
         "ticker": "00679B.TWO",
@@ -24887,7 +24887,7 @@
         "Stochastic RSI": 0.5,
         "CCI": -2.44,
         "Williams %R": -43.3,
-        "ADX": 19.55
+        "ADX": 19.65
     },
     {
         "ticker": "00679B.TWO",
@@ -24906,7 +24906,7 @@
         "Stochastic RSI": 0.52,
         "CCI": 5.45,
         "Williams %R": -41.24,
-        "ADX": 19.57
+        "ADX": 19.67
     },
     {
         "ticker": "00679B.TWO",
@@ -24925,7 +24925,7 @@
         "Stochastic RSI": 0.77,
         "CCI": 68.35,
         "Williams %R": -11.34,
-        "ADX": 20.08
+        "ADX": 20.17
     },
     {
         "ticker": "00679B.TWO",
@@ -24944,7 +24944,7 @@
         "Stochastic RSI": 0.65,
         "CCI": 44.47,
         "Williams %R": -21.05,
-        "ADX": 20.24
+        "ADX": 20.33
     },
     {
         "ticker": "00679B.TWO",
@@ -24963,7 +24963,7 @@
         "Stochastic RSI": 0.95,
         "CCI": 66.65,
         "Williams %R": -1.15,
-        "ADX": 20.61
+        "ADX": 20.7
     },
     {
         "ticker": "00679B.TWO",
@@ -24982,7 +24982,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 148.57,
         "Williams %R": -2.56,
-        "ADX": 21.7
+        "ADX": 21.79
     },
     {
         "ticker": "00679B.TWO",
@@ -25001,7 +25001,7 @@
         "Stochastic RSI": 0.94,
         "CCI": 127.08,
         "Williams %R": -5.98,
-        "ADX": 22.53
+        "ADX": 22.61
     },
     {
         "ticker": "00679B.TWO",
@@ -25020,7 +25020,7 @@
         "Stochastic RSI": 0.87,
         "CCI": 106.04,
         "Williams %R": -10.26,
-        "ADX": 23.04
+        "ADX": 23.12
     },
     {
         "ticker": "00679B.TWO",
@@ -25039,7 +25039,7 @@
         "Stochastic RSI": 0.93,
         "CCI": 104.8,
         "Williams %R": -3.54,
-        "ADX": 23.61
+        "ADX": 23.68
     },
     {
         "ticker": "00679B.TWO",
@@ -25058,7 +25058,7 @@
         "Stochastic RSI": 0.61,
         "CCI": 74.13,
         "Williams %R": -20.62,
-        "ADX": 23.81
+        "ADX": 23.88
     },
     {
         "ticker": "00679B.TWO",
@@ -25077,7 +25077,7 @@
         "Stochastic RSI": 0.35,
         "CCI": 41.41,
         "Williams %R": -35.05,
-        "ADX": 23.14
+        "ADX": 23.22
     },
     {
         "ticker": "00679B.TWO",
@@ -25096,7 +25096,7 @@
         "Stochastic RSI": 0.63,
         "CCI": 93.49,
         "Williams %R": -9.88,
-        "ADX": 23.43
+        "ADX": 23.5
     },
     {
         "ticker": "00679B.TWO",
@@ -25115,7 +25115,7 @@
         "Stochastic RSI": 0.62,
         "CCI": 98.62,
         "Williams %R": -11.27,
-        "ADX": 23.92
+        "ADX": 23.98
     },
     {
         "ticker": "00679B.TWO",
@@ -25134,7 +25134,7 @@
         "Stochastic RSI": 0.91,
         "CCI": 115.14,
         "Williams %R": -6.02,
-        "ADX": 24.71
+        "ADX": 24.77
     },
     {
         "ticker": "00679B.TWO",
@@ -25153,7 +25153,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 174.23,
         "Williams %R": -10.26,
-        "ADX": 26.25
+        "ADX": 26.31
     },
     {
         "ticker": "00679B.TWO",
@@ -25172,7 +25172,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 223.56,
         "Williams %R": -12.75,
-        "ADX": 28.41
+        "ADX": 28.46
     },
     {
         "ticker": "00679B.TWO",
@@ -25191,7 +25191,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 314.37,
         "Williams %R": -9.76,
-        "ADX": 31.34
+        "ADX": 31.39
     },
     {
         "ticker": "00679B.TWO",
@@ -25210,7 +25210,7 @@
         "Stochastic RSI": 0.74,
         "CCI": 190.63,
         "Williams %R": -21.67,
-        "ADX": 31.83
+        "ADX": 31.88
     },
     {
         "ticker": "00679B.TWO",
@@ -25229,7 +25229,7 @@
         "Stochastic RSI": 0.41,
         "CCI": 130.72,
         "Williams %R": -38.82,
-        "ADX": 32.29
+        "ADX": 32.33
     },
     {
         "ticker": "00679B.TWO",
@@ -25248,7 +25248,7 @@
         "Stochastic RSI": 0.22,
         "CCI": 83.55,
         "Williams %R": -49.79,
-        "ADX": 32.02
+        "ADX": 32.06
     },
     {
         "ticker": "00679B.TWO",
@@ -25267,7 +25267,7 @@
         "Stochastic RSI": 0.05,
         "CCI": 40.53,
         "Williams %R": -61.18,
-        "ADX": 30.92
+        "ADX": 30.96
     },
     {
         "ticker": "00679B.TWO",
@@ -25286,7 +25286,7 @@
         "Stochastic RSI": 0.17,
         "CCI": 59.42,
         "Williams %R": -50.21,
-        "ADX": 30.22
+        "ADX": 30.26
     },
     {
         "ticker": "00679B.TWO",
@@ -25305,7 +25305,7 @@
         "Stochastic RSI": 0.17,
         "CCI": 60.69,
         "Williams %R": -50.21,
-        "ADX": 29.71
+        "ADX": 29.74
     },
     {
         "ticker": "00679B.TWO",
@@ -25324,7 +25324,7 @@
         "Stochastic RSI": 0.26,
         "CCI": 68.96,
         "Williams %R": -41.77,
-        "ADX": 29.41
+        "ADX": 29.44
     },
     {
         "ticker": "00679B.TWO",
@@ -25343,7 +25343,7 @@
         "Stochastic RSI": 0.34,
         "CCI": 94.14,
         "Williams %R": -34.91,
-        "ADX": 29.64
+        "ADX": 29.67
     },
     {
         "ticker": "00679B.TWO",
@@ -25362,7 +25362,7 @@
         "Stochastic RSI": 0.27,
         "CCI": 73.13,
         "Williams %R": -41.09,
-        "ADX": 29.56
+        "ADX": 29.59
     },
     {
         "ticker": "00679B.TWO",
@@ -25381,7 +25381,7 @@
         "Stochastic RSI": 0.18,
         "CCI": 63.8,
         "Williams %R": -48.56,
-        "ADX": 29.54
+        "ADX": 29.57
     },
     {
         "ticker": "00679B.TWO",
@@ -25400,7 +25400,7 @@
         "Stochastic RSI": 0.1,
         "CCI": 44.23,
         "Williams %R": -65.71,
-        "ADX": 29.12
+        "ADX": 29.14
     },
     {
         "ticker": "00679B.TWO",
@@ -25419,7 +25419,7 @@
         "Stochastic RSI": 0.22,
         "CCI": 66.53,
         "Williams %R": -53.32,
-        "ADX": 29.03
+        "ADX": 29.05
     },
     {
         "ticker": "00679B.TWO",
@@ -25438,7 +25438,7 @@
         "Stochastic RSI": 0.22,
         "CCI": 57.96,
         "Williams %R": -53.32,
-        "ADX": 28.77
+        "ADX": 28.79
     },
     {
         "ticker": "00679B.TWO",
@@ -25457,7 +25457,7 @@
         "Stochastic RSI": 0.12,
         "CCI": 30.89,
         "Williams %R": -47.91,
-        "ADX": 28.16
+        "ADX": 28.19
     },
     {
         "ticker": "00679B.TWO",
@@ -25476,7 +25476,7 @@
         "Stochastic RSI": 0.31,
         "CCI": 32.36,
         "Williams %R": -27.87,
-        "ADX": 27.7
+        "ADX": 27.73
     },
     {
         "ticker": "00679B.TWO",
@@ -25495,7 +25495,7 @@
         "Stochastic RSI": 0.14,
         "CCI": 10.57,
         "Williams %R": -36.2,
-        "ADX": 27.12
+        "ADX": 27.14
     },
     {
         "ticker": "00679B.TWO",
@@ -25514,7 +25514,7 @@
         "Stochastic RSI": 0.16,
         "CCI": -3.46,
         "Williams %R": -35.01,
-        "ADX": 26.58
+        "ADX": 26.6
     },
     {
         "ticker": "00679B.TWO",
@@ -25533,7 +25533,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -62.77,
         "Williams %R": -76.51,
-        "ADX": 25.38
+        "ADX": 25.4
     },
     {
         "ticker": "00679B.TWO",
@@ -25552,7 +25552,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -115.47,
         "Williams %R": -83.19,
-        "ADX": 23.67
+        "ADX": 23.69
     },
     {
         "ticker": "00679B.TWO",
@@ -25571,7 +25571,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -144.97,
         "Williams %R": -93.1,
-        "ADX": 22.13
+        "ADX": 22.14
     },
     {
         "ticker": "00679B.TWO",
@@ -25590,7 +25590,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -118.83,
         "Williams %R": -93.1,
-        "ADX": 20.59
+        "ADX": 20.61
     },
     {
         "ticker": "00679B.TWO",
@@ -25609,7 +25609,7 @@
         "Stochastic RSI": 0.62,
         "CCI": 27.6,
         "Williams %R": -30.77,
-        "ADX": 20.29
+        "ADX": 20.31
     },
     {
         "ticker": "00679B.TWO",
@@ -25628,7 +25628,7 @@
         "Stochastic RSI": 0.99,
         "CCI": 121.13,
         "Williams %R": -4.23,
-        "ADX": 20.67
+        "ADX": 20.68
     },
     {
         "ticker": "00679B.TWO",
@@ -25647,7 +25647,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 170.73,
         "Williams %R": -1.18,
-        "ADX": 21.35
+        "ADX": 21.36
     },
     {
         "ticker": "00679B.TWO",
@@ -25666,7 +25666,7 @@
         "Stochastic RSI": 0.86,
         "CCI": 122.6,
         "Williams %R": -10.59,
-        "ADX": 21.55
+        "ADX": 21.56
     },
     {
         "ticker": "00679B.TWO",
@@ -25685,7 +25685,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 203.66,
         "Williams %R": -0.93,
-        "ADX": 22.43
+        "ADX": 22.44
     },
     {
         "ticker": "00679B.TWO",
@@ -25704,7 +25704,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 255.19,
         "Williams %R": -2.08,
-        "ADX": 23.93
+        "ADX": 23.94
     },
     {
         "ticker": "00679B.TWO",
@@ -25723,7 +25723,7 @@
         "Stochastic RSI": 0.75,
         "CCI": 164.49,
         "Williams %R": -16.67,
-        "ADX": 24.65
+        "ADX": 24.66
     },
     {
         "ticker": "00679B.TWO",
@@ -25742,7 +25742,7 @@
         "Stochastic RSI": 0.69,
         "CCI": 132.06,
         "Williams %R": -20.14,
-        "ADX": 25.33
+        "ADX": 25.34
     },
     {
         "ticker": "00679B.TWO",
@@ -25761,7 +25761,7 @@
         "Stochastic RSI": 0.53,
         "CCI": 91.28,
         "Williams %R": -29.86,
-        "ADX": 25.32
+        "ADX": 25.33
     },
     {
         "ticker": "00679B.TWO",
@@ -25780,7 +25780,7 @@
         "Stochastic RSI": 0.66,
         "CCI": 104.74,
         "Williams %R": -17.36,
-        "ADX": 25.51
+        "ADX": 25.52
     },
     {
         "ticker": "00679B.TWO",
@@ -25816,9 +25816,9 @@
         "K": 47.22,
         "D": 61.81,
         "Stochastic RSI": 0.15,
-        "CCI": 5.11,
+        "CCI": 5.12,
         "Williams %R": -52.78,
-        "ADX": 22.92
+        "ADX": 22.93
     },
     {
         "ticker": "00679B.TWO",
@@ -25837,7 +25837,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -31.79,
         "Williams %R": -65.73,
-        "ADX": 21.51
+        "ADX": 21.52
     },
     {
         "ticker": "00679B.TWO",
@@ -25856,7 +25856,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -35.57,
         "Williams %R": -90.0,
-        "ADX": 19.98
+        "ADX": 20.43
     },
     {
         "ticker": "00679B.TWO",
@@ -25875,7 +25875,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -63.01,
         "Williams %R": -100.0,
-        "ADX": 18.88
+        "ADX": 19.73
     },
     {
         "ticker": "00679B.TWO",
@@ -25894,7 +25894,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -92.26,
         "Williams %R": -99.22,
-        "ADX": 18.39
+        "ADX": 19.57
     },
     {
         "ticker": "00679B.TWO",
@@ -25913,7 +25913,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -102.98,
         "Williams %R": -97.81,
-        "ADX": 18.2
+        "ADX": 19.68
     },
     {
         "ticker": "00679B.TWO",
@@ -25932,7 +25932,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -103.13,
         "Williams %R": -98.55,
-        "ADX": 18.06
+        "ADX": 19.81
     },
     {
         "ticker": "00679B.TWO",
@@ -25951,7 +25951,7 @@
         "Stochastic RSI": 0.11,
         "CCI": -88.54,
         "Williams %R": -89.86,
-        "ADX": 17.42
+        "ADX": 19.39
     },
     {
         "ticker": "00679B.TWO",
@@ -25970,7 +25970,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -116.61,
         "Williams %R": -98.36,
-        "ADX": 17.19
+        "ADX": 19.36
     },
     {
         "ticker": "00679B.TWO",
@@ -25989,7 +25989,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -141.28,
         "Williams %R": -95.1,
-        "ADX": 17.68
+        "ADX": 19.99
     },
     {
         "ticker": "00679B.TWO",
@@ -26008,7 +26008,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -150.33,
         "Williams %R": -92.26,
-        "ADX": 18.77
+        "ADX": 21.18
     },
     {
         "ticker": "00679B.TWO",
@@ -26027,7 +26027,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -132.75,
         "Williams %R": -97.02,
-        "ADX": 19.7
+        "ADX": 22.19
     },
     {
         "ticker": "00679B.TWO",
@@ -26046,7 +26046,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -141.26,
         "Williams %R": -99.35,
-        "ADX": 21.05
+        "ADX": 23.59
     },
     {
         "ticker": "00679B.TWO",
@@ -26065,7 +26065,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -151.52,
         "Williams %R": -98.77,
-        "ADX": 22.76
+        "ADX": 25.33
     },
     {
         "ticker": "00679B.TWO",
@@ -26084,7 +26084,7 @@
         "Stochastic RSI": 0.23,
         "CCI": -124.17,
         "Williams %R": -88.74,
-        "ADX": 23.75
+        "ADX": 26.34
     },
     {
         "ticker": "00679B.TWO",
@@ -26103,7 +26103,7 @@
         "Stochastic RSI": 0.65,
         "CCI": -78.32,
         "Williams %R": -69.54,
-        "ADX": 23.3
+        "ADX": 25.87
     },
     {
         "ticker": "00679B.TWO",
@@ -26122,7 +26122,7 @@
         "Stochastic RSI": 0.8,
         "CCI": -65.42,
         "Williams %R": -61.07,
-        "ADX": 22.72
+        "ADX": 25.27
     },
     {
         "ticker": "00679B.TWO",
@@ -26141,7 +26141,7 @@
         "Stochastic RSI": 0.46,
         "CCI": -112.29,
         "Williams %R": -92.31,
-        "ADX": 23.24
+        "ADX": 25.74
     },
     {
         "ticker": "00679B.TWO",
@@ -26160,7 +26160,7 @@
         "Stochastic RSI": 0.35,
         "CCI": -116.39,
         "Williams %R": -97.6,
-        "ADX": 23.99
+        "ADX": 26.45
     },
     {
         "ticker": "00679B.TWO",
@@ -26179,7 +26179,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -167.96,
         "Williams %R": -99.44,
-        "ADX": 25.6
+        "ADX": 27.98
     },
     {
         "ticker": "00679B.TWO",
@@ -26198,7 +26198,7 @@
         "Stochastic RSI": 0.03,
         "CCI": -154.03,
         "Williams %R": -98.31,
-        "ADX": 27.09
+        "ADX": 29.41
     },
     {
         "ticker": "00679B.TWO",
@@ -26217,7 +26217,7 @@
         "Stochastic RSI": 0.23,
         "CCI": -133.95,
         "Williams %R": -91.98,
-        "ADX": 28.47
+        "ADX": 30.73
     },
     {
         "ticker": "00679B.TWO",
@@ -26236,7 +26236,7 @@
         "Stochastic RSI": 0.75,
         "CCI": -85.2,
         "Williams %R": -68.89,
-        "ADX": 28.49
+        "ADX": 30.68
     },
     {
         "ticker": "00679B.TWO",
@@ -26255,7 +26255,7 @@
         "Stochastic RSI": 0.34,
         "CCI": -130.84,
         "Williams %R": -96.85,
-        "ADX": 29.25
+        "ADX": 31.35
     },
     {
         "ticker": "00679B.TWO",
@@ -26274,7 +26274,7 @@
         "Stochastic RSI": 0.52,
         "CCI": -105.22,
         "Williams %R": -88.19,
-        "ADX": 29.57
+        "ADX": 31.6
     },
     {
         "ticker": "00679B.TWO",
@@ -26293,7 +26293,7 @@
         "Stochastic RSI": 0.61,
         "CCI": -86.69,
         "Williams %R": -84.0,
-        "ADX": 29.52
+        "ADX": 31.48
     },
     {
         "ticker": "00679B.TWO",
@@ -26312,7 +26312,7 @@
         "Stochastic RSI": 0.74,
         "CCI": -75.28,
         "Williams %R": -77.6,
-        "ADX": 29.47
+        "ADX": 31.37
     },
     {
         "ticker": "00679B.TWO",
@@ -26331,7 +26331,7 @@
         "Stochastic RSI": 0.47,
         "CCI": -103.84,
         "Williams %R": -97.69,
-        "ADX": 29.94
+        "ADX": 31.76
     },
     {
         "ticker": "00679B.TWO",
@@ -26350,7 +26350,7 @@
         "Stochastic RSI": 0.87,
         "CCI": -65.11,
         "Williams %R": -78.46,
-        "ADX": 29.58
+        "ADX": 31.33
     },
     {
         "ticker": "00679B.TWO",
@@ -26369,7 +26369,7 @@
         "Stochastic RSI": 0.58,
         "CCI": -105.82,
         "Williams %R": -84.91,
-        "ADX": 30.15
+        "ADX": 31.82
     },
     {
         "ticker": "00679B.TWO",
@@ -26388,7 +26388,7 @@
         "Stochastic RSI": 0.63,
         "CCI": -95.03,
         "Williams %R": -81.74,
-        "ADX": 30.67
+        "ADX": 32.28
     },
     {
         "ticker": "00679B.TWO",
@@ -26407,7 +26407,7 @@
         "Stochastic RSI": 0.95,
         "CCI": -67.5,
         "Williams %R": -65.14,
-        "ADX": 30.8
+        "ADX": 32.34
     },
     {
         "ticker": "00679B.TWO",
@@ -26426,7 +26426,7 @@
         "Stochastic RSI": 1.0,
         "CCI": -16.21,
         "Williams %R": -22.99,
-        "ADX": 29.98
+        "ADX": 31.45
     },
     {
         "ticker": "00679B.TWO",
@@ -26445,7 +26445,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 45.15,
         "Williams %R": -0.99,
-        "ADX": 28.15
+        "ADX": 29.56
     },
     {
         "ticker": "00679B.TWO",
@@ -26464,7 +26464,7 @@
         "Stochastic RSI": 0.65,
         "CCI": -29.78,
         "Williams %R": -47.52,
-        "ADX": 27.11
+        "ADX": 28.45
     },
     {
         "ticker": "00679B.TWO",
@@ -26483,7 +26483,7 @@
         "Stochastic RSI": 0.44,
         "CCI": -103.73,
         "Williams %R": -74.26,
-        "ADX": 26.85
+        "ADX": 28.13
     },
     {
         "ticker": "00679B.TWO",
@@ -26502,7 +26502,7 @@
         "Stochastic RSI": 0.53,
         "CCI": -54.67,
         "Williams %R": -65.35,
-        "ADX": 25.91
+        "ADX": 27.12
     },
     {
         "ticker": "00679B.TWO",
@@ -26521,7 +26521,7 @@
         "Stochastic RSI": 0.47,
         "CCI": -70.51,
         "Williams %R": -66.35,
-        "ADX": 25.13
+        "ADX": 26.28
     },
     {
         "ticker": "00679B.TWO",
@@ -26540,7 +26540,7 @@
         "Stochastic RSI": 0.51,
         "CCI": -48.51,
         "Williams %R": -63.34,
-        "ADX": 24.31
+        "ADX": 25.4
     },
     {
         "ticker": "00679B.TWO",
@@ -26559,7 +26559,7 @@
         "Stochastic RSI": 0.5,
         "CCI": -41.25,
         "Williams %R": -64.34,
-        "ADX": 23.44
+        "ADX": 24.48
     },
     {
         "ticker": "00679B.TWO",
@@ -26578,7 +26578,7 @@
         "Stochastic RSI": 0.67,
         "CCI": 5.26,
         "Williams %R": -51.32,
-        "ADX": 22.35
+        "ADX": 23.35
     },
     {
         "ticker": "00679B.TWO",
@@ -26597,7 +26597,7 @@
         "Stochastic RSI": 0.63,
         "CCI": 5.41,
         "Williams %R": -52.32,
-        "ADX": 21.35
+        "ADX": 22.3
     },
     {
         "ticker": "00679B.TWO",
@@ -26616,7 +26616,7 @@
         "Stochastic RSI": 0.87,
         "CCI": 105.28,
         "Williams %R": -36.29,
-        "ADX": 19.94
+        "ADX": 20.8
     },
     {
         "ticker": "00679B.TWO",
@@ -26635,7 +26635,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 220.63,
         "Williams %R": -11.26,
-        "ADX": 19.68
+        "ADX": 20.46
     },
     {
         "ticker": "00679B.TWO",
@@ -26654,7 +26654,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 176.39,
         "Williams %R": -5.63,
-        "ADX": 19.36
+        "ADX": 20.06
     },
     {
         "ticker": "00679B.TWO",
@@ -26673,7 +26673,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 199.69,
         "Williams %R": -0.95,
-        "ADX": 19.62
+        "ADX": 20.26
     },
     {
         "ticker": "00679B.TWO",
@@ -26692,7 +26692,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 184.34,
         "Williams %R": -0.0,
-        "ADX": 20.12
+        "ADX": 20.69
     },
     {
         "ticker": "00679B.TWO",
@@ -26711,7 +26711,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 184.77,
         "Williams %R": -2.16,
-        "ADX": 21.1
+        "ADX": 21.62
     },
     {
         "ticker": "00679B.TWO",
@@ -26730,7 +26730,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 172.02,
         "Williams %R": -3.93,
-        "ADX": 22.31
+        "ADX": 22.78
     },
     {
         "ticker": "00679B.TWO",
@@ -26749,7 +26749,7 @@
         "Stochastic RSI": 0.6,
         "CCI": 100.13,
         "Williams %R": -31.88,
-        "ADX": 22.2
+        "ADX": 22.62
     },
     {
         "ticker": "00679B.TWO",
@@ -26768,7 +26768,7 @@
         "Stochastic RSI": 0.8,
         "CCI": 118.32,
         "Williams %R": -9.42,
-        "ADX": 22.39
+        "ADX": 22.76
     },
     {
         "ticker": "00679B.TWO",
@@ -26787,7 +26787,7 @@
         "Stochastic RSI": 0.85,
         "CCI": 122.18,
         "Williams %R": -2.99,
-        "ADX": 22.82
+        "ADX": 23.16
     },
     {
         "ticker": "00679B.TWO",
@@ -26806,7 +26806,7 @@
         "Stochastic RSI": 0.92,
         "CCI": 118.78,
         "Williams %R": -0.7,
-        "ADX": 23.43
+        "ADX": 23.73
     },
     {
         "ticker": "00679B.TWO",
@@ -26825,7 +26825,7 @@
         "Stochastic RSI": 0.59,
         "CCI": 75.94,
         "Williams %R": -21.64,
-        "ADX": 23.2
+        "ADX": 23.47
     },
     {
         "ticker": "00679B.TWO",
@@ -26844,7 +26844,7 @@
         "Stochastic RSI": 0.42,
         "CCI": 47.56,
         "Williams %R": -34.09,
-        "ADX": 22.34
+        "ADX": 22.58
     },
     {
         "ticker": "00679B.TWO",
@@ -26863,7 +26863,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -2.35,
         "Williams %R": -69.91,
-        "ADX": 20.97
+        "ADX": 21.2
     },
     {
         "ticker": "00679B.TWO",
@@ -26882,7 +26882,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -43.52,
         "Williams %R": -98.02,
-        "ADX": 20.29
+        "ADX": 20.52
     },
     {
         "ticker": "00679B.TWO",
@@ -26901,7 +26901,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -82.93,
         "Williams %R": -94.35,
-        "ADX": 20.25
+        "ADX": 20.46
     },
     {
         "ticker": "00679B.TWO",
@@ -26920,7 +26920,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -87.34,
         "Williams %R": -97.58,
-        "ADX": 20.13
+        "ADX": 20.34
     },
     {
         "ticker": "00679B.TWO",
@@ -26939,7 +26939,7 @@
         "Stochastic RSI": 0.04,
         "CCI": -84.94,
         "Williams %R": -94.35,
-        "ADX": 19.87
+        "ADX": 20.07
     },
     {
         "ticker": "00679B.TWO",
@@ -26958,7 +26958,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -135.67,
         "Williams %R": -98.67,
-        "ADX": 20.41
+        "ADX": 20.6
     },
     {
         "ticker": "00679B.TWO",
@@ -26977,7 +26977,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -158.65,
         "Williams %R": -98.82,
-        "ADX": 21.34
+        "ADX": 21.52
     },
     {
         "ticker": "00679B.TWO",
@@ -26996,7 +26996,7 @@
         "Stochastic RSI": 0.04,
         "CCI": -144.14,
         "Williams %R": -93.68,
-        "ADX": 22.29
+        "ADX": 22.47
     },
     {
         "ticker": "00679B.TWO",
@@ -27015,7 +27015,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -142.51,
         "Williams %R": -98.91,
-        "ADX": 23.39
+        "ADX": 23.56
     },
     {
         "ticker": "00679B.TWO",
@@ -27034,7 +27034,7 @@
         "Stochastic RSI": 0.09,
         "CCI": -113.75,
         "Williams %R": -93.48,
-        "ADX": 24.04
+        "ADX": 24.19
     },
     {
         "ticker": "00679B.TWO",
@@ -27053,7 +27053,7 @@
         "Stochastic RSI": 0.02,
         "CCI": -109.44,
         "Williams %R": -99.47,
-        "ADX": 24.8
+        "ADX": 24.95
     },
     {
         "ticker": "00679B.TWO",
@@ -27072,7 +27072,7 @@
         "Stochastic RSI": 0.15,
         "CCI": -89.22,
         "Williams %R": -92.77,
-        "ADX": 25.22
+        "ADX": 25.36
     },
     {
         "ticker": "00679B.TWO",
@@ -27091,7 +27091,7 @@
         "Stochastic RSI": 0.04,
         "CCI": -101.82,
         "Williams %R": -98.12,
-        "ADX": 26.12
+        "ADX": 26.26
     },
     {
         "ticker": "00679B.TWO",
@@ -27110,7 +27110,7 @@
         "Stochastic RSI": 0.75,
         "CCI": -57.07,
         "Williams %R": -66.92,
-        "ADX": 25.34
+        "ADX": 25.47
     },
     {
         "ticker": "00679B.TWO",
@@ -27129,7 +27129,7 @@
         "Stochastic RSI": 0.63,
         "CCI": -77.57,
         "Williams %R": -81.9,
-        "ADX": 25.07
+        "ADX": 25.19
     },
     {
         "ticker": "00679B.TWO",
@@ -27148,7 +27148,7 @@
         "Stochastic RSI": 1.0,
         "CCI": -44.55,
         "Williams %R": -52.27,
-        "ADX": 23.96
+        "ADX": 24.08
     },
     {
         "ticker": "00679B.TWO",
@@ -27167,7 +27167,7 @@
         "Stochastic RSI": 0.68,
         "CCI": -69.94,
         "Williams %R": -80.68,
-        "ADX": 23.48
+        "ADX": 23.59
     },
     {
         "ticker": "00679B.TWO",
@@ -27186,7 +27186,7 @@
         "Stochastic RSI": 0.44,
         "CCI": -90.31,
         "Williams %R": -98.91,
-        "ADX": 23.45
+        "ADX": 23.56
     },
     {
         "ticker": "00679B.TWO",
@@ -27205,7 +27205,7 @@
         "Stochastic RSI": 0.17,
         "CCI": -142.0,
         "Williams %R": -92.47,
-        "ADX": 24.13
+        "ADX": 24.23
     },
     {
         "ticker": "00679B.TWO",
@@ -27224,7 +27224,7 @@
         "Stochastic RSI": 0.4,
         "CCI": -124.27,
         "Williams %R": -76.54,
-        "ADX": 24.33
+        "ADX": 24.43
     },
     {
         "ticker": "00679B.TWO",
@@ -27241,9 +27241,9 @@
         "K": 12.35,
         "D": 14.44,
         "Stochastic RSI": 0.29,
-        "CCI": -130.41,
+        "CCI": -130.4,
         "Williams %R": -87.65,
-        "ADX": 24.54
+        "ADX": 24.64
     },
     {
         "ticker": "00679B.TWO",
@@ -27262,7 +27262,7 @@
         "Stochastic RSI": 0.24,
         "CCI": -137.96,
         "Williams %R": -91.57,
-        "ADX": 24.95
+        "ADX": 25.04
     },
     {
         "ticker": "00679B.TWO",
@@ -27281,7 +27281,7 @@
         "Stochastic RSI": 0.42,
         "CCI": -106.68,
         "Williams %R": -79.52,
-        "ADX": 25.02
+        "ADX": 25.1
     },
     {
         "ticker": "00679B.TWO",
@@ -27300,7 +27300,7 @@
         "Stochastic RSI": 0.29,
         "CCI": -115.28,
         "Williams %R": -91.57,
-        "ADX": 25.34
+        "ADX": 25.42
     },
     {
         "ticker": "00679B.TWO",
@@ -27319,7 +27319,7 @@
         "Stochastic RSI": 1.0,
         "CCI": -15.25,
         "Williams %R": -48.19,
-        "ADX": 24.25
+        "ADX": 24.32
     },
     {
         "ticker": "00679B.TWO",
@@ -27338,7 +27338,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 16.78,
         "Williams %R": -43.37,
-        "ADX": 22.91
+        "ADX": 22.98
     },
     {
         "ticker": "00679B.TWO",
@@ -27357,7 +27357,7 @@
         "Stochastic RSI": 0.8,
         "CCI": -10.69,
         "Williams %R": -57.83,
-        "ADX": 22.08
+        "ADX": 22.14
     },
     {
         "ticker": "00679B.TWO",
@@ -27376,7 +27376,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 53.58,
         "Williams %R": -22.22,
-        "ADX": 20.71
+        "ADX": 20.78
     },
     {
         "ticker": "00679B.TWO",
@@ -27395,7 +27395,7 @@
         "Stochastic RSI": 0.93,
         "CCI": 46.74,
         "Williams %R": -28.39,
-        "ADX": 19.45
+        "ADX": 19.51
     },
     {
         "ticker": "00679B.TWO",
@@ -27414,7 +27414,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 194.18,
         "Williams %R": -0.0,
-        "ADX": 19.72
+        "ADX": 19.78
     },
     {
         "ticker": "00679B.TWO",
@@ -27433,7 +27433,7 @@
         "Stochastic RSI": 0.78,
         "CCI": 134.55,
         "Williams %R": -22.76,
-        "ADX": 19.97
+        "ADX": 20.02
     },
     {
         "ticker": "00679B.TWO",
@@ -27452,7 +27452,7 @@
         "Stochastic RSI": 0.82,
         "CCI": 141.67,
         "Williams %R": -17.89,
-        "ADX": 20.33
+        "ADX": 20.38
     },
     {
         "ticker": "00679B.TWO",
@@ -27471,7 +27471,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 204.28,
         "Williams %R": -4.79,
-        "ADX": 21.59
+        "ADX": 21.63
     },
     {
         "ticker": "00679B.TWO",
@@ -27490,7 +27490,7 @@
         "Stochastic RSI": 0.97,
         "CCI": 171.82,
         "Williams %R": -7.53,
-        "ADX": 22.63
+        "ADX": 22.67
     },
     {
         "ticker": "00679B.TWO",
@@ -27509,7 +27509,7 @@
         "Stochastic RSI": 0.86,
         "CCI": 116.6,
         "Williams %R": -15.75,
-        "ADX": 22.86
+        "ADX": 22.89
     },
     {
         "ticker": "00679B.TWO",
@@ -27528,7 +27528,7 @@
         "Stochastic RSI": 0.78,
         "CCI": 95.97,
         "Williams %R": -21.92,
-        "ADX": 22.94
+        "ADX": 22.98
     },
     {
         "ticker": "00679B.TWO",
@@ -27547,7 +27547,7 @@
         "Stochastic RSI": 0.61,
         "CCI": 54.54,
         "Williams %R": -35.62,
-        "ADX": 22.17
+        "ADX": 22.2
     },
     {
         "ticker": "00679B.TWO",
@@ -27566,7 +27566,7 @@
         "Stochastic RSI": 0.11,
         "CCI": 2.02,
         "Williams %R": -74.34,
-        "ADX": 20.75
+        "ADX": 20.77
     },
     {
         "ticker": "00679B.TWO",
@@ -27585,7 +27585,7 @@
         "Stochastic RSI": 0.48,
         "CCI": 45.2,
         "Williams %R": -42.48,
-        "ADX": 19.86
+        "ADX": 19.88
     },
     {
         "ticker": "00679B.TWO",
@@ -27604,7 +27604,7 @@
         "Stochastic RSI": 0.49,
         "CCI": 49.49,
         "Williams %R": -41.59,
-        "ADX": 19.25
+        "ADX": 19.28
     },
     {
         "ticker": "00679B.TWO",
@@ -27623,7 +27623,7 @@
         "Stochastic RSI": 0.42,
         "CCI": 41.28,
         "Williams %R": -46.15,
-        "ADX": 18.69
+        "ADX": 18.71
     },
     {
         "ticker": "00679B.TWO",
@@ -27642,7 +27642,7 @@
         "Stochastic RSI": 0.2,
         "CCI": 4.47,
         "Williams %R": -65.0,
-        "ADX": 17.57
+        "ADX": 17.58
     },
     {
         "ticker": "00679B.TWO",
@@ -27661,7 +27661,7 @@
         "Stochastic RSI": 0.33,
         "CCI": 16.44,
         "Williams %R": -64.71,
-        "ADX": 16.81
+        "ADX": 16.82
     },
     {
         "ticker": "00679B.TWO",
@@ -27680,7 +27680,7 @@
         "Stochastic RSI": 0.45,
         "CCI": 23.85,
         "Williams %R": -54.01,
-        "ADX": 16.27
+        "ADX": 16.28
     },
     {
         "ticker": "00679B.TWO",
@@ -27699,7 +27699,7 @@
         "Stochastic RSI": 0.66,
         "CCI": 81.99,
         "Williams %R": -33.79,
-        "ADX": 16.44
+        "ADX": 16.45
     },
     {
         "ticker": "00679B.TWO",
@@ -27718,7 +27718,7 @@
         "Stochastic RSI": 0.96,
         "CCI": 143.16,
         "Williams %R": -3.54,
-        "ADX": 17.2
+        "ADX": 17.21
     },
     {
         "ticker": "00679B.TWO",
@@ -27737,7 +27737,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 209.74,
         "Williams %R": -13.63,
-        "ADX": 18.76
+        "ADX": 18.77
     },
     {
         "ticker": "00679B.TWO",
@@ -27756,7 +27756,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 219.94,
         "Williams %R": -1.44,
-        "ADX": 20.46
+        "ADX": 20.47
     },
     {
         "ticker": "00679B.TWO",
@@ -27775,7 +27775,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 206.68,
         "Williams %R": -0.0,
-        "ADX": 22.24
+        "ADX": 22.25
     },
     {
         "ticker": "00679B.TWO",
@@ -27794,7 +27794,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 213.75,
         "Williams %R": -8.39,
-        "ADX": 24.5
+        "ADX": 24.51
     },
     {
         "ticker": "00679B.TWO",
@@ -27813,7 +27813,7 @@
         "Stochastic RSI": 0.56,
         "CCI": 104.41,
         "Williams %R": -34.09,
-        "ADX": 24.65
+        "ADX": 24.66
     },
     {
         "ticker": "00679B.TWO",
@@ -27927,7 +27927,7 @@
         "Stochastic RSI": 0.08,
         "CCI": 31.97,
         "Williams %R": -48.45,
-        "ADX": 23.38
+        "ADX": 23.39
     },
     {
         "ticker": "00679B.TWO",
@@ -27984,7 +27984,7 @@
         "Stochastic RSI": 0.2,
         "CCI": 57.25,
         "Williams %R": -60.67,
-        "ADX": 22.51
+        "ADX": 22.52
     },
     {
         "ticker": "00679B.TWO",
@@ -28150,11 +28150,11 @@
         "EMA": 27.81,
         "BB High": 28.56,
         "BB Low": 27.77,
-        "K": 91.04,
+        "K": 91.05,
         "D": 34.85,
         "Stochastic RSI": 0.88,
         "CCI": 98.15,
-        "Williams %R": -8.96,
+        "Williams %R": -8.95,
         "ADX": 18.03
     },
     {
@@ -28383,7 +28383,7 @@
         "Stochastic RSI": 0.17,
         "CCI": -86.17,
         "Williams %R": -79.58,
-        "ADX": 21.33
+        "ADX": 21.34
     },
     {
         "ticker": "00679B.TWO",
@@ -29217,7 +29217,7 @@
         "K": 58.82,
         "D": 51.47,
         "Stochastic RSI": 0.81,
-        "CCI": 15.33,
+        "CCI": 15.34,
         "Williams %R": -41.18,
         "ADX": 26.04
     },
@@ -29633,7 +29633,7 @@
         "BB High": 24.57,
         "BB Low": 23.8,
         "K": 56.86,
-        "D": 48.22,
+        "D": 48.21,
         "Stochastic RSI": 0.89,
         "CCI": 11.86,
         "Williams %R": -43.14,
@@ -33005,20 +33005,20 @@
     {
         "ticker": "00679B.TWO",
         "Date": "2026-04-21",
-        "Close": 27.07,
-        "MACD": -0.08,
+        "Close": 27.08,
+        "MACD": -0.07,
         "MACD_signal": -0.05,
         "MACD_diff": -0.03,
-        "RSI": 45.42,
+        "RSI": 45.72,
         "SMA": 27.29,
         "EMA": 27.23,
         "BB High": 27.47,
         "BB Low": 26.91,
-        "K": 25.76,
-        "D": 16.16,
-        "Stochastic RSI": 0.35,
-        "CCI": -77.59,
-        "Williams %R": -74.24,
+        "K": 27.27,
+        "D": 16.67,
+        "Stochastic RSI": 0.37,
+        "CCI": -75.75,
+        "Williams %R": -72.73,
         "ADX": 11.49
     },
     {
@@ -41270,20 +41270,20 @@
     {
         "ticker": "^TWII",
         "Date": "2026-04-21",
-        "Close": 37676.96,
-        "MACD": 1095.25,
-        "MACD_signal": 748.97,
-        "MACD_diff": 346.29,
-        "RSI": 70.83,
-        "SMA": 33805.45,
-        "EMA": 33722.44,
-        "BB High": 38223.35,
-        "BB Low": 30829.68,
-        "K": 98.67,
-        "D": 95.18,
+        "Close": 37680.84,
+        "MACD": 1095.56,
+        "MACD_signal": 749.03,
+        "MACD_diff": 346.54,
+        "RSI": 70.84,
+        "SMA": 33805.53,
+        "EMA": 33722.59,
+        "BB High": 38224.2,
+        "BB Low": 30829.22,
+        "K": 98.73,
+        "D": 95.21,
         "Stochastic RSI": 1.0,
-        "CCI": 122.71,
-        "Williams %R": -1.33,
+        "CCI": 122.76,
+        "Williams %R": -1.27,
         "ADX": 25.94
     },
     {
@@ -50019,11 +50019,11 @@
         "EMA": 115.37,
         "BB High": 135.88,
         "BB Low": 119.45,
-        "K": 55.49,
+        "K": 55.48,
         "D": 56.34,
         "Stochastic RSI": 0.1,
         "CCI": 22.21,
-        "Williams %R": -44.51,
+        "Williams %R": -44.52,
         "ADX": 42.43
     },
     {
@@ -51941,7 +51941,7 @@
         "K": 62.92,
         "D": 55.43,
         "Stochastic RSI": 0.85,
-        "CCI": 38.36,
+        "CCI": 38.37,
         "Williams %R": -37.08,
         "ADX": 13.1
     },
@@ -52186,7 +52186,7 @@
         "BB High": 146.0,
         "BB Low": 128.24,
         "K": 67.89,
-        "D": 57.61,
+        "D": 57.6,
         "Stochastic RSI": 0.86,
         "CCI": 63.77,
         "Williams %R": -32.11,
@@ -53244,7 +53244,7 @@
         "MACD": -3.73,
         "MACD_signal": -4.3,
         "MACD_diff": 0.57,
-        "RSI": 46.18,
+        "RSI": 46.17,
         "SMA": 127.96,
         "EMA": 125.55,
         "BB High": 137.13,
@@ -59579,7 +59579,7 @@
         "K": 73.45,
         "D": 72.94,
         "Stochastic RSI": 0.65,
-        "CCI": 58.12,
+        "CCI": 58.11,
         "Williams %R": -26.55,
         "ADX": 20.76
     },
@@ -59997,7 +59997,7 @@
         "K": 73.09,
         "D": 75.81,
         "Stochastic RSI": 0.84,
-        "CCI": 147.14,
+        "CCI": 147.15,
         "Williams %R": -26.91,
         "ADX": 16.27
     },
@@ -60320,7 +60320,7 @@
         "K": 41.75,
         "D": 41.38,
         "Stochastic RSI": 0.41,
-        "CCI": -61.61,
+        "CCI": -61.62,
         "Williams %R": -58.25,
         "ADX": 11.22
     },
@@ -60773,11 +60773,11 @@
         "EMA": 426.98,
         "BB High": 452.32,
         "BB Low": 418.97,
-        "K": 34.44,
+        "K": 34.43,
         "D": 32.45,
         "Stochastic RSI": 0.12,
         "CCI": -11.73,
-        "Williams %R": -65.56,
+        "Williams %R": -65.57,
         "ADX": 21.36
     },
     {
@@ -61780,11 +61780,11 @@
         "EMA": 403.48,
         "BB High": 413.75,
         "BB Low": 370.9,
-        "K": 40.9,
+        "K": 40.89,
         "D": 29.01,
         "Stochastic RSI": 0.83,
         "CCI": -47.08,
-        "Williams %R": -59.1,
+        "Williams %R": -59.11,
         "ADX": 27.69
     },
     {
@@ -61916,7 +61916,7 @@
         "K": 67.15,
         "D": 67.84,
         "Stochastic RSI": 0.75,
-        "CCI": 33.35,
+        "CCI": 33.34,
         "Williams %R": -32.85,
         "ADX": 22.46
     },
@@ -62220,7 +62220,7 @@
         "K": 46.11,
         "D": 60.67,
         "Stochastic RSI": 0.54,
-        "CCI": -75.36,
+        "CCI": -75.37,
         "Williams %R": -53.89,
         "ADX": 22.91
     },
@@ -63773,7 +63773,7 @@
         "RSI": 55.03,
         "SMA": 498.91,
         "EMA": 496.82,
-        "BB High": 533.09,
+        "BB High": 533.08,
         "BB Low": 499.63,
         "K": 23.32,
         "D": 25.29,
@@ -63856,7 +63856,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -141.1,
         "Williams %R": -95.61,
-        "ADX": 31.86
+        "ADX": 31.85
     },
     {
         "ticker": "MSFT",
@@ -64103,7 +64103,7 @@
         "Stochastic RSI": 0.51,
         "CCI": -86.78,
         "Williams %R": -59.18,
-        "ADX": 20.75
+        "ADX": 21.06
     },
     {
         "ticker": "MSFT",
@@ -64122,7 +64122,7 @@
         "Stochastic RSI": 0.58,
         "CCI": -79.69,
         "Williams %R": -55.92,
-        "ADX": 20.79
+        "ADX": 21.38
     },
     {
         "ticker": "MSFT",
@@ -64141,7 +64141,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 49.63,
         "Williams %R": -13.13,
-        "ADX": 19.45
+        "ADX": 19.96
     },
     {
         "ticker": "MSFT",
@@ -64160,7 +64160,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 134.4,
         "Williams %R": -0.48,
-        "ADX": 18.62
+        "ADX": 18.86
     },
     {
         "ticker": "MSFT",
@@ -64198,7 +64198,7 @@
         "Stochastic RSI": 0.73,
         "CCI": 82.78,
         "Williams %R": -29.0,
-        "ADX": 17.17
+        "ADX": 16.96
     },
     {
         "ticker": "MSFT",
@@ -64217,7 +64217,7 @@
         "Stochastic RSI": 0.66,
         "CCI": 88.06,
         "Williams %R": -35.32,
-        "ADX": 16.56
+        "ADX": 16.17
     },
     {
         "ticker": "MSFT",
@@ -64234,9 +64234,9 @@
         "K": 94.91,
         "D": 76.86,
         "Stochastic RSI": 1.0,
-        "CCI": 171.78,
+        "CCI": 171.77,
         "Williams %R": -5.09,
-        "ADX": 16.86
+        "ADX": 16.32
     },
     {
         "ticker": "MSFT",
@@ -64255,7 +64255,7 @@
         "Stochastic RSI": 0.83,
         "CCI": 135.03,
         "Williams %R": -18.01,
-        "ADX": 17.13
+        "ADX": 16.45
     },
     {
         "ticker": "MSFT",
@@ -64274,7 +64274,7 @@
         "Stochastic RSI": 0.6,
         "CCI": 59.41,
         "Williams %R": -37.39,
-        "ADX": 16.41
+        "ADX": 15.62
     },
     {
         "ticker": "MSFT",
@@ -64293,7 +64293,7 @@
         "Stochastic RSI": 0.64,
         "CCI": 46.66,
         "Williams %R": -33.98,
-        "ADX": 15.67
+        "ADX": 14.79
     },
     {
         "ticker": "MSFT",
@@ -64312,7 +64312,7 @@
         "Stochastic RSI": 0.41,
         "CCI": 6.99,
         "Williams %R": -50.56,
-        "ADX": 14.65
+        "ADX": 13.78
     },
     {
         "ticker": "MSFT",
@@ -64331,7 +64331,7 @@
         "Stochastic RSI": 0.63,
         "CCI": 55.87,
         "Williams %R": -34.72,
-        "ADX": 14.34
+        "ADX": 13.4
     },
     {
         "ticker": "MSFT",
@@ -64345,12 +64345,12 @@
         "EMA": 503.19,
         "BB High": 517.46,
         "BB Low": 493.24,
-        "K": 79.18,
+        "K": 79.19,
         "D": 64.64,
         "Stochastic RSI": 0.76,
         "CCI": 88.04,
-        "Williams %R": -20.82,
-        "ADX": 14.49
+        "Williams %R": -20.81,
+        "ADX": 13.5
     },
     {
         "ticker": "MSFT",
@@ -64369,7 +64369,7 @@
         "Stochastic RSI": 0.93,
         "CCI": 104.33,
         "Williams %R": -6.3,
-        "ADX": 14.82
+        "ADX": 13.78
     },
     {
         "ticker": "MSFT",
@@ -64388,7 +64388,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 121.17,
         "Williams %R": -4.8,
-        "ADX": 15.46
+        "ADX": 14.38
     },
     {
         "ticker": "MSFT",
@@ -64407,7 +64407,7 @@
         "Stochastic RSI": 0.59,
         "CCI": 94.54,
         "Williams %R": -35.39,
-        "ADX": 16.21
+        "ADX": 15.09
     },
     {
         "ticker": "MSFT",
@@ -64426,7 +64426,7 @@
         "Stochastic RSI": 0.72,
         "CCI": 110.45,
         "Williams %R": -25.66,
-        "ADX": 16.91
+        "ADX": 15.76
     },
     {
         "ticker": "MSFT",
@@ -64445,7 +64445,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 206.1,
         "Williams %R": -9.47,
-        "ADX": 18.82
+        "ADX": 17.67
     },
     {
         "ticker": "MSFT",
@@ -64464,7 +64464,7 @@
         "Stochastic RSI": 0.69,
         "CCI": 173.52,
         "Williams %R": -27.13,
-        "ADX": 20.6
+        "ADX": 19.45
     },
     {
         "ticker": "MSFT",
@@ -64483,7 +64483,7 @@
         "Stochastic RSI": 0.73,
         "CCI": 153.61,
         "Williams %R": -23.78,
-        "ADX": 22.25
+        "ADX": 21.1
     },
     {
         "ticker": "MSFT",
@@ -64502,7 +64502,7 @@
         "Stochastic RSI": 0.56,
         "CCI": 95.29,
         "Williams %R": -33.21,
-        "ADX": 22.36
+        "ADX": 21.21
     },
     {
         "ticker": "MSFT",
@@ -64521,7 +64521,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -7.25,
         "Williams %R": -77.22,
-        "ADX": 20.95
+        "ADX": 19.83
     },
     {
         "ticker": "MSFT",
@@ -64540,7 +64540,7 @@
         "Stochastic RSI": 0.15,
         "CCI": -19.23,
         "Williams %R": -65.33,
-        "ADX": 19.64
+        "ADX": 18.54
     },
     {
         "ticker": "MSFT",
@@ -64559,7 +64559,7 @@
         "Stochastic RSI": 0.13,
         "CCI": -57.75,
         "Williams %R": -67.18,
-        "ADX": 18.97
+        "ADX": 18.0
     },
     {
         "ticker": "MSFT",
@@ -64578,7 +64578,7 @@
         "Stochastic RSI": 0.12,
         "CCI": -32.16,
         "Williams %R": -70.32,
-        "ADX": 18.01
+        "ADX": 17.16
     },
     {
         "ticker": "MSFT",
@@ -64597,7 +64597,7 @@
         "Stochastic RSI": 0.02,
         "CCI": -57.87,
         "Williams %R": -77.59,
-        "ADX": 17.41
+        "ADX": 16.67
     },
     {
         "ticker": "MSFT",
@@ -64616,7 +64616,7 @@
         "Stochastic RSI": 0.14,
         "CCI": -54.48,
         "Williams %R": -69.72,
-        "ADX": 16.98
+        "ADX": 16.34
     },
     {
         "ticker": "MSFT",
@@ -64635,7 +64635,7 @@
         "Stochastic RSI": 0.33,
         "CCI": 13.4,
         "Williams %R": -56.89,
-        "ADX": 15.96
+        "ADX": 15.41
     },
     {
         "ticker": "MSFT",
@@ -64654,7 +64654,7 @@
         "Stochastic RSI": 0.38,
         "CCI": 11.48,
         "Williams %R": -53.42,
-        "ADX": 15.08
+        "ADX": 14.61
     },
     {
         "ticker": "MSFT",
@@ -64673,7 +64673,7 @@
         "Stochastic RSI": 0.54,
         "CCI": 82.04,
         "Williams %R": -41.91,
-        "ADX": 14.9
+        "ADX": 14.42
     },
     {
         "ticker": "MSFT",
@@ -64692,7 +64692,7 @@
         "Stochastic RSI": 0.54,
         "CCI": 69.9,
         "Williams %R": -41.83,
-        "ADX": 14.73
+        "ADX": 14.25
     },
     {
         "ticker": "MSFT",
@@ -64711,7 +64711,7 @@
         "Stochastic RSI": 0.95,
         "CCI": 94.73,
         "Williams %R": -26.01,
-        "ADX": 14.8
+        "ADX": 14.33
     },
     {
         "ticker": "MSFT",
@@ -64730,7 +64730,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 190.95,
         "Williams %R": -10.71,
-        "ADX": 16.13
+        "ADX": 15.66
     },
     {
         "ticker": "MSFT",
@@ -64749,7 +64749,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 286.67,
         "Williams %R": -24.41,
-        "ADX": 18.88
+        "ADX": 18.43
     },
     {
         "ticker": "MSFT",
@@ -64768,7 +64768,7 @@
         "Stochastic RSI": 0.97,
         "CCI": 195.68,
         "Williams %R": -25.5,
-        "ADX": 20.69
+        "ADX": 20.25
     },
     {
         "ticker": "MSFT",
@@ -64787,7 +64787,7 @@
         "Stochastic RSI": 0.27,
         "CCI": 54.21,
         "Williams %R": -58.59,
-        "ADX": 20.22
+        "ADX": 19.8
     },
     {
         "ticker": "MSFT",
@@ -64806,7 +64806,7 @@
         "Stochastic RSI": 0.02,
         "CCI": -12.53,
         "Williams %R": -75.25,
-        "ADX": 19.0
+        "ADX": 18.59
     },
     {
         "ticker": "MSFT",
@@ -64825,7 +64825,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -27.84,
         "Williams %R": -79.06,
-        "ADX": 17.8
+        "ADX": 17.42
     },
     {
         "ticker": "MSFT",
@@ -64844,7 +64844,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -82.58,
         "Williams %R": -84.87,
-        "ADX": 17.08
+        "ADX": 16.73
     },
     {
         "ticker": "MSFT",
@@ -64863,7 +64863,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -100.77,
         "Williams %R": -98.77,
-        "ADX": 16.53
+        "ADX": 16.22
     },
     {
         "ticker": "MSFT",
@@ -64882,7 +64882,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -166.14,
         "Williams %R": -97.77,
-        "ADX": 16.99
+        "ADX": 16.71
     },
     {
         "ticker": "MSFT",
@@ -64901,7 +64901,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -167.53,
         "Williams %R": -94.1,
-        "ADX": 17.63
+        "ADX": 17.37
     },
     {
         "ticker": "MSFT",
@@ -64920,7 +64920,7 @@
         "Stochastic RSI": 0.22,
         "CCI": -101.43,
         "Williams %R": -78.92,
-        "ADX": 17.28
+        "ADX": 17.05
     },
     {
         "ticker": "MSFT",
@@ -64939,7 +64939,7 @@
         "Stochastic RSI": 0.28,
         "CCI": -76.08,
         "Williams %R": -74.48,
-        "ADX": 16.64
+        "ADX": 16.43
     },
     {
         "ticker": "MSFT",
@@ -64958,7 +64958,7 @@
         "Stochastic RSI": 0.34,
         "CCI": -68.7,
         "Williams %R": -70.42,
-        "ADX": 16.35
+        "ADX": 16.17
     },
     {
         "ticker": "MSFT",
@@ -64977,7 +64977,7 @@
         "Stochastic RSI": 0.2,
         "CCI": -73.34,
         "Williams %R": -83.4,
-        "ADX": 15.86
+        "ADX": 15.7
     },
     {
         "ticker": "MSFT",
@@ -64996,7 +64996,7 @@
         "Stochastic RSI": 0.34,
         "CCI": -67.12,
         "Williams %R": -72.0,
-        "ADX": 15.79
+        "ADX": 15.65
     },
     {
         "ticker": "MSFT",
@@ -65015,7 +65015,7 @@
         "Stochastic RSI": 0.3,
         "CCI": -50.91,
         "Williams %R": -73.14,
-        "ADX": 15.66
+        "ADX": 15.53
     },
     {
         "ticker": "MSFT",
@@ -65034,7 +65034,7 @@
         "Stochastic RSI": 0.17,
         "CCI": -119.35,
         "Williams %R": -85.45,
-        "ADX": 17.05
+        "ADX": 16.94
     },
     {
         "ticker": "MSFT",
@@ -65053,7 +65053,7 @@
         "Stochastic RSI": 0.01,
         "CCI": -136.95,
         "Williams %R": -90.77,
-        "ADX": 18.59
+        "ADX": 18.49
     },
     {
         "ticker": "MSFT",
@@ -65072,7 +65072,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -145.97,
         "Williams %R": -93.96,
-        "ADX": 20.41
+        "ADX": 20.32
     },
     {
         "ticker": "MSFT",
@@ -65091,7 +65091,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -173.85,
         "Williams %R": -91.69,
-        "ADX": 22.47
+        "ADX": 22.4
     },
     {
         "ticker": "MSFT",
@@ -65110,7 +65110,7 @@
         "Stochastic RSI": 0.09,
         "CCI": -158.52,
         "Williams %R": -86.96,
-        "ADX": 24.41
+        "ADX": 24.34
     },
     {
         "ticker": "MSFT",
@@ -65129,7 +65129,7 @@
         "Stochastic RSI": 0.24,
         "CCI": -137.01,
         "Williams %R": -74.61,
-        "ADX": 26.37
+        "ADX": 26.31
     },
     {
         "ticker": "MSFT",
@@ -65148,7 +65148,7 @@
         "Stochastic RSI": 0.63,
         "CCI": -72.6,
         "Williams %R": -56.75,
-        "ADX": 26.82
+        "ADX": 26.77
     },
     {
         "ticker": "MSFT",
@@ -65167,7 +65167,7 @@
         "Stochastic RSI": 0.89,
         "CCI": -37.42,
         "Williams %R": -43.09,
-        "ADX": 26.67
+        "ADX": 26.63
     },
     {
         "ticker": "MSFT",
@@ -65186,7 +65186,7 @@
         "Stochastic RSI": 0.73,
         "CCI": -49.47,
         "Williams %R": -54.15,
-        "ADX": 26.69
+        "ADX": 26.65
     },
     {
         "ticker": "MSFT",
@@ -65205,7 +65205,7 @@
         "Stochastic RSI": 0.86,
         "CCI": -26.57,
         "Williams %R": -47.3,
-        "ADX": 26.22
+        "ADX": 26.19
     },
     {
         "ticker": "MSFT",
@@ -65224,7 +65224,7 @@
         "Stochastic RSI": 0.51,
         "CCI": -86.32,
         "Williams %R": -73.05,
-        "ADX": 26.64
+        "ADX": 26.62
     },
     {
         "ticker": "MSFT",
@@ -65243,7 +65243,7 @@
         "Stochastic RSI": 0.64,
         "CCI": -76.04,
         "Williams %R": -65.53,
-        "ADX": 27.04
+        "ADX": 27.01
     },
     {
         "ticker": "MSFT",
@@ -65262,7 +65262,7 @@
         "Stochastic RSI": 0.81,
         "CCI": -55.91,
         "Williams %R": -60.52,
-        "ADX": 27.1
+        "ADX": 27.08
     },
     {
         "ticker": "MSFT",
@@ -65281,7 +65281,7 @@
         "Stochastic RSI": 1.0,
         "CCI": -4.69,
         "Williams %R": -29.66,
-        "ADX": 26.0
+        "ADX": 25.98
     },
     {
         "ticker": "MSFT",
@@ -65300,7 +65300,7 @@
         "Stochastic RSI": 1.0,
         "CCI": 11.44,
         "Williams %R": -7.64,
-        "ADX": 24.97
+        "ADX": 24.96
     },
     {
         "ticker": "MSFT",
@@ -65319,7 +65319,7 @@
         "Stochastic RSI": 0.61,
         "CCI": -67.11,
         "Williams %R": -52.34,
-        "ADX": 25.17
+        "ADX": 25.16
     },
     {
         "ticker": "MSFT",
@@ -65357,7 +65357,7 @@
         "Stochastic RSI": 0.62,
         "CCI": -58.67,
         "Williams %R": -52.32,
-        "ADX": 25.08
+        "ADX": 25.07
     },
     {
         "ticker": "MSFT",
@@ -65528,7 +65528,7 @@
         "Stochastic RSI": 0.97,
         "CCI": 55.84,
         "Williams %R": -21.43,
-        "ADX": 18.38
+        "ADX": 18.39
     },
     {
         "ticker": "MSFT",
@@ -65547,7 +65547,7 @@
         "Stochastic RSI": 0.92,
         "CCI": 49.82,
         "Williams %R": -23.63,
-        "ADX": 17.55
+        "ADX": 17.56
     },
     {
         "ticker": "MSFT",
@@ -65566,7 +65566,7 @@
         "Stochastic RSI": 0.96,
         "CCI": 65.17,
         "Williams %R": -11.7,
-        "ADX": 16.55
+        "ADX": 16.56
     },
     {
         "ticker": "MSFT",
@@ -65623,7 +65623,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -145.21,
         "Williams %R": -83.4,
-        "ADX": 18.18
+        "ADX": 18.19
     },
     {
         "ticker": "MSFT",
@@ -65661,7 +65661,7 @@
         "Stochastic RSI": 0.87,
         "CCI": 23.03,
         "Williams %R": -30.84,
-        "ADX": 17.38
+        "ADX": 17.39
     },
     {
         "ticker": "MSFT",
@@ -65680,7 +65680,7 @@
         "Stochastic RSI": 0.52,
         "CCI": -40.06,
         "Williams %R": -57.38,
-        "ADX": 16.46
+        "ADX": 16.47
     },
     {
         "ticker": "MSFT",
@@ -65699,7 +65699,7 @@
         "Stochastic RSI": 0.62,
         "CCI": -63.69,
         "Williams %R": -51.58,
-        "ADX": 16.06
+        "ADX": 16.07
     },
     {
         "ticker": "MSFT",
@@ -65737,7 +65737,7 @@
         "Stochastic RSI": 0.09,
         "CCI": -131.43,
         "Williams %R": -80.13,
-        "ADX": 16.12
+        "ADX": 16.13
     },
     {
         "ticker": "MSFT",
@@ -65756,7 +65756,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -212.87,
         "Williams %R": -93.21,
-        "ADX": 17.45
+        "ADX": 17.46
     },
     {
         "ticker": "MSFT",
@@ -65775,7 +65775,7 @@
         "Stochastic RSI": 0.0,
         "CCI": -205.47,
         "Williams %R": -97.75,
-        "ADX": 18.79
+        "ADX": 18.8
     },
     {
         "ticker": "MSFT",
@@ -65794,7 +65794,7 @@
         "Stochastic RSI": 0.19,
         "CCI": -164.92,
         "Williams %R": -88.28,
-        "ADX": 20.03
+        "ADX": 20.04
     },
     {
         "ticker": "MSFT",
@@ -65813,7 +65813,7 @@
         "Stochastic RSI": 0.04,
         "CCI": -181.01,
         "Williams %R": -87.04,
-        "ADX": 21.75
+        "ADX": 21.76
     },
     {
         "ticker": "MSFT",
@@ -65851,7 +65851,7 @@
         "Stochastic RSI": 0.33,
         "CCI": -139.47,
         "Williams %R": -75.58,
-        "ADX": 26.07
+        "ADX": 26.08
     },
     {
         "ticker": "MSFT",
@@ -65870,7 +65870,7 @@
         "Stochastic RSI": 0.88,
         "CCI": -55.14,
         "Williams %R": -46.55,
-        "ADX": 25.29
+        "ADX": 25.3
     },
     {
         "ticker": "MSFT",
@@ -65889,7 +65889,7 @@
         "Stochastic RSI": 1.0,
         "CCI": -13.08,
         "Williams %R": -38.06,
-        "ADX": 24.2
+        "ADX": 24.21
     },
     {
         "ticker": "MSFT",
@@ -65965,7 +65965,7 @@
         "Stochastic RSI": 0.22,
         "CCI": -170.34,
         "Williams %R": -85.22,
-        "ADX": 24.49
+        "ADX": 24.5
     },
     {
         "ticker": "MSFT",
@@ -65984,7 +65984,7 @@
         "Stochastic RSI": 0.15,
         "CCI": -172.53,
         "Williams %R": -96.25,
-        "ADX": 26.07
+        "ADX": 26.08
     },
     {
         "ticker": "MSFT",
@@ -66060,7 +66060,7 @@
         "Stochastic RSI": 0.15,
         "CCI": -146.97,
         "Williams %R": -90.35,
-        "ADX": 33.89
+        "ADX": 33.9
     },
     {
         "ticker": "MSFT",
@@ -66079,7 +66079,7 @@
         "Stochastic RSI": 0.37,
         "CCI": -99.98,
         "Williams %R": -76.72,
-        "ADX": 34.42
+        "ADX": 34.43
     },
     {
         "ticker": "MSFT",
@@ -66098,7 +66098,7 @@
         "Stochastic RSI": 0.36,
         "CCI": -71.65,
         "Williams %R": -77.08,
-        "ADX": 34.14
+        "ADX": 34.15
     },
     {
         "ticker": "MSFT",
@@ -66117,7 +66117,7 @@
         "Stochastic RSI": 0.28,
         "CCI": -88.1,
         "Williams %R": -86.82,
-        "ADX": 34.37
+        "ADX": 34.38
     },
     {
         "ticker": "MSFT",
@@ -66155,7 +66155,7 @@
         "Stochastic RSI": 0.25,
         "CCI": -86.41,
         "Williams %R": -90.16,
-        "ADX": 35.01
+        "ADX": 35.02
     },
     {
         "ticker": "MSFT",
@@ -66174,7 +66174,7 @@
         "Stochastic RSI": 0.2,
         "CCI": -89.71,
         "Williams %R": -95.03,
-        "ADX": 35.45
+        "ADX": 35.46
     },
     {
         "ticker": "MSFT",
@@ -66212,7 +66212,7 @@
         "Stochastic RSI": 0.72,
         "CCI": -67.57,
         "Williams %R": -85.09,
-        "ADX": 35.52
+        "ADX": 35.53
     },
     {
         "ticker": "MSFT",
@@ -66288,7 +66288,7 @@
         "Stochastic RSI": 1.0,
         "CCI": -54.72,
         "Williams %R": -53.93,
-        "ADX": 35.88
+        "ADX": 35.89
     },
     {
         "ticker": "MSFT",
@@ -66326,7 +66326,7 @@
         "Stochastic RSI": 0.69,
         "CCI": -77.74,
         "Williams %R": -73.1,
-        "ADX": 33.89
+        "ADX": 33.9
     },
     {
         "ticker": "MSFT",
@@ -66421,7 +66421,7 @@
         "Stochastic RSI": 0.95,
         "CCI": 116.43,
         "Williams %R": -13.05,
-        "ADX": 26.17
+        "ADX": 26.18
     },
     {
         "ticker": "MSFT",
@@ -66782,7 +66782,7 @@
         "Stochastic RSI": 0.84,
         "CCI": -70.26,
         "Williams %R": -64.3,
-        "ADX": 32.57
+        "ADX": 32.58
     },
     {
         "ticker": "MSFT",
@@ -66877,7 +66877,7 @@
         "Stochastic RSI": 0.86,
         "CCI": -36.2,
         "Williams %R": -52.83,
-        "ADX": 29.63
+        "ADX": 29.64
     },
     {
         "ticker": "MSFT",
@@ -67133,7 +67133,7 @@
         "MACD": 8.61,
         "MACD_signal": 7.97,
         "MACD_diff": 0.64,
-        "RSI": 71.16,
+        "RSI": 71.15,
         "SMA": 199.42,
         "EMA": 202.24,
         "BB High": 232.34,
@@ -68471,7 +68471,7 @@
         "K": 93.75,
         "D": 81.77,
         "Stochastic RSI": 1.0,
-        "CCI": 159.83,
+        "CCI": 159.84,
         "Williams %R": -6.25,
         "ADX": 16.11
     },
@@ -69022,7 +69022,7 @@
         "K": 93.34,
         "D": 95.02,
         "Stochastic RSI": 1.0,
-        "CCI": 196.62,
+        "CCI": 196.61,
         "Williams %R": -6.66,
         "ADX": 15.79
     },
@@ -69372,7 +69372,7 @@
         "ticker": "AAPL",
         "Date": "2024-12-30",
         "Close": 250.83,
-        "MACD": 5.64,
+        "MACD": 5.65,
         "MACD_signal": 5.66,
         "MACD_diff": -0.01,
         "RSI": 60.23,
@@ -69440,7 +69440,7 @@
         "K": 8.42,
         "D": 17.47,
         "Stochastic RSI": 0.0,
-        "CCI": -117.27,
+        "CCI": -117.26,
         "Williams %R": -91.58,
         "ADX": 36.75
     },
@@ -69584,7 +69584,7 @@
         "MACD": -2.51,
         "MACD_signal": 0.15,
         "MACD_diff": -2.66,
-        "RSI": 32.58,
+        "RSI": 32.59,
         "SMA": 237.82,
         "EMA": 238.55,
         "BB High": 262.1,
@@ -70713,7 +70713,7 @@
         "K": 51.3,
         "D": 47.15,
         "Stochastic RSI": 0.8,
-        "CCI": -72.73,
+        "CCI": -72.74,
         "Williams %R": -48.7,
         "ADX": 33.35
     },
@@ -75954,11 +75954,11 @@
         "EMA": 176.69,
         "BB High": 196.0,
         "BB Low": 165.17,
-        "K": 29.76,
+        "K": 29.77,
         "D": 23.84,
         "Stochastic RSI": 0.31,
         "CCI": -86.63,
-        "Williams %R": -70.24,
+        "Williams %R": -70.23,
         "ADX": 25.93
     },
     {
@@ -75973,11 +75973,11 @@
         "EMA": 176.48,
         "BB High": 195.56,
         "BB Low": 164.13,
-        "K": 26.9,
+        "K": 26.91,
         "D": 26.42,
         "Stochastic RSI": 0.28,
         "CCI": -82.97,
-        "Williams %R": -73.1,
+        "Williams %R": -73.09,
         "ADX": 25.74
     },
     {
@@ -76031,7 +76031,7 @@
         "BB High": 193.57,
         "BB Low": 157.85,
         "K": 13.77,
-        "D": 12.75,
+        "D": 12.74,
         "Stochastic RSI": 0.0,
         "CCI": -141.23,
         "Williams %R": -86.23,
@@ -76196,7 +76196,7 @@
         "MACD": -3.81,
         "MACD_signal": -4.26,
         "MACD_diff": 0.45,
-        "RSI": 47.23,
+        "RSI": 47.22,
         "SMA": 175.74,
         "EMA": 171.32,
         "BB High": 177.59,
@@ -76581,11 +76581,11 @@
         "EMA": 164.21,
         "BB High": 171.4,
         "BB Low": 147.38,
-        "K": 62.89,
+        "K": 62.88,
         "D": 55.28,
         "Stochastic RSI": 1.0,
         "CCI": -2.85,
-        "Williams %R": -37.11,
+        "Williams %R": -37.12,
         "ADX": 34.87
     },
     {
@@ -76662,7 +76662,7 @@
         "Stochastic RSI": 0.89,
         "CCI": 68.66,
         "Williams %R": -19.23,
-        "ADX": 27.27
+        "ADX": 27.28
     },
     {
         "ticker": "GOOG",
@@ -77040,7 +77040,7 @@
         "K": 53.3,
         "D": 43.95,
         "Stochastic RSI": 0.38,
-        "CCI": -8.83,
+        "CCI": -8.84,
         "Williams %R": -46.7,
         "ADX": 15.02
     },
@@ -77384,7 +77384,7 @@
         "Stochastic RSI": 0.04,
         "CCI": 56.16,
         "Williams %R": -36.61,
-        "ADX": 31.6
+        "ADX": 31.61
     },
     {
         "ticker": "GOOG",
@@ -77617,7 +77617,7 @@
     {
         "ticker": "GOOG",
         "Date": "2024-12-04",
-        "Close": 175.08,
+        "Close": 175.09,
         "MACD": 0.35,
         "MACD_signal": 0.74,
         "MACD_diff": -0.39,
@@ -77855,7 +77855,7 @@
         "BB High": 202.25,
         "BB Low": 159.32,
         "K": 67.55,
-        "D": 63.42,
+        "D": 63.43,
         "Stochastic RSI": 0.45,
         "CCI": 61.79,
         "Williams %R": -32.45,
@@ -78790,7 +78790,7 @@
         "Stochastic RSI": 0.69,
         "CCI": -72.46,
         "Williams %R": -67.64,
-        "ADX": 34.98
+        "ADX": 34.99
     },
     {
         "ticker": "GOOG",
